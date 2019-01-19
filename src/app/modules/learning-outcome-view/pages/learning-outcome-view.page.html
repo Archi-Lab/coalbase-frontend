@@ -1,0 +1,36 @@
+<mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+    <li class="mat-tree-node">
+      <button mat-icon-button disabled></button>
+      TEST
+    </li>
+  </mat-tree-node>
+
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+    <div class="mat-tree-node">
+      <button mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'toggle ' + node.title">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      {{node.title}}
+    </div>
+    <div [class.learning-outcome-tree-invisible]="!nestedTreeControl.isExpanded(node)" style="margin-left: 40px;">
+      <mat-label><b>Als&nbsp;</b></mat-label>
+      <mat-label *ngFor="let role of node.roles">{{role}}</mat-label>
+      <br>
+      <mat-label><b>kann ich&nbsp;</b></mat-label>
+      <mat-label *ngFor="let ability of node.abilities">{{ability}}</mat-label>
+      <br>
+      <mat-label><b>vorrausgesetzt ich kann&nbsp;</b></mat-label>
+      <mat-label *ngFor="let precondition of node.preconditions">{{precondition}}</mat-label>
+      <br>
+      <mat-label><b>indem ich&nbsp;</b></mat-label>
+      <ng-container matTreeNodeOutlet></ng-container>
+      <mat-label><b>sodass ich&nbsp;</b></mat-label>
+      <mat-label>{{node.businessGoal}}</mat-label>
+    </div>
+  </mat-nested-tree-node>
+
+</mat-tree>
