@@ -1,9 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./assets/coalbase-material.scss";
+@import "assets/scss/coalbase-material";
+
+html {
+  width: 100%;
+  height: 100%;
+}
 
 html, body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+}
+
+body {
+  background: url("./assets/images/bg-grid.png") top left repeat;
+  margin: 0 0 0 0;
+  height: 100%;
 }
 
 *:focus {

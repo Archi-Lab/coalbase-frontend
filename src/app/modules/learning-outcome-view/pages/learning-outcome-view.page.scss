@@ -1,3 +1,29 @@
+@import "~src/assets/scss/coalbase-colors";
+
+.learning-outcome-view {
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.learning-outcome-tree{
+  padding-bottom: 5px;
+}
+
+.learning-outcome-tree-content{
+  padding-bottom: 5px;
+}
+
+.learning-outcome-tree-content-extended{
+  padding-left: 48px;
+}
+
 .learning-outcome-tree-invisible {
   display: none;
+}
+
+.highlight-green{
+  color: $coalbase-green-darker;
 }

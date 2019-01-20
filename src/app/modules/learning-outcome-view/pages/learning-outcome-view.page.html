@@ -1,50 +1,62 @@
 <ng-template #learningOutcomeTree let-learningOutcomes_tmp="learnings">
-  <div *ngFor="let learningOutcome of learningOutcomes_tmp" style="margin-bottom: 15px;">
-    <button mat-button #toggleButton
-            [attr.aria-label]="'toggle ' + learningOutcome.title"
-            (click)="toggleButton.isOpen = !toggleButton.isOpen">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{toggleButton.isOpen ? 'expand_more' : 'chevron_right'}}
-      </mat-icon>
-      {{learningOutcome.title}}
-    </button>
-    <div [class.learning-outcome-tree-invisible]="!toggleButton.isOpen" style="padding-left: 32px;">
-      <div *ngIf="learningOutcome.roles && learningOutcome.roles.length >0">
-        <br>
-        <mat-label><b>Als&nbsp;</b></mat-label>
-        <mat-label *ngFor="let role of learningOutcome.roles">{{role}},&nbsp;</mat-label>
-      </div>
-      <div *ngIf="learningOutcome.abilities && learningOutcome.abilities.length >0">
-        <br>
-        <mat-label><b>kann ich&nbsp;</b></mat-label>
-        <mat-label *ngFor="let ability of learningOutcome.abilities">{{ability}}</mat-label>
-      </div>
-      <div *ngIf="learningOutcome.preconditions && learningOutcome.preconditions.length >0">
-        <br>
-        <mat-label><b>vorrausgesetzt ich kann&nbsp;</b></mat-label>
-        <div style="margin-left: 20px;">
-          <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                        [ngTemplateOutletContext]="{learnings: learningOutcome.preconditions}"></ng-container>
+  <div *ngFor="let learningOutcome of learningOutcomes_tmp; last as last"
+       class="learning-outcome-tree">
+    <div class="learning-outcome-tree-content">
+      <button mat-button #toggleButton
+              [attr.aria-label]="'toggle ' + learningOutcome.title"
+              (click)="toggleButton.isOpen = !toggleButton.isOpen">
+        <mat-icon class="mat-icon-rtl-mirror highlight-green">
+          {{toggleButton.isOpen ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+        <mat-label class="highlight-green">{{learningOutcome.title}}</mat-label>
+      </button>
+      <div class="learning-outcome-tree-content-extended" [class.learning-outcome-tree-invisible]="!toggleButton.isOpen" >
+        <div *ngIf="learningOutcome.roles && learningOutcome.roles.length >0">
+          <br>
+          <mat-label><b>Als&nbsp;</b></mat-label>
+          <mat-label *ngFor="let role of learningOutcome.roles">{{role}},&nbsp;</mat-label>
         </div>
-      </div>
-      <div *ngIf="learningOutcome.subAbilities && learningOutcome.subAbilities.length >0">
-        <br>
-        <mat-label><b>indem ich&nbsp;</b></mat-label>
-        <div style="margin-left: 20px;">
-          <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                        [ngTemplateOutletContext]="{learnings: learningOutcome.subAbilities}"></ng-container>
+        <div *ngIf="learningOutcome.abilities && learningOutcome.abilities.length >0">
+          <br>
+          <mat-label><b>kann ich&nbsp;</b></mat-label>
+          <mat-label *ngFor="let ability of learningOutcome.abilities">{{ability}}</mat-label>
         </div>
-      </div>
-      <div *ngIf="learningOutcome.businessGoal">
-        <mat-label><b>sodass ich&nbsp;</b></mat-label>
-        <mat-label>{{learningOutcome.businessGoal}}</mat-label>
+        <div *ngIf="learningOutcome.preconditions && learningOutcome.preconditions.length >0">
+          <br>
+          <mat-label><b>vorrausgesetzt ich kann&nbsp;</b></mat-label>
+          <div style="margin-left: 20px;">
+            <ng-container [ngTemplateOutlet]="learningOutcomeTree"
+                          [ngTemplateOutletContext]="{learnings: learningOutcome.preconditions}"></ng-container>
+          </div>
+        </div>
+        <div *ngIf="learningOutcome.subAbilities && learningOutcome.subAbilities.length >0">
+          <br>
+          <mat-label><b>indem ich&nbsp;</b></mat-label>
+          <div style="margin-left: 20px;">
+            <ng-container [ngTemplateOutlet]="learningOutcomeTree"
+                          [ngTemplateOutletContext]="{learnings: learningOutcome.subAbilities}"></ng-container>
+          </div>
+        </div>
+        <div *ngIf="learningOutcome.businessGoal">
+          <mat-label><b>sodass ich&nbsp;</b></mat-label>
+          <mat-label>{{learningOutcome.businessGoal}}</mat-label>
+        </div>
       </div>
     </div>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
   </div>
 </ng-template>
 
 
-<div *ngIf="learningOutcomes">
-  <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                [ngTemplateOutletContext]="{learnings: learningOutcomes}"></ng-container>
-</div>
+<mat-card class="learning-outcome-view">
+  <mat-card-title>Learning Outcomes</mat-card-title>
+  <mat-card-content>
+    <div *ngIf="learningOutcomes">
+      <ng-container [ngTemplateOutlet]="learningOutcomeTree"
+                    [ngTemplateOutletContext]="{learnings: learningOutcomes}"></ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+
