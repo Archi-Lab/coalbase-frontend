@@ -2,7 +2,7 @@ export interface LearningOutcome {
   title: string;
   roles: string[];
   abilities: string[];
-  preconditions: string[];
+  preconditions: LearningOutcome[];
   subAbilities: LearningOutcome[];
   businessGoal: string
 }

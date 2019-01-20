@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {LearningOutcome} from "../../../shared/models/learning-outcome.model";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {MatTreeNestedDataSource} from "@angular/material";
+import {LearningOutcomeService} from "../../../core/services/learning-outcome.service";
 
 @Component({
   selector: "app-learning-outcome-view",
@@ -9,36 +10,22 @@ import {MatTreeNestedDataSource} from "@angular/material";
   styleUrls: ["./learning-outcome-view.page.scss"]
 })
 export class LearningOutcomeViewPage {
-  learningOutcomes: LearningOutcome[] = [
-    {
-      title: "My first Learning-Outcome",
-      roles: ["SoftwareDeveloper"],
-      abilities: ["i can view a learning-outcome"],
-      preconditions: ["know how to develope angular"],
-      subAbilities: [
-        {
-          title: "My second Learning-Outcome",
-          roles: ["SoftwareDeveloper"],
-          abilities: ["i can view a learning-outcome"],
-          preconditions: ["know how to develope angular"],
-          subAbilities: [],
-          businessGoal: "so i can see a learning-outcome"
-        }
-      ],
-      businessGoal: "so i can see a learning-outcome"
-    }
-  ];
 
   nestedTreeControl: NestedTreeControl<LearningOutcome>;
   nestedDataSource: MatTreeNestedDataSource<LearningOutcome>;
 
-  constructor() {
-    this.nestedTreeControl = new NestedTreeControl<LearningOutcome>((learningOutcome: LearningOutcome) => learningOutcome.subAbilities);
+  constructor(private learningOutcomeService: LearningOutcomeService) {
+    this.nestedTreeControl = new NestedTreeControl<LearningOutcome>(this.getChildren);
 
     this.nestedDataSource = new MatTreeNestedDataSource();
-    this.nestedDataSource.data = this.learningOutcomes;
+    learningOutcomeService.learningOutcomes.subscribe(learningOutcomes => this.nestedDataSource.data = learningOutcomes);
   }
 
-  hasNestedChild = (_: number, nodeData: LearningOutcome) => nodeData.subAbilities;
+  private getChildren = (learningOutcome: LearningOutcome) => {
+    return [].concat(learningOutcome.subAbilities ? learningOutcome.subAbilities : [],
+      learningOutcome.preconditions ? learningOutcome.preconditions : []);
+  };
+
+  hasSubAbilities = (_: number, nodeData: LearningOutcome) => nodeData.subAbilities;
 
 }

@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../shared/material.module";
 import {LearningOutcomeViewPage} from "./pages/learning-outcome-view.page";
+import {LearningOutcomeService} from "../../core/services/learning-outcome.service";
 
 @NgModule({
   imports: [
@@ -13,6 +14,9 @@ import {LearningOutcomeViewPage} from "./pages/learning-outcome-view.page";
   ],
   declarations: [
     LearningOutcomeViewPage
+  ],
+  providers: [
+    LearningOutcomeService
   ],
   exports: [
     LearningOutcomeViewPage
