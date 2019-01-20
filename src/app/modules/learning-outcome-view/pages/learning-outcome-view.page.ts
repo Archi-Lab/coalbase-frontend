@@ -1,7 +1,5 @@
 import {Component} from "@angular/core";
 import {LearningOutcome} from "../../../shared/models/learning-outcome.model";
-import {NestedTreeControl} from "@angular/cdk/tree";
-import {MatTreeNestedDataSource} from "@angular/material";
 import {LearningOutcomeService} from "../../../core/services/learning-outcome.service";
 
 @Component({
@@ -11,21 +9,9 @@ import {LearningOutcomeService} from "../../../core/services/learning-outcome.se
 })
 export class LearningOutcomeViewPage {
 
-  nestedTreeControl: NestedTreeControl<LearningOutcome>;
-  nestedDataSource: MatTreeNestedDataSource<LearningOutcome>;
+  learningOutcomes: LearningOutcome[];
 
   constructor(private learningOutcomeService: LearningOutcomeService) {
-    this.nestedTreeControl = new NestedTreeControl<LearningOutcome>(this.getChildren);
-
-    this.nestedDataSource = new MatTreeNestedDataSource();
-    learningOutcomeService.learningOutcomes.subscribe(learningOutcomes => this.nestedDataSource.data = learningOutcomes);
+    learningOutcomeService.learningOutcomes.subscribe(learningOutcomes => this.learningOutcomes = learningOutcomes);
   }
-
-  private getChildren = (learningOutcome: LearningOutcome) => {
-    return [].concat(learningOutcome.subAbilities ? learningOutcome.subAbilities : [],
-      learningOutcome.preconditions ? learningOutcome.preconditions : []);
-  };
-
-  hasSubAbilities = (_: number, nodeData: LearningOutcome) => nodeData.subAbilities;
-
 }

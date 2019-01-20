@@ -5,38 +5,38 @@ import {LearningOutcome} from "../../shared/models/learning-outcome.model";
 /*SAMPLE DATA*/
 const learningOutcomes: LearningOutcome[] = [
   {
-    title: "My first Learning-Outcome",
-    roles: ["SoftwareDeveloper"],
-    abilities: ["i can view a learning-outcome"],
+    title: "UseCase Übersicht",
+    roles: ["Anforderungsanalyst", "Softwarearchitekt", "Softwareentwickler"],
+    abilities: ["eine Übersicht über alle Use Cases, basierend auf meinem Anforderungstext identifizieren", "als Use-Case-Diagramme spezifizieren"],
     preconditions: [
       {
-        title: "My second Learning-Outcome",
-        roles: ["SoftwareDeveloper"],
-        abilities: ["i can view a learning-outcome"],
+        title: "Namenskonventionen für UseCases",
+        roles: [],
+        abilities: ["mich an Namenskonventionen für UseCases erinnern"],
         preconditions: [],
         subAbilities: [],
-        businessGoal: "so i can see a learning-outcome"
+        businessGoal: ""
       }
     ],
     subAbilities: [
       {
-        title: "My second Learning-Outcome",
-        roles: ["SoftwareDeveloper"],
-        abilities: ["i can view a learning-outcome"],
+        title: "Anforderungsblöcke Gruppieren",
+        roles: [],
+        abilities: ["den Anforderungstext in Blöcke von zusammenhängenden Aktivitäten gruppiere"],
         preconditions: [],
         subAbilities: [],
-        businessGoal: "so i can see a learning-outcome"
+        businessGoal: ""
       }
     ],
-    businessGoal: "so i can see a learning-outcome"
+    businessGoal: "eine erste Übersicht der Anwendungsfälle (Nutzerperspektive) meines Systems vorliegen habe."
   },
   {
-    title: "My first Learning-Outcome",
-    roles: ["SoftwareDeveloper"],
-    abilities: ["i can view a learning-outcome"],
+    title: " Definition einer Komponentenstruktur",
+    roles: ["Softwarearchitekt", "Softwareentwickler"],
+    abilities: ["durch Use Cases, fachliches Datenmodell und Clustering eine erste Komponentenstruktur"],
     preconditions: undefined,
     subAbilities: undefined,
-    businessGoal: "so i can see a learning-outcome"
+    businessGoal: "einen Startpunkt für die weitere Entwurfsarbeit habe"
   }
 ];
 
