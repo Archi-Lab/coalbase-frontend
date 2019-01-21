@@ -35,7 +35,7 @@ pipeline {
                 echo 'Building.. with ID: ${env.BUILD_ID}'
                 updateGitlabCommitStatus name: "Building", state: "running"
                 sh "docker build -t docker.nexus.archi-lab.io/archilab/coalbase-frontend ."
-				sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
+				sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
                 sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend"
             }
             post {
