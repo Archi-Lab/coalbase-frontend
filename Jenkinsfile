@@ -68,7 +68,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 updateGitlabCommitStatus name: "Deploy", state: "running"
-                sh "docker-compose -p coalbase -f docker-compose.yml up -d"
+				script {
+					docker.withServer('tcp://10.10.10.25:2376', 'CoalbaseVM') {
+						sh 'docker stack deploy -c ./docker-compose.yml frontend'
+					}
+				}
             }
             post {
                 success {
