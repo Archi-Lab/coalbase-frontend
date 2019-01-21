@@ -8,7 +8,7 @@
         <mat-icon class="mat-icon-rtl-mirror highlight-green">
           {{toggleButton.isOpen ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
-        <mat-label class="highlight-green">{{learningOutcome.title}}</mat-label>
+       <mat-label class="highlight-green">{{learningOutcome.title}}</mat-label>
       </button>
       <div class="learning-outcome-tree-content-extended" [class.learning-outcome-tree-invisible]="!toggleButton.isOpen" >
         <div *ngIf="learningOutcome.roles && learningOutcome.roles.length >0">

@@ -8,15 +8,15 @@
   overflow-y: auto;
 }
 
-.learning-outcome-tree{
+.learning-outcome-tree {
   padding-bottom: 5px;
 }
 
-.learning-outcome-tree-content{
+.learning-outcome-tree-content {
   padding-bottom: 5px;
 }
 
-.learning-outcome-tree-content-extended{
+.learning-outcome-tree-content-extended {
   padding-left: 48px;
 }
 
@@ -24,6 +24,21 @@
   display: none;
 }
 
-.highlight-green{
+.highlight-green {
   color: $coalbase-green-darker;
+}
+
+@media only screen and (max-width: 40em) {
+  .learning-outcome-tree-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  .mat-button {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+  }
 }
