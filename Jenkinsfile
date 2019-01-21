@@ -70,7 +70,9 @@ pipeline {
                 updateGitlabCommitStatus name: "Deploy", state: "running"
 				script {
 					docker.withServer('tcp://10.10.10.25:2376', 'CoalbaseVM') {
-						sh 'docker stack deploy -c ./docker-compose.yml frontend'
+						docker.withRegistry('https://nexus.archi-lab.io/', 'archilab-nexus-jenkins-user') {
+							sh 'docker stack deploy -c ./docker-compose.yml frontend'
+						}
 					}
 				}
             }
