@@ -40,7 +40,7 @@ RUN npm run build -prod
 FROM nginx:1.13.9-alpine
 
 # copy artifact build from the 'build environment'
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/Coalbase-Frontend /usr/share/nginx/html
 
 # expose port 80
 EXPOSE 80
