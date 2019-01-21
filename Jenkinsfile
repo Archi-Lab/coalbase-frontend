@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    tools{
+      nodejs "nodejs8111"
+    }
+
     stages {
         stage("Code Quality Check") {
             steps {
