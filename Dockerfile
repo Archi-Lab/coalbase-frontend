@@ -3,7 +3,7 @@
 #########################
 
 # base image
-FROM node:10.15.0-apline as builder
+FROM node:10.15.0-alpine as builder
 
 # set working directory
 RUN mkdir /usr/src/app
