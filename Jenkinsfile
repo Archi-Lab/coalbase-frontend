@@ -5,7 +5,23 @@ pipeline {
     }
 
     stages {
-        stage("Code Quality Check") {
+        stage('Test') {
+            steps {
+              echo "should test the project here!"
+            }
+            post {
+                success {
+                    updateGitlabCommitStatus name: "Test", state: "success"
+                }
+                failure {
+                    updateGitlabCommitStatus name: "Test", state: "failed"
+                }
+                unstable {
+                    updateGitlabCommitStatus name: "Test", state: "success"
+                }
+            }
+        }
+        stage("Quality Check") {
             steps {
                 script { scannerHome = tool "SonarQube Scanner"; }
                 withSonarQubeEnv("SonarQube-Server") { sh "${scannerHome}/bin/sonar-scanner" }
@@ -32,10 +48,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building.. with ID: ${env.BUILD_ID}'
+                echo 'Building..'
                 updateGitlabCommitStatus name: "Building", state: "running"
                 sh "docker build -t docker.nexus.archi-lab.io/archilab/coalbase-frontend ."
-				sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
+				        sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
                 sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend"
             }
             post {
@@ -50,32 +66,16 @@ pipeline {
                 }
             }
         }
-        /* stage('Test') {
-            steps {
-
-            }
-            post {
-                success {
-                    updateGitlabCommitStatus name: "Test", state: "success"
-                }
-                failure {
-                    updateGitlabCommitStatus name: "Test", state: "failed"
-                }
-                unstable {
-                    updateGitlabCommitStatus name: "Test", state: "success"
-                }
-            }
-        } */
         stage('Deploy') {
             steps {
                 updateGitlabCommitStatus name: "Deploy", state: "running"
-				script {
-					docker.withServer('tcp://10.10.10.25:2376', 'CoalbaseVM') {
-						docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins-user') {
-							sh 'docker stack deploy --with-registry-auth -c ./docker-compose.yml frontend'
-						}
-					}
-				}
+                script {
+                  docker.withServer('tcp://10.10.10.25:2376', 'CoalbaseVM') {
+                    docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins-user') {
+                      sh 'docker stack deploy --with-registry-auth -c ./docker-compose.yml frontend'
+                    }
+                  }
+                }
             }
             post {
                 success {
