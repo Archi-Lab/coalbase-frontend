@@ -51,8 +51,12 @@ pipeline {
                 echo 'Building..'
                 updateGitlabCommitStatus name: "Building", state: "running"
                 sh "docker build -t docker.nexus.archi-lab.io/archilab/coalbase-frontend ."
-				        sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
-                sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend"
+                sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
+                script {
+                  docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins-user') {
+                    sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend"
+                  }
+                }
             }
             post {
                 success {
