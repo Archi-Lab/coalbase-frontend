@@ -49,5 +49,3 @@ EXPOSE 80
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
-HEALTHCHECK --interval=1m --timeout=3s --retries=2 \
-  CMD curl -f http://localhost/ || exit 1
