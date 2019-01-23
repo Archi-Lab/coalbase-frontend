@@ -30,7 +30,7 @@ COPY . /usr/src/app
 # RUN ng test --watch=false
 
 # generate build
-RUN npm run build --prod
+RUN ng build --prod
 
 ##################
 ### production ###
