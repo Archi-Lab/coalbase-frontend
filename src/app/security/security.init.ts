@@ -11,7 +11,8 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
             config: {
               url: environment.keyCloak,
               realm: environment.realm,
-              clientId: environment.clientID
+              clientId: environment.clientID,
+              flow: 'implicit'
             },
             initOptions: {
               onLoad: 'login-required',
