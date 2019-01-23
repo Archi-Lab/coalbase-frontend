@@ -11,12 +11,12 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
             config: {
               url: environment.keyCloak,
               realm: environment.realm,
-              clientId: environment.clientID,
-              flow: 'implicit'
+              clientId: environment.clientID
             },
             initOptions: {
               onLoad: 'login-required',
-              checkLoginIframe: false
+              checkLoginIframe: false,
+              flow: 'implicit'
             },
             bearerExcludedUrls: []
           });
