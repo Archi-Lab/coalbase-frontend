@@ -39,7 +39,6 @@ RUN npm run build --prod
 # base image
 FROM nginx:1.13.9-alpine
 
-CMD apk add --update \ curl
 
 # copy artifact build from the 'build environment'
 COPY --from=builder /usr/src/app/dist/Coalbase-Frontend /usr/share/nginx/html
