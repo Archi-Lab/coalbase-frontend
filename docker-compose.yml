@@ -5,9 +5,15 @@ services:
     image: docker.nexus.archi-lab.io/archilab/coalbase-frontend
     ports:
     - 4201:80
+    restart: always
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
     deploy:
       restart_policy:
         condition: on-failure
         delay: 5s
         max_attempts: 3
         window: 120s
+

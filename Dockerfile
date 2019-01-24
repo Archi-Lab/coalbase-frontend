@@ -30,7 +30,7 @@ COPY . /usr/src/app
 # RUN ng test --watch=false
 
 # generate build
-RUN npm run build -prod
+RUN ng build --prod
 
 ##################
 ### production ###
@@ -38,6 +38,7 @@ RUN npm run build -prod
 
 # base image
 FROM nginx:1.13.9-alpine
+
 
 # copy artifact build from the 'build environment'
 COPY --from=builder /usr/src/app/dist/Coalbase-Frontend /usr/share/nginx/html
