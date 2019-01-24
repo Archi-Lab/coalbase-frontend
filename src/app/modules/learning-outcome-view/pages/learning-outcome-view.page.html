@@ -1,47 +1,33 @@
-<ng-template #learningOutcomeTree let-learningOutcomes_tmp="learnings">
-  <div *ngFor="let learningOutcome of learningOutcomes_tmp; last as last"
-       class="learning-outcome-tree">
-    <div class="learning-outcome-tree-content">
-      <button mat-button #toggleButton
-              [attr.aria-label]="'toggle ' + learningOutcome.title"
-              (click)="toggleButton.isOpen = !toggleButton.isOpen">
-        <mat-icon class="mat-icon-rtl-mirror highlight-green">
-          {{toggleButton.isOpen ? 'expand_more' : 'chevron_right'}}
-        </mat-icon>
-       <mat-label class="highlight-green">{{learningOutcome.title}}</mat-label>
-      </button>
-      <div class="learning-outcome-tree-content-extended" [class.learning-outcome-tree-invisible]="!toggleButton.isOpen" >
-        <div *ngIf="learningOutcome.skill">
-          <br>
-          <mat-label><b>WAS&nbsp;</b></mat-label>
-          <mat-label>{{learningOutcome.skill.description}}</mat-label>
-          <mat-label>{{learningOutcome.skill.taxonomyLevel}}</mat-label>
-        </div>
-        <div *ngIf="learningOutcome.toolKit && learningOutcome.toolKit.length >0">
-          <br>
-          <mat-label><b>WOMIT&nbsp;</b></mat-label>
-          <mat-label *ngFor="let tool of learningOutcome.toolKit">{{tool}}</mat-label>
-        </div>
-        <div *ngIf="learningOutcome.purpose">
-          <mat-label><b>WOZU</b></mat-label>
-          <mat-label>{{learningOutcome.purpose}}</mat-label>
-        </div>
+<div class="learning-outcome-page">
+  <mat-card class="learning-outcome-overview">
+    <mat-card-title>Learning Outcomes</mat-card-title>
+    <mat-card-content>
+      <div *ngIf="learningOutcomes">
+        <mat-action-list>
+          <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
+                         class="learning-outcome-overview-item mat-option" (click)="selectLearningOutcome(learningOutcome)">
+            {{learningOutcome.title}}
+          </mat-list-item>
+        </mat-action-list>
       </div>
-    </div>
-    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-  </div>
-</ng-template>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="learning-outcome-editor">
+    <mat-card-title>{{selectedLearningOutcome.title}}</mat-card-title>
+    <mat-card-content>
+      <br>
+      <mat-label><b>WAS&nbsp;</b></mat-label>
+      <mat-label>{{selectedLearningOutcome.skill.description}}</mat-label>
+      <mat-label>{{selectedLearningOutcome.skill.taxonomyLevel}}</mat-label>
 
-
-<mat-card class="learning-outcome-view">
-  <mat-card-title>Learning Outcomes</mat-card-title>
-  <mat-card-content>
-    <div *ngIf="learningOutcomes">
-      <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                    [ngTemplateOutletContext]="{learnings: learningOutcomes}"></ng-container>
-    </div>
-  </mat-card-content>
-</mat-card>
+      <br>
+      <mat-label><b>WOMIT&nbsp;</b></mat-label>
+      <mat-label *ngFor="let tool of selectedLearningOutcome.toolKit">{{tool}}</mat-label>
+      <mat-label><b>WOZU</b></mat-label>
+      <mat-label>{{selectedLearningOutcome.purpose}}</mat-label>
+    </mat-card-content>
+  </mat-card>
+</div>
 
 
 
