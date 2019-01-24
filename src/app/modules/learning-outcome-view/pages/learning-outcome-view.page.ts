@@ -9,7 +9,7 @@ import {LearningOutcomeService} from "../../../core/services/learning-outcome.se
 })
 export class LearningOutcomeViewPage {
 
-  learningOutcomes: LearningOutcome[];
+  learningOutcomes: LearningOutcome[] = [];
 
   constructor(private learningOutcomeService: LearningOutcomeService) {
     learningOutcomeService.learningOutcomes.subscribe(learningOutcomes => this.learningOutcomes = learningOutcomes);

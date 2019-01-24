@@ -1,8 +1,8 @@
+import {Skill} from './skill.model';
+
 export interface LearningOutcome {
   title: string;
-  roles: string[];
-  abilities: string[];
-  preconditions: LearningOutcome[];
-  subAbilities: LearningOutcome[];
-  businessGoal: string
+  skill: Skill;
+  toolKit: string[];
+  purpose: string;
 }

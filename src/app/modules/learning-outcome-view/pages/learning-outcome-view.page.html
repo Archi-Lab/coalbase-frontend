@@ -11,35 +11,20 @@
        <mat-label class="highlight-green">{{learningOutcome.title}}</mat-label>
       </button>
       <div class="learning-outcome-tree-content-extended" [class.learning-outcome-tree-invisible]="!toggleButton.isOpen" >
-        <div *ngIf="learningOutcome.roles && learningOutcome.roles.length >0">
+        <div *ngIf="learningOutcome.skill">
           <br>
-          <mat-label><b>Als&nbsp;</b></mat-label>
-          <mat-label *ngFor="let role of learningOutcome.roles">{{role}},&nbsp;</mat-label>
+          <mat-label><b>WAS&nbsp;</b></mat-label>
+          <mat-label>{{learningOutcome.skill.description}}</mat-label>
+          <mat-label>{{learningOutcome.skill.taxonomyLevel}}</mat-label>
         </div>
-        <div *ngIf="learningOutcome.abilities && learningOutcome.abilities.length >0">
+        <div *ngIf="learningOutcome.toolKit && learningOutcome.toolKit.length >0">
           <br>
-          <mat-label><b>kann ich&nbsp;</b></mat-label>
-          <mat-label *ngFor="let ability of learningOutcome.abilities">{{ability}}</mat-label>
+          <mat-label><b>WOMIT&nbsp;</b></mat-label>
+          <mat-label *ngFor="let tool of learningOutcome.toolKit">{{tool}}</mat-label>
         </div>
-        <div *ngIf="learningOutcome.preconditions && learningOutcome.preconditions.length >0">
-          <br>
-          <mat-label><b>vorrausgesetzt ich kann&nbsp;</b></mat-label>
-          <div style="margin-left: 20px;">
-            <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                          [ngTemplateOutletContext]="{learnings: learningOutcome.preconditions}"></ng-container>
-          </div>
-        </div>
-        <div *ngIf="learningOutcome.subAbilities && learningOutcome.subAbilities.length >0">
-          <br>
-          <mat-label><b>indem ich&nbsp;</b></mat-label>
-          <div style="margin-left: 20px;">
-            <ng-container [ngTemplateOutlet]="learningOutcomeTree"
-                          [ngTemplateOutletContext]="{learnings: learningOutcome.subAbilities}"></ng-container>
-          </div>
-        </div>
-        <div *ngIf="learningOutcome.businessGoal">
-          <mat-label><b>sodass ich&nbsp;</b></mat-label>
-          <mat-label>{{learningOutcome.businessGoal}}</mat-label>
+        <div *ngIf="learningOutcome.purpose">
+          <mat-label><b>WOZU</b></mat-label>
+          <mat-label>{{learningOutcome.purpose}}</mat-label>
         </div>
       </div>
     </div>
