@@ -9,7 +9,7 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome.se
   styleUrls: ['./learning-outcome-editor.component.scss']
 })
 export class LearningOutcomeEditorComponent implements OnInit {
-  learningOutcome: LearningOutcome = {id: 0, title: '', skill: {description: '', taxonomyLevel: 0}, toolKit: [], purpose: ''};
+  learningOutcome: LearningOutcome = {id: '', competence: {action: '', taxonomyLevel: ''}, tools: [], purpose: ''};
 
   constructor(private route: ActivatedRoute, private learningOutcomeService: LearningOutcomeService) {
 

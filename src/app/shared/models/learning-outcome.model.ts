@@ -1,9 +1,8 @@
-import {Skill} from './skill.model';
+import {Competence} from './competence.model';
 
 export interface LearningOutcome {
-  id: number;
-  title: string;
-  skill: Skill;
-  toolKit: string[];
+  id: string;
+  competence: Competence;
+  tools: string[];
   purpose: string;
 }

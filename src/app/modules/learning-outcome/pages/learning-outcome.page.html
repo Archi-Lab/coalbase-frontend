@@ -6,7 +6,7 @@
         <mat-action-list>
           <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
                          class="learning-outcome-overview-item mat-option" [routerLink]="learningOutcome.id">
-            {{ learningOutcome.title }}
+            {{ learningOutcome.competence.action }}
           </mat-list-item>
         </mat-action-list>
       </div>
