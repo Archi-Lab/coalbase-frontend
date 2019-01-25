@@ -16,11 +16,12 @@ export class LearningOutcomeEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      if (params['learningOutcome']) {
-        this.learningOutcome = this.learningOutcomeService.learningOutcome(params['learningOutcome']);
+    this.route.paramMap.subscribe(params => {
+      const identifier = params.get('learningOutcome');
+      if (identifier) {
+        this.learningOutcomeService.learningOutcome(identifier).subscribe(learningOutcome => this.learningOutcome = learningOutcome);
       } else {
-        this.learningOutcome = this.learningOutcomeService.firstlearningOutcome;
+        this.learningOutcomeService.firstLearningOutcome.subscribe(learningOutcome => this.learningOutcome = learningOutcome);
       }
     });
   }

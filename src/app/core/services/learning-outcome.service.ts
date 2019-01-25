@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {LearningOutcome} from '../../shared/models/learning-outcome.model';
 
 /*SAMPLE DATA*/
@@ -74,13 +74,11 @@ export class LearningOutcomeService {
     return this._learningOutcomes.asObservable();
   }
 
-  public learningOutcome(identifier: string): LearningOutcome {
-    // TODO refactor to return a Observable
-    return this._learningOutcomes.getValue().filter(learningOutcome => learningOutcome.id.toString() === identifier)[0];
+  public learningOutcome(identifier: string): Observable<LearningOutcome> {
+    return of(this._learningOutcomes.getValue().filter(learningOutcome => learningOutcome.id.toString() === identifier)[0]);
   }
 
-  get firstlearningOutcome(): LearningOutcome {
-    // TODO refactor to return a Observable
-    return this._learningOutcomes.getValue()[0];
+  get firstLearningOutcome(): Observable<LearningOutcome> {
+    return of(this._learningOutcomes.getValue()[0]);
   }
 }
