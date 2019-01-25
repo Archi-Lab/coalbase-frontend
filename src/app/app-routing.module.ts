@@ -1,11 +1,11 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 
 const appRoutes: Routes = [
-  {path: "", redirectTo: "learning-outcomes", pathMatch: "full"},
+  {path: '', redirectTo: 'learning-outcomes', pathMatch: 'full'},
   {
-    path: "learning-outcomes",
-    loadChildren: "./modules/learning-outcome/learning-outcome.module#LearningOutcomeModule"
+    path: 'learning-outcomes',
+    loadChildren: './modules/learning-outcome/learning-outcome.module#LearningOutcomeModule'
   }
 ];
 

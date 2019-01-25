@@ -1,15 +1,15 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {LearningOutcomePage} from "./pages/learning-outcome.page";
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
+import {LearningOutcomePage} from './pages/learning-outcome.page';
 import {LearningOutcomeEditorComponent} from './learning-outcome-editor/learning-outcome-editor.component';
 
 const LearningOutcomeRoutes: Routes = [
   {
-    path: "",
+    path: '',
     component: LearningOutcomePage,
     children: [
-      {path: "", component: LearningOutcomeEditorComponent},
-      {path: ":learningOutcome", component: LearningOutcomeEditorComponent},
+      {path: '', component: LearningOutcomeEditorComponent},
+      {path: ':learningOutcome', component: LearningOutcomeEditorComponent},
     ],
   }
 ];
