@@ -1,5 +1,5 @@
-@import "assets/scss/coalbase-material";
-@import "assets/scss/coalbase-colors";
+@import 'assets/scss/coalbase-material';
+@import 'assets/scss/coalbase-colors';
 
 html {
   width: 100%;
@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-  background: url("./assets/images/bg-grid.png") top left repeat;
+  background: url('./assets/images/bg-grid.png') top left repeat;
   background-color: lighten($coalbase-grey, 20%);
   margin: 0 0 0 0;
   height: 100%;
