@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/scss/coalbase-material";
+@import "assets/scss/coalbase-colors";
 
 html {
   width: 100%;
@@ -13,6 +14,7 @@ html, body {
 
 body {
   background: url("./assets/images/bg-grid.png") top left repeat;
+  background-color: lighten($coalbase-grey, 20%);
   margin: 0 0 0 0;
   height: 100%;
 }

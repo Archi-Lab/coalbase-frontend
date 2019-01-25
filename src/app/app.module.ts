@@ -1,10 +1,11 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {BrowserModule} from "@angular/platform-browser";
+import {APP_INITIALIZER, NgModule} from "@angular/core";
 
-import {AppComponent} from './app.component';
-import {LearningOutcomeViewModule} from "./modules/learning-outcome-view/learning-outcome-view.module";
+import {AppComponent} from "./app.component";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./security/security.init";
+import {MaterialModule} from "./shared/material.module";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {initializer} from "./security/security.init";
   imports: [
     BrowserModule,
     KeycloakAngularModule,
-    LearningOutcomeViewModule
+    MaterialModule,
+    AppRoutingModule
   ],
   providers: [
     {

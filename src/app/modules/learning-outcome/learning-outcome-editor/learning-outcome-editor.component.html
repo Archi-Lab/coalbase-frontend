@@ -1,0 +1,20 @@
+<mat-card-title>{{learningOutcome.title}}</mat-card-title>
+<mat-card-content>
+  <br>
+  <mat-label><b>WAS&nbsp;</b></mat-label>
+  <mat-label>{{learningOutcome.skill.description}}</mat-label>
+  <mat-label>{{learningOutcome.skill.taxonomyLevel}}</mat-label>
+
+  <br>
+  <mat-label><b>WOMIT&nbsp;</b></mat-label>
+  <mat-label *ngFor="let tool of learningOutcome.toolKit">{{tool}}</mat-label>
+
+  <br>
+  <mat-label><b>WOZU</b></mat-label>
+  <mat-label>{{learningOutcome.purpose}}</mat-label>
+</mat-card-content>
+
+
+
+
+
