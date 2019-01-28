@@ -12,13 +12,15 @@ html, body {
 }
 
 body {
-  background: url('./assets/images/bg-grid.png') top left repeat;
-  background-color: lighten($coalbase-grey, 20%);
   margin: 0 0 0 0;
   height: 100%;
 }
 
 *:focus {
   outline: none;
+}
+
+.mat-card{
+  background: #ffffffdb;
 }
 
