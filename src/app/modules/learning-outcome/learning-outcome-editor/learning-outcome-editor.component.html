@@ -1,16 +1,16 @@
 <mat-card-title>Learning Outcome</mat-card-title>
-<mat-card-content>
-  <br>
+<mat-card-content class="learning-outcome-editor-content">
   <mat-label><strong>WAS&nbsp;</strong></mat-label>
-  <mat-label>{{learningOutcome.competence.action}}</mat-label>
-  <mat-label>{{learningOutcome.competence.taxonomyLevel}}</mat-label>
-
-  <br>
+  <div>
+    <mat-label>{{learningOutcome.competence.action}}</mat-label>
+    <mat-label>{{learningOutcome.competence.taxonomyLevel}}</mat-label>
+  </div>
   <mat-label><strong>WOMIT&nbsp;</strong></mat-label>
-  <mat-label *ngFor="let tool of learningOutcome.tools">{{tool}}</mat-label>
+  <div>
+    <mat-label *ngFor="let tool of learningOutcome.tools">{{tool}}</mat-label>
+  </div>
 
-  <br>
-  <mat-label><strong>WOZU</strong></mat-label>
+  <mat-label><strong>WOZU </strong></mat-label>
   <mat-label>{{learningOutcome.purpose}}</mat-label>
 </mat-card-content>
 
