@@ -18,6 +18,12 @@
   overflow-y: auto;
 }
 
+.learning-outcome-overview-item {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .learning-outcome-editor {
   width: 68.5%;
   height: 100%;

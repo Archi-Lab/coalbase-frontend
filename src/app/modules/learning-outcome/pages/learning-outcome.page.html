@@ -5,14 +5,17 @@
       <div *ngIf="learningOutcomes">
         <mat-action-list>
           <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
-                         class="learning-outcome-overview-item mat-option" [routerLink]="learningOutcome.id">
-            {{ learningOutcome.competence.action }}
+                         class="mat-option" [routerLink]="learningOutcome.id">
+            <div class="learning-outcome-overview-item">
+              {{ learningOutcome.competence.action }}
+            </div>
           </mat-list-item>
         </mat-action-list>
       </div>
     </mat-card-content>
   </mat-card>
-  <mat-card class="learning-outcome-editor">
+  <mat-card class=" learning-outcome-editor
+            ">
     <router-outlet></router-outlet>
   </mat-card>
 </div>
