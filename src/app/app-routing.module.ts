@@ -6,6 +6,14 @@ const appRoutes: Routes = [
   {
     path: 'learning-outcomes',
     loadChildren: './modules/learning-outcome/learning-outcome.module#LearningOutcomeModule'
+  },
+  {
+    path: 'imprint',
+    loadChildren: './modules/imprint/imprint.module#ImprintModule'
+  },
+  {
+    path: 'privacy',
+    loadChildren: './modules/privacy/privacy.module#PrivacyModule'
   }
 ];
 
