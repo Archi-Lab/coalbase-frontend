@@ -28,10 +28,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('CoalBase');
   });
 
-  it('should contain a mat-label with \'CoalBase Header\'', () => {
+  it('should contain a link to \'Learning Outcomes\'', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-label').textContent).toContain('CoalBase Header');
+    expect(compiled.querySelector('a').textContent).toContain('Learning Outcomes');
   });
 });
