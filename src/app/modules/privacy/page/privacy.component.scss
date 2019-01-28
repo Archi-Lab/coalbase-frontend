@@ -1,1 +1,11 @@
 @import '~src/assets/scss/coalbase-colors';
+
+.privacy-panel {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 1.5%;
+}
