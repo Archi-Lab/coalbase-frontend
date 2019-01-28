@@ -3,13 +3,16 @@
   <mat-label><strong>WAS&nbsp;</strong></mat-label>
   <div>
     <mat-label>{{learningOutcome.competence.action}}</mat-label>
+    <br>
     <mat-label>{{learningOutcome.competence.taxonomyLevel}}</mat-label>
   </div>
   <mat-label><strong>WOMIT&nbsp;</strong></mat-label>
   <div>
-    <mat-label *ngFor="let tool of learningOutcome.tools">{{tool}}</mat-label>
+    <div *ngFor="let tool of learningOutcome.tools">
+      <mat-label>{{tool}}</mat-label>
+      <br>
+    </div>
   </div>
-
   <mat-label><strong>WOZU </strong></mat-label>
   <mat-label>{{learningOutcome.purpose}}</mat-label>
 </mat-card-content>
