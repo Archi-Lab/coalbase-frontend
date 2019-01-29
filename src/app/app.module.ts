@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {LearningOutcomeViewModule} from "./modules/learning-outcome-view/learning-outcome-view.module";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./security/security.init";
+import {HttpClientModule} from "@angular/common/http"
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import {initializer} from "./security/security.init";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     KeycloakAngularModule,
     LearningOutcomeViewModule
   ],
