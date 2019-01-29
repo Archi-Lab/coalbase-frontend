@@ -1,0 +1,8 @@
+@import '~src/assets/scss/coalbase-colors';
+
+.learning-outcome-editor-content {
+  display: grid;
+  grid-template-columns: 10% auto;
+  grid-row-gap: 10px;
+}
+

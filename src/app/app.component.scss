@@ -1,0 +1,25 @@
+@import '../assets/scss/coalbase-colors';
+
+.header {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  background-color: $coalbase-grey;
+  color: white;
+}
+
+.content {
+  background: url('../assets/images/coalbase-background-2.svg') no-repeat center center fixed;
+  background-size: cover;
+  height: calc(100% - 100px);
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  background-color: $coalbase-grey;
+  color: white;
+}

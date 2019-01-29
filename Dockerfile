@@ -42,6 +42,7 @@ FROM nginx:1.13.9-alpine
 
 # copy artifact build from the 'build environment'
 COPY --from=builder /usr/src/app/dist/Coalbase-Frontend /usr/share/nginx/html
+COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 
 # expose port 80
 EXPOSE 80
