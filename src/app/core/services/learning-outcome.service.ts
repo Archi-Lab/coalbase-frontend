@@ -1,7 +1,9 @@
 import {Observable, of} from 'rxjs';
 import {LearningOutcome} from '../../shared/models/learning-outcome.model';
-import {AbstractService} from './abstract.service';
+
 import {HttpClient} from '@angular/common/http';
+import {AbstractService} from './abstract.service';
+import {Injectable} from '@angular/core';
 
 const learningOutcomes: LearningOutcome[] = [
   {
@@ -60,18 +62,22 @@ const learningOutcomes: LearningOutcome[] = [
   }
 ];
 
+@Injectable()
 export class LearningOutcomeService extends AbstractService<LearningOutcome[]> {
 
   constructor(private http: HttpClient) {
-    super('/learningOutcomes', []);
+    super('learningOutcomes', []);
   }
 
   protected initalizeResource(): void {
-    this.resource.next(learningOutcomes);
+    // TODO load all LearningOutcomes initial
+    //this.resource.next(learningOutcomes);
   }
 
   get learningOutcomes(): Observable<LearningOutcome[]> {
-    return this.resource.asObservable();
+    // TODO change coalbaseAPI to local
+    return this.http.get<LearningOutcome[]>(this.uri);
+    //return this.resource.asObservable();
   }
 
   public learningOutcome(identifier: string): Observable<LearningOutcome> {

@@ -13,6 +13,7 @@ export class LearningOutcomePage {
 
   constructor(private learningOutcomeService: LearningOutcomeService, private router: Router) {
     learningOutcomeService.learningOutcomes.subscribe(learningOutcomes => {
+      console.log(JSON.stringify(learningOutcomes));
       this.learningOutcomes = learningOutcomes;
     });
   }
