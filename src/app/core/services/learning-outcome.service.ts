@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {LearningOutcome} from '../../shared/models/learning-outcome.model';
+import {AbstractService} from './abstract.service';
+import {HttpClient} from '@angular/common/http';
 
 const learningOutcomes: LearningOutcome[] = [
   {
@@ -59,29 +60,27 @@ const learningOutcomes: LearningOutcome[] = [
   }
 ];
 
-@Injectable()
-export class LearningOutcomeService {
+export class LearningOutcomeService extends AbstractService<LearningOutcome[]> {
 
-  private _learningOutcomes: BehaviorSubject<LearningOutcome[]>;
-
-  constructor() {
-    this._learningOutcomes = new BehaviorSubject<LearningOutcome[]>([]);
-    this.initializeLearningOutcomes();
+  constructor(private http: HttpClient) {
+    super('/learningOutcomes', []);
   }
 
-  private initializeLearningOutcomes(): void {
-    this._learningOutcomes.next(learningOutcomes);
+  protected initalizeResource(): void {
+    this.resource.next(learningOutcomes);
   }
 
   get learningOutcomes(): Observable<LearningOutcome[]> {
-    return this._learningOutcomes.asObservable();
+    return this.resource.asObservable();
   }
 
   public learningOutcome(identifier: string): Observable<LearningOutcome> {
-    return of(this._learningOutcomes.getValue().filter(learningOutcome => learningOutcome.id === identifier)[0]);
+    return of(this.resource.getValue().filter(learningOutcome => learningOutcome.id === identifier)[0]);
   }
 
   get firstLearningOutcome(): Observable<LearningOutcome> {
-    return of(this._learningOutcomes.getValue()[0]);
+    return of(this.resource.getValue()[0]);
   }
+
+
 }

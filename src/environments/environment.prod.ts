@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  keyCloak: "https://login.coalbase.io/auth",
-  realm: "coalbase",
-  clientID: "coalbase"
-
+  keyCloak: 'https://login.coalbase.io/auth',
+  realm: 'coalbase',
+  clientID: 'coalbase',
+  coalbaseAPI: 'api.coalbase.io'
 };

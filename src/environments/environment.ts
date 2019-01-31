@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  keyCloak: "",
-  realm: "",
-  clientID: "",
+  keyCloak: '',
+  realm: '',
+  clientID: '',
+  coalbaseAPI: ''
 };
 
 /*
