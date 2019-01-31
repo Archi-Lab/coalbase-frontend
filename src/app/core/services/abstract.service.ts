@@ -14,6 +14,5 @@ export abstract class AbstractService<T> {
   }
 
   protected abstract initalizeResource(): void;
-  
 }
 

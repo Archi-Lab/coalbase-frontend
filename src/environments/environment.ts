@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  keyCloak: '',
-  realm: '',
-  clientID: '',
+  keyCloak: 'http://localhost:8090/auth',
+  realm: 'coalbase',
+  clientID: 'coalbase',
   coalbaseAPI: ''
 };
 
