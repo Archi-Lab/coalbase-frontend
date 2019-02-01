@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
 import {ActivatedRoute} from '@angular/router';
-import {LearningOutcomeService} from '../../../core/services/learning-outcome.service';
+import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 
 @Component({
   selector: 'app-learning-outcome-editor',

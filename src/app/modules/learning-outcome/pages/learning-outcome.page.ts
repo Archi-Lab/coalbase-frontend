@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {LearningOutcomeService} from '../../../core/services/learning-outcome.service';
+import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {Router} from '@angular/router';
 
 @Component({

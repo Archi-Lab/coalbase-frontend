@@ -1,4 +1,4 @@
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
 
 export abstract class AbstractService<T> {

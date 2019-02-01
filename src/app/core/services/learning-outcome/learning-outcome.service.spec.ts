@@ -1,9 +1,9 @@
 import {LearningOutcomeService} from './learning-outcome.service';
 import {getTestBed, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 
-describe('LearningOutcomeService', () => {
+describe('Service: Learning Outcome', () => {
   let service: LearningOutcomeService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
@@ -42,7 +42,6 @@ describe('LearningOutcomeService', () => {
     ];
 
     service.learningOutcomes.subscribe(learningoutcome => {
-      expect(learningoutcome.length).toBe(1);
       expect(learningoutcome).toEqual(dummyLearningOutcomes);
     });
 
