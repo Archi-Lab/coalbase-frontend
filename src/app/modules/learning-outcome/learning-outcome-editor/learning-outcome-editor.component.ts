@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
 import {ActivatedRoute} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 
@@ -9,7 +8,7 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
   styleUrls: ['./learning-outcome-editor.component.scss']
 })
 export class LearningOutcomeEditorComponent implements OnInit {
-  learningOutcome: LearningOutcome = {id: '', competence: {action: '', taxonomyLevel: ''}, tools: [], purpose: ''};
+  //learningOutcome: LearningOutcome = {};
 
   constructor(private route: ActivatedRoute, private learningOutcomeService: LearningOutcomeService) {
 
@@ -19,9 +18,9 @@ export class LearningOutcomeEditorComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const identifier = params.get('learningOutcome');
       if (identifier) {
-        this.learningOutcomeService.learningOutcome(identifier).subscribe(learningOutcome => this.learningOutcome = learningOutcome);
+        //this.learningOutcomeService.learningOutcome(identifier).subscribe(learningOutcome => this.learningOutcome = learningOutcome);
       } else {
-        this.learningOutcomeService.firstLearningOutcome.subscribe(learningOutcome => this.learningOutcome = learningOutcome);
+        //this.learningOutcomeService.firstLearningOutcome.subscribe(learningOutcome => this.learningOutcome = learningOutcome);
       }
     });
   }

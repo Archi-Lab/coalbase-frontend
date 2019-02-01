@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../shared/material.module';
 import {LearningOutcomePage} from './pages/learning-outcome.page';
-import {LearningOutcomeService} from '../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcomeRoutingModule} from './learning-outcome-routing.module';
 import {LearningOutcomeEditorComponent} from './learning-outcome-editor/learning-outcome-editor.component';
+import {LearningOutcomeService} from '../../core/services/learning-outcome/learning-outcome.service';
 
 @NgModule({
   imports: [

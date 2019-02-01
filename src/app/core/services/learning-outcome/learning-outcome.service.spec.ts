@@ -1,52 +1,152 @@
+import {TestBed} from '@angular/core/testing';
+
 import {LearningOutcomeService} from './learning-outcome.service';
-import {getTestBed, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {ExternalConfigurationService} from '../external-configuration.service';
+import {AngularHalModule} from 'angular4-hal';
 import {environment} from '../../../../environments/environment';
+import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
 
 describe('Service: Learning Outcome', () => {
   let service: LearningOutcomeService;
-  let injector: TestBed;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [LearningOutcomeService]
+      imports: [
+        HttpClientTestingModule,
+        AngularHalModule.forRoot()
+      ],
+      providers: [
+        LearningOutcomeService,
+        {
+          provide: 'ExternalConfigurationService',
+          useClass: ExternalConfigurationService
+        },
+      ]
     });
-    injector = getTestBed();
-    service = injector.get(LearningOutcomeService);
-    httpMock = injector.get(HttpTestingController);
+    service = TestBed.get(LearningOutcomeService);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   afterEach(() => {
     httpMock.verify();
   });
-  it('Correct Resource address', () => {
-    expect(service.uri).toBe(environment.coalbaseAPI + '/learningOutcomes');
+
+  it('Service should be created', () => {
+    expect(service).toBeTruthy();
   });
-
   it('Get Learning Outcomes', () => {
-    const dummyLearningOutcomes = [
-      {
-        id: '3b5957ea-3643-441d-bc96-a3d8f2b6e712',
-        competence: {
-          action: 'Die Studierenden können Marketingentscheidungen informationsgestützt treffen',
-          taxonomyLevel: 'SYNTHESIS'
+    const dummyLearningOutcomes = {
+      '_embedded': {
+        'learningOutcomes': [
+          {
+            'competence': {
+              'action': 'action1',
+              'taxonomyLevel': 'ANALYSIS'
+            },
+            'tools': [
+              {
+                'value': 'tool1'
+              }
+            ],
+            'purpose': {
+              'value': 'purpose1'
+            },
+            '_links': {
+              'self': {
+                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+              },
+              'learningOutcome': {
+                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+              }
+            }
+          },
+          {
+            'competence': {
+              'action': 'action1',
+              'taxonomyLevel': 'ANALYSIS'
+            },
+            'tools': [
+              {
+                'value': 'tool1'
+              }
+            ],
+            'purpose': {
+              'value': 'purpose1'
+            },
+            '_links': {
+              'self': {
+                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+              },
+              'learningOutcome': {
+                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+              }
+            }
+          }
+        ]
+      },
+      '_links': {
+        'self': {
+          'href': 'http://localhost:8080/learningOutcomes'
         },
-        tools: [
-          'das Makro- und Mikroumfeld des relevanten Marktes so wie das eigenen Unternehmen analysieren',
-          'Konsequenzen für die verschiedenen Bereiche der Marketingpolitik entwerfen'
-        ],
-        purpose: 'Produkte, Preise, Kommunikation und den Vertrieb bewusst marktorientiert zu gestalten'
+        'profile': {
+          'href': 'http://localhost:8080/profile/learningOutcomes'
+        }
       }
+    };
+    const outputLearningOutcomes = [
+      new LearningOutcome(
+        {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+        [{value: 'tool1'}],
+        {value: 'purpose1'},
+        {
+          self: {
+            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          },
+          learningOutcome: {
+            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          }
+        }
+      ),
+      new LearningOutcome(
+        {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+        [{value: 'tool1'}],
+        {value: 'purpose1'},
+        {
+          self: {
+            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          },
+          learningOutcome: {
+            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          }
+        }
+      )
     ];
+    service.getAll().subscribe((learningOutcomes: LearningOutcome[]) => {
+        expect(learningOutcomes.length).toBe(2);
+        expect(learningOutcomes).toEqual(outputLearningOutcomes);
+      }
+    );
 
-    service.learningOutcomes.subscribe(learningoutcome => {
-      expect(learningoutcome).toEqual(dummyLearningOutcomes);
-    });
-
-    const req = httpMock.expectOne(`${service.uri}`);
+    const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes'}`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyLearningOutcomes);
   });
-});
+  it('Post Learning Outcome', () => {
+    const dummyLearningOutcome: LearningOutcome = new LearningOutcome(
+      {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'}
+    );
+    service.create(dummyLearningOutcome).subscribe((data: any) => {
+      expect(data).toBe(dummyLearningOutcome);
+    });
+    const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes'}`);
+    expect(req.request.method).toBe('POST');
+    req.flush(dummyLearningOutcome);
+  });
+  
+
+})
+;
