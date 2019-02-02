@@ -18,7 +18,7 @@ export class LearningOutcomePage implements OnInit {
   ngOnInit(): void {
     console.log(environment.coalbaseAPI);
     this.learningOutcomeService.getAll().subscribe((learningOutcomes: LearningOutcome[]) => {
-        console.log(JSON.stringify(learningOutcomes));
+        this.learningOutcomes = learningOutcomes;
       }
     );
   }

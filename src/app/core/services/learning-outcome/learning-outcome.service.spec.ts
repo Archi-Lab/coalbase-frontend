@@ -37,7 +37,7 @@ describe('Service: Learning Outcome', () => {
     expect(service).toBeTruthy();
   });
   it('Get Learning Outcomes', () => {
-    const dummyLearningOutcomes = {
+    const serverResponse = {
       '_embedded': {
         'learningOutcomes': [
           {
@@ -95,7 +95,7 @@ describe('Service: Learning Outcome', () => {
         }
       }
     };
-    const outputLearningOutcomes = [
+    const serviceExpectedReturnValue = [
       new LearningOutcome(
         {action: 'action1', taxonomyLevel: 'ANALYSIS'},
         [{value: 'tool1'}],
@@ -125,13 +125,13 @@ describe('Service: Learning Outcome', () => {
     ];
     service.getAll().subscribe((learningOutcomes: LearningOutcome[]) => {
         expect(learningOutcomes.length).toBe(2);
-        expect(learningOutcomes).toEqual(outputLearningOutcomes);
+        expect(learningOutcomes).toEqual(serviceExpectedReturnValue);
       }
     );
 
     const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes'}`);
     expect(req.request.method).toBe('GET');
-    req.flush(dummyLearningOutcomes);
+    req.flush(serverResponse);
   });
   it('Post Learning Outcome', () => {
     const dummyLearningOutcome: LearningOutcome = new LearningOutcome(
@@ -146,7 +146,7 @@ describe('Service: Learning Outcome', () => {
     expect(req.request.method).toBe('POST');
     req.flush(dummyLearningOutcome);
   });
-  
+
 
 })
 ;

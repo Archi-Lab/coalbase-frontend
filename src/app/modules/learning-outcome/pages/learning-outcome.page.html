@@ -1,11 +1,12 @@
 <div class="learning-outcome-page">
-  <!--<mat-card class="learning-outcome-overview">
+  <mat-card class="learning-outcome-overview">
     <mat-card-title>Learning Outcomes</mat-card-title>
     <mat-card-content>
       <div *ngIf="learningOutcomes">
         <mat-action-list>
+          <!-- TODO RouterLink should be identifier of Learning Outcome -->
           <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
-                         class="mat-option" [routerLink]="learningOutcome.id">
+                         class="mat-option" [routerLink]="learningOutcome.competence.action">
             <div class="learning-outcome-overview-item">
               {{ learningOutcome.competence.action }}
             </div>
@@ -14,10 +15,9 @@
       </div>
     </mat-card-content>
   </mat-card>
-  <mat-card class=" learning-outcome-editor
-            ">
+  <mat-card class="learning-outcome-editor">
     <router-outlet></router-outlet>
-  </mat-card>-->
+  </mat-card>
 </div>
 
 
