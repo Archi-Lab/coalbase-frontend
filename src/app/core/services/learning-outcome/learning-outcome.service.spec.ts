@@ -36,7 +36,7 @@ describe('Service: Learning Outcome', () => {
   it('Service should be created', () => {
     expect(service).toBeTruthy();
   });
-  it('Get Learning Outcomes', () => {
+  it('Successful Get Learning Outcomes', () => {
     const serverResponse = {
       '_embedded': {
         'learningOutcomes': [
@@ -55,10 +55,10 @@ describe('Service: Learning Outcome', () => {
             },
             '_links': {
               'self': {
-                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+                'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
               },
               'learningOutcome': {
-                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+                'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
               }
             }
           },
@@ -77,10 +77,10 @@ describe('Service: Learning Outcome', () => {
             },
             '_links': {
               'self': {
-                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+                'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
               },
               'learningOutcome': {
-                'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+                'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
               }
             }
           }
@@ -88,10 +88,10 @@ describe('Service: Learning Outcome', () => {
       },
       '_links': {
         'self': {
-          'href': 'http://localhost:8080/learningOutcomes'
+          'href': 'http://api.coalbase.io/learningOutcomes'
         },
         'profile': {
-          'href': 'http://localhost:8080/profile/learningOutcomes'
+          'href': 'http://api.coalbase.io/profile/learningOutcomes'
         }
       }
     };
@@ -102,10 +102,10 @@ describe('Service: Learning Outcome', () => {
         {value: 'purpose1'},
         {
           self: {
-            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+            href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
           },
           learningOutcome: {
-            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+            href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
           }
         }
       ),
@@ -115,10 +115,10 @@ describe('Service: Learning Outcome', () => {
         {value: 'purpose1'},
         {
           self: {
-            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+            href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
           },
           learningOutcome: {
-            href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+            href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
           }
         }
       )
@@ -133,7 +133,7 @@ describe('Service: Learning Outcome', () => {
     expect(req.request.method).toBe('GET');
     req.flush(serverResponse);
   });
-  it('Post Learning Outcome', () => {
+  it('Successful Post Learning Outcome', () => {
     const serverResponse = {
       'competence': {
         'action': 'action1',
@@ -149,27 +149,128 @@ describe('Service: Learning Outcome', () => {
       },
       '_links': {
         'self': {
-          'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
         },
         'learningOutcome': {
-          'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
         }
       }
     };
+    const servicePostValue: LearningOutcome = new LearningOutcome(
+      {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'}
+    );
 
     const serviceExpectedReturnValue: LearningOutcome = new LearningOutcome(
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
       [{value: 'tool1'}],
       {value: 'purpose1'}
     );
-    service.create(serviceExpectedReturnValue).subscribe((data: any) => {
-      expect(data).toBe(serviceExpectedReturnValue);
+    service.create(servicePostValue).subscribe((response: LearningOutcome | any) => {
+      // Compare all values as the base objects are not equal (response has links and root/proxy url)
+      expect(response.purpose).toEqual(serviceExpectedReturnValue.purpose);
+      expect(response.tools).toEqual(serviceExpectedReturnValue.tools);
+      expect(response.competence).toEqual(serviceExpectedReturnValue.competence);
+      // Look if the Links exists
+      expect(response._links).toEqual({
+          'self': {
+            'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          },
+          'learningOutcome': {
+            'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+          }
+        }
+      );
     });
     const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes'}`);
     expect(req.request.method).toBe('POST');
     req.flush(serverResponse);
   });
+  it('Successful Put Learning Outcome', () => {
+    const serverResponse = {
+      'competence': {
+        'action': 'action1',
+        'taxonomyLevel': 'ANALYSIS'
+      },
+      'tools': [
+        {
+          'value': 'tool1'
+        }
+      ],
+      'purpose': {
+        'value': 'purpose1'
+      },
+      '_links': {
+        'self': {
+          'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        },
+        'learningOutcome': {
+          'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        }
+      }
+    };
+    const servicePutValue: LearningOutcome = new LearningOutcome(
+      {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'}
+    );
+    servicePutValue._links = {
+      'self': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      },
+      'learningOutcome': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      }
+    };
 
 
+    const serviceExpectedReturnValue: LearningOutcome = new LearningOutcome(
+      {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'}
+    );
+    serviceExpectedReturnValue._links = {
+      'self': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      },
+      'learningOutcome': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      }
+    };
+    serviceExpectedReturnValue.rootUrl = environment.coalbaseAPI;
+    serviceExpectedReturnValue.proxyUrl = environment.coalbaseAPI;
+
+    service.update(servicePutValue).subscribe((response: LearningOutcome | any) => {
+      expect(response).toEqual(serviceExpectedReturnValue);
+    });
+
+    const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b/'}`);
+    expect(req.request.method).toBe('PUT');
+    req.flush(serverResponse);
+  });
+  it('Successful Delete Learning Outcome', () => {
+    const serviceDeleteValue: LearningOutcome = new LearningOutcome(
+      {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'}
+    );
+    serviceDeleteValue._links = {
+      'self': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      },
+      'learningOutcome': {
+        'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      }
+    };
+
+    service.delete(serviceDeleteValue).subscribe((response: any) => {
+      expect(response).toEqual('');
+    });
+
+    const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b/'}`);
+    expect(req.request.method).toBe('DELETE');
+    req.flush('');
+  });
 })
 ;
