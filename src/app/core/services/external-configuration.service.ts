@@ -7,12 +7,10 @@ import {environment} from '../../../environments/environment';
 export class ExternalConfigurationService implements ExternalConfigurationHandlerInterface {
 
   getProxyUri(): string {
-    console.log('get ProxyUri: ' + environment.coalbaseAPI);
     return environment.coalbaseAPI;
   }
 
   getRootUri(): string {
-    console.log('get RootUri: ' + environment.coalbaseAPI);
     return environment.coalbaseAPI;
   }
 
