@@ -134,17 +134,40 @@ describe('Service: Learning Outcome', () => {
     req.flush(serverResponse);
   });
   it('Post Learning Outcome', () => {
-    const dummyLearningOutcome: LearningOutcome = new LearningOutcome(
+    const serverResponse = {
+      'competence': {
+        'action': 'action1',
+        'taxonomyLevel': 'ANALYSIS'
+      },
+      'tools': [
+        {
+          'value': 'tool1'
+        }
+      ],
+      'purpose': {
+        'value': 'purpose1'
+      },
+      '_links': {
+        'self': {
+          'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        },
+        'learningOutcome': {
+          'href': 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        }
+      }
+    };
+
+    const serviceExpectedReturnValue: LearningOutcome = new LearningOutcome(
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
       [{value: 'tool1'}],
       {value: 'purpose1'}
     );
-    service.create(dummyLearningOutcome).subscribe((data: any) => {
-      expect(data).toBe(dummyLearningOutcome);
+    service.create(serviceExpectedReturnValue).subscribe((data: any) => {
+      expect(data).toBe(serviceExpectedReturnValue);
     });
     const req = httpMock.expectOne(`${environment.coalbaseAPI + 'learningOutcomes'}`);
     expect(req.request.method).toBe('POST');
-    req.flush(dummyLearningOutcome);
+    req.flush(serverResponse);
   });
 
 
