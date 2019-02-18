@@ -6,6 +6,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
   return (): Promise<any> => {
     return new Promise(async (resolve, reject) => {
       try {
+        /*
         await keycloak.init({
           config: {
             url: environment.keyCloak,
@@ -19,6 +20,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
           },
           bearerExcludedUrls: []
         });
+        */
         resolve();
       } catch (error) {
         reject(error);

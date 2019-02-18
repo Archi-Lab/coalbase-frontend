@@ -34,7 +34,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
       if (identifier) {
         this.learningOutcomeService.get(identifier).subscribe(learingOutcome => this.learningOutcome = learingOutcome);
       } else {
-        throw Error("No Identifier!");
+        this.learningOutcomeService.getFirstLearningOutcome().subscribe(firstLearningOutcome => this.learningOutcome = firstLearningOutcome);
       }
     });
   }
