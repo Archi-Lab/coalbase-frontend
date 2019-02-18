@@ -9,16 +9,11 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
     super(LearningOutcome, 'learningOutcomes', injector);
   }
 
-  getFirstLearningOutcome(): Observable<LearningOutcome> {
-
+  public getFirstLearningOutcome(): Observable<LearningOutcome> {
     let firstLearningOutcome: LearningOutcome = new LearningOutcome();
-
     this.first().subscribe(firstLearningOutcomes => {
       firstLearningOutcome = firstLearningOutcomes[0];
     });
-
     return of(firstLearningOutcome);
-
   }
-
 }

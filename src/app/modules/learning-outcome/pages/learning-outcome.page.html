@@ -6,7 +6,7 @@
         <mat-action-list>
           <!-- TODO RouterLink should be identifier of Learning Outcome -->
           <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
-                         class="mat-option" [routerLink]="['/learning-outcomes', getIdFromURI(learningOutcome)]">
+                         class="mat-option" [routerLink]="['/learning-outcomes', learningOutcome.getIdFromUri()]">
             <div class="learning-outcome-overview-item">
               {{ learningOutcome.competence.action }}
             </div>

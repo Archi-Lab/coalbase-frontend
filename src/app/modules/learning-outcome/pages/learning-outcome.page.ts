@@ -46,9 +46,4 @@ export class LearningOutcomePage implements OnInit {
     );
   }
 
-  public getIdFromURI(learningOutcome: LearningOutcome): string {
-    const selfUri: string = learningOutcome._links.self.href;
-    return selfUri.substring(selfUri.lastIndexOf("/") + 1, selfUri.length).trim();
-  }
-
 }
