@@ -3,5 +3,5 @@ export const environment = {
   keyCloak: 'https://login.coalbase.io/auth',
   realm: 'coalbase',
   clientID: 'coalbase',
-  coalbaseAPI: 'api.coalbase.io'
+  coalbaseAPI: 'https://api.coalbase.io'
 };
