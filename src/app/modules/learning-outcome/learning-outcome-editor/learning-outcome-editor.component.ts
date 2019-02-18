@@ -88,6 +88,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
         });
       } else {
         this.learningOutcomeService.getFirstLearningOutcome().subscribe(firstLearningOutcome => {
+          console.log(`${JSON.stringify(firstLearningOutcome)}`);
           this.learningOutcome = firstLearningOutcome;
           this.initializeForm();
         });
