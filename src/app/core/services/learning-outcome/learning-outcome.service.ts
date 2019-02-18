@@ -12,7 +12,6 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
   public getFirstLearningOutcome(): Observable<LearningOutcome> {
     let firstLearningOutcome: LearningOutcome = new LearningOutcome();
     this.page(0).subscribe(firstLearningOutcomes => {
-      console.log(`First: ${firstLearningOutcomes}`);
       firstLearningOutcome = firstLearningOutcomes[0];
     });
     return of(firstLearningOutcome);
