@@ -10,9 +10,8 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./learning-outcome-editor.component.scss']
 })
 export class LearningOutcomeEditorComponent implements OnInit {
-  // TODO remove example Learning Outcome
   learningOutcome: LearningOutcome = new LearningOutcome();
-  private readonly taxonomyLevels = [
+  readonly taxonomyLevels = [
     {
       backend: "KNOWLEDGE",
       name: "Wissen",
