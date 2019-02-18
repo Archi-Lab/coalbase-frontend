@@ -9,6 +9,8 @@ import {MaterialModule} from './shared/material.module';
 import {AppRoutingModule} from './app-routing.module';
 import {ExternalConfigurationService} from './core/services/external-configuration.service';
 import {AngularHalModule} from 'angular4-hal';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import {AngularHalModule} from 'angular4-hal';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     KeycloakAngularModule,
     MaterialModule,

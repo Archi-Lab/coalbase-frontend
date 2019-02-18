@@ -6,3 +6,34 @@
   grid-row-gap: 10px;
 }
 
+.learning-outcome-editor-label {
+  margin: 1.125em auto 0 auto;
+}
+
+.tools-form-array {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+}
+
+.tools-form-control {
+  width: 70%;
+  margin-right: 5%;
+}
+
+.purpose-form {
+  width: 100%;
+}
+
+.competence-form-group {
+  width: 100%;
+}
+
+.competence-form-group-action {
+  width: 70%;
+  margin-right: 5%;
+}
+
+.competence-form-group-taxonomy {
+  width: 25%;
+}
