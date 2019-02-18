@@ -30,12 +30,11 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const identifier = params.get('learningOutcome');
-      // TODO get Learning Outcome by identifier
+      const identifier = params.get('learningOutcomeIdentifier');
       if (identifier) {
-        //this.learningOutcomeService.learningOutcome(identifier).subscribe(learningOutcome => this.learningOutcome = learningOutcome);
+        this.learningOutcomeService.get(identifier).subscribe(learingOutcome => this.learningOutcome = learingOutcome);
       } else {
-        //this.learningOutcomeService.firstLearningOutcome.subscribe(learningOutcome => this.learningOutcome = learningOutcome);
+        throw Error("No Identifier!");
       }
     });
   }

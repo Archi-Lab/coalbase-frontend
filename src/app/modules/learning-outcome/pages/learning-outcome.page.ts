@@ -9,7 +9,32 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
   styleUrls: ['./learning-outcome.page.scss']
 })
 export class LearningOutcomePage implements OnInit {
-  learningOutcomes: LearningOutcome[] = [];
+  learningOutcomes: LearningOutcome[] = [new LearningOutcome(
+    {action: 'action1', taxonomyLevel: 'ANALYSIS'},
+    [{value: 'tool1'}],
+    {value: 'purpose1'},
+    {
+      self: {
+        href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      },
+      learningOutcome: {
+        href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+      }
+    }
+  ),
+    new LearningOutcome(
+      {action: 'action2', taxonomyLevel: 'ANALYSIS'},
+      [{value: 'tool1'}],
+      {value: 'purpose1'},
+      {
+        self: {
+          href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        },
+        learningOutcome: {
+          href: 'http://localhost:8080/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
+        }
+      }
+    ),];
 
   constructor(private learningOutcomeService: LearningOutcomeService, private router: Router) {
   }
@@ -20,4 +45,10 @@ export class LearningOutcomePage implements OnInit {
       }
     );
   }
+
+  public getIdFromURI(learningOutcome: LearningOutcome): string {
+    const selfUri: string = learningOutcome._links.self.href;
+    return selfUri.substring(selfUri.lastIndexOf("/") + 1, selfUri.length).trim();
+  }
+
 }

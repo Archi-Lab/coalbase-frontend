@@ -9,7 +9,7 @@ const LearningOutcomeRoutes: Routes = [
     component: LearningOutcomePage,
     children: [
       {path: '', component: LearningOutcomeEditorComponent},
-      {path: ':learningOutcome', component: LearningOutcomeEditorComponent},
+      {path: ':learningOutcomeIdentifier', component: LearningOutcomeEditorComponent},
     ],
   }
 ];
