@@ -65,7 +65,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     }
   ];
 
-  private learningOutcomeFormGroup = new FormGroup({
+  learningOutcomeFormGroup = new FormGroup({
     competence: new FormGroup({
       action: new FormControl(''),
       taxonomyLevel: new FormControl('')
