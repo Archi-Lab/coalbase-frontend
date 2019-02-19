@@ -23,48 +23,59 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
   }
 
   delete(entity: LearningOutcome): Observable<Object> {
-    const result = super.delete(entity);
-    this.fetchLearningOutcomes();
-    return result;
+    this.deleteLearningOutcomeFromState(entity);
+    return super.delete(entity);
   }
 
   create(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
-    const result = super.create(entity);
-    this.fetchLearningOutcomes();
-    return result;
+    return from(new Promise(resolve => {
+      super.create(entity).subscribe(learningOutcome => {
+        this.createLearningOutcomeInState(learningOutcome as LearningOutcome);
+        resolve(learningOutcome);
+      });
+    }));
   }
 
   update(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
-    const result = super.update(entity);
-    this.fetchLearningOutcomes();
-    return result;
+    this.updateLearningOutcomeInState(entity);
+    return super.update(entity);
   }
 
   patch(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
-    const result = super.patch(entity);
-    this.fetchLearningOutcomes();
-    return result;
+    this.updateLearningOutcomeInState(entity);
+    return super.patch(entity);
   }
 
   public get learningOutcomes(): Observable<LearningOutcome[]> {
     return this._learningOutcomes.asObservable();
   }
 
-  private fetchLearningOutcomes() {
+  private fetchLearningOutcomes(): void {
     super.getAll().subscribe(learningOutcomes => {
-      const oldState: LearningOutcome[] = this._learningOutcomes.value;
-      const newState: LearningOutcome[] = [];
-
-      learningOutcomes.forEach(learningOutcome => {
-
-        const condition = oldState.filter(oldLearningOutcome => oldLearningOutcome.getIdFromUri() === learningOutcome.getIdFromUri());
-        if (condition == null || condition.length === 0) {
-          newState.push(learningOutcome);
-        }
-        console.log(newState);
-      });
-      this._learningOutcomes.next(oldState.concat(newState));
+      this._learningOutcomes.next(learningOutcomes);
     });
+  }
+
+  private deleteLearningOutcomeFromState(learningOutcome: LearningOutcome): void {
+    let state: LearningOutcome[] = this._learningOutcomes.value;
+    state = state.filter(stateLearningOutcome => stateLearningOutcome.getIdFromUri() !== learningOutcome.getIdFromUri());
+    this._learningOutcomes.next(state);
+  }
+
+  private updateLearningOutcomeInState(learningOutcome: LearningOutcome): void {
+    const state: LearningOutcome[] = this._learningOutcomes.value;
+    state.forEach((stateLearningOutcome, index) => {
+      if (stateLearningOutcome.getIdFromUri() === learningOutcome.getIdFromUri()) {
+        state[index] = learningOutcome;
+      }
+    });
+    this._learningOutcomes.next(state);
+  }
+
+  private createLearningOutcomeInState(learningOutcome: LearningOutcome): void {
+    const state: LearningOutcome[] = this._learningOutcomes.value;
+    state.push(learningOutcome);
+    this._learningOutcomes.next(state);
   }
 
 }
