@@ -11,6 +11,7 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
 
   constructor(injector: Injector) {
     super(LearningOutcome, 'learningOutcomes', injector);
+    this.fetchLearningOutcomes();
   }
 
   public getFirstLearningOutcome(): Observable<LearningOutcome> {
