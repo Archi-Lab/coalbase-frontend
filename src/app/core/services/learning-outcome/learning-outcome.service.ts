@@ -53,8 +53,15 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
   private fetchLearningOutcomes() {
     super.getAll().subscribe(learningOutcomes => {
       const oldState: LearningOutcome[] = this._learningOutcomes.value;
-      const newLearningOutcomes: LearningOutcome[] = learningOutcomes.filter(learningOutcome => !oldState.includes(learningOutcome));
-      this._learningOutcomes.next(oldState.concat(newLearningOutcomes));
+      const newState: LearningOutcome[] = [];
+
+      learningOutcomes.forEach(learningOutcome => {
+        if (oldState.filter(oldLearningOutcome => oldLearningOutcome.getIdFromUri() === learningOutcome.getIdFromUri()) == null) {
+          newState.push(learningOutcome);
+        }
+      });
+
+      this._learningOutcomes.next(oldState.concat(newState));
     });
   }
 
