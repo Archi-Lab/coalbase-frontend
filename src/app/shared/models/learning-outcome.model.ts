@@ -18,7 +18,6 @@ export class LearningOutcome extends Resource {
 
   public getIdFromUri(): string {
     const selfUri: string = this._links.self.href;
-    return selfUri.substring(selfUri.lastIndexOf("/") + 1, selfUri.length).trim();
+    return selfUri.substring(selfUri.lastIndexOf('/') + 1, selfUri.length).trim();
   }
-
 }
