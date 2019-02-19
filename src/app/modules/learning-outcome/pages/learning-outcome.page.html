@@ -4,7 +4,6 @@
     <mat-card-content>
       <div *ngIf="learningOutcomes">
         <mat-action-list>
-          <!-- TODO RouterLink should be identifier of Learning Outcome -->
           <mat-list-item *ngFor="let learningOutcome of learningOutcomes"
                          class="mat-option" [routerLink]="['/learning-outcomes', learningOutcome.getIdFromUri()]">
             <div class="learning-outcome-overview-item">
