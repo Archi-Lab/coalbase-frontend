@@ -13,7 +13,7 @@ export class LearningOutcomePage {
   learningOutcomes: Observable<LearningOutcome[]>;
 
   constructor(private learningOutcomeService: LearningOutcomeService, private router: Router) {
-    this.learningOutcomes = this.learningOutcomeService.getAll();
+    this.learningOutcomes = this.learningOutcomeService.learningOutcomes;
   }
 
 }

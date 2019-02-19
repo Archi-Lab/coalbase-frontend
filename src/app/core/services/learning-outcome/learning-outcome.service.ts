@@ -1,11 +1,14 @@
 import {Injectable, Injector} from '@angular/core';
 import {RestService} from 'angular4-hal';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {from, Observable} from "rxjs";
+import {BehaviorSubject, from, Observable} from "rxjs";
 import {reject} from "q";
 
 @Injectable()
 export class LearningOutcomeService extends RestService<LearningOutcome> {
+
+  private _learningOutcomes: BehaviorSubject<LearningOutcome[]> = new BehaviorSubject<LearningOutcome[]>([]);
+
   constructor(injector: Injector) {
     super(LearningOutcome, 'learningOutcomes', injector);
   }
@@ -17,4 +20,39 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
       }, error => reject(error));
     }));
   }
+
+  delete(entity: LearningOutcome): Observable<Object> {
+    const result = super.delete(entity);
+    this.fetchLearningOutcomes();
+    return result;
+  }
+
+  create(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
+    const result = super.create(entity);
+    this.fetchLearningOutcomes();
+    return result;
+  }
+
+  update(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
+    const result = super.update(entity);
+    this.fetchLearningOutcomes();
+    return result;
+  }
+
+  patch(entity: LearningOutcome): Observable<Observable<never> | LearningOutcome> {
+    const result = super.patch(entity);
+    this.fetchLearningOutcomes();
+    return result;
+  }
+
+  public get learningOutcomes(): Observable<LearningOutcome[]> {
+    return this._learningOutcomes.asObservable();
+  }
+
+  private fetchLearningOutcomes() {
+    super.getAll().subscribe(learningOutcomes => {
+      this._learningOutcomes.next(learningOutcomes);
+    });
+  }
+
 }
