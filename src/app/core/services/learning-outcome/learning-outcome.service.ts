@@ -1,7 +1,8 @@
 import {Injectable, Injector} from '@angular/core';
 import {RestService} from 'angular4-hal';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {Observable, of} from "rxjs";
+import {from, Observable} from "rxjs";
+import {reject} from "q";
 
 @Injectable()
 export class LearningOutcomeService extends RestService<LearningOutcome> {
@@ -10,10 +11,10 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
   }
 
   public getFirstLearningOutcome(): Observable<LearningOutcome> {
-    let firstLearningOutcome: LearningOutcome = new LearningOutcome();
-    this.getAll().subscribe(firstLearningOutcomes => {
-      firstLearningOutcome = firstLearningOutcomes[0];
-    });
-    return of(firstLearningOutcome);
+    return from(new Promise(resolve => {
+      this.getAll().subscribe(value => {
+        resolve(value[0]);
+      }, error => reject(error));
+    }));
   }
 }

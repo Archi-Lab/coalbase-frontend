@@ -80,6 +80,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
+
       const identifier = params.get('learningOutcomeIdentifier');
       if (identifier) {
         this.learningOutcomeService.get(identifier).subscribe(learingOutcome => {
@@ -100,6 +101,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     this.actionForm.setValue(this.learningOutcome.competence.action);
     this.taxonomyLevelForm.setValue(this.learningOutcome.competence.taxonomyLevel);
 
+    this.toolsFormArray.setValue([]);
     if (this.learningOutcome.tools != null && this.learningOutcome.tools.length > 0) {
       this.learningOutcome.tools.forEach(tool => this.addTool(tool.value));
     } else {
