@@ -30,7 +30,7 @@
           <textarea matInput placeholder="Ein Werkzeug"
                     [formControlName]="toolFormIndex"></textarea>
       </mat-form-field>
-      <button mat-mini-fab (click)="removeTool(toolsFormIndex)"><mat-icon aria-label="Button um ein Werkzeug zu löschen">delete</mat-icon></button>
+      <button mat-mini-fab color="primary" (click)="removeTool(toolsFormIndex)"><mat-icon aria-label="Button um ein Werkzeug zu löschen">delete</mat-icon></button>
     </div>
 
     <button mat-mini-fab (click)="addTool('')">
@@ -45,6 +45,16 @@
               placeholder="Zweck des Lernziels"
               [formControl]="purposeForm"></textarea>
   </mat-form-field>
+
+  <div class="learning-outcome-editor-button-group">
+    <button mat-raised-button color="accent" (click)="saveLearningOutcome()">
+      Speichern
+    </button>
+    <button mat-raised-button color="primary" (click)="deleteLearningOutcome()">
+      Löschen
+    </button>
+  </div>
+
 </mat-card-content>
 
 

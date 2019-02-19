@@ -37,3 +37,14 @@
 .competence-form-group-taxonomy {
   width: 25%;
 }
+
+.learning-outcome-editor-button-group {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  button {
+    margin: 5px;
+  }
+}

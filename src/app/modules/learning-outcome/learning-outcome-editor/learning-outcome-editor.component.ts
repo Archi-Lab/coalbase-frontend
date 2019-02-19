@@ -87,10 +87,6 @@ export class LearningOutcomeEditorComponent implements OnInit {
           {value: ''},
         );
         this.initializeForm();
-        // TODO move into post LO method
-        /*this.learningOutcomeService.create(this.learningOutcomes[0]).subscribe((learningOutcome) => {
-          console.log(learningOutcome);
-        });*/
       } else if (identifier) {
         this.learningOutcomeService.get(identifier).subscribe(learingOutcome => {
           this.learningOutcome = learingOutcome;
@@ -119,36 +115,63 @@ export class LearningOutcomeEditorComponent implements OnInit {
     this.purposeForm.setValue(this.learningOutcome.purpose.value);
   }
 
+  public saveLearningOutcome(): void {
+    this.learningOutcome.competence.action = this.actionForm.value;
+    this.learningOutcome.competence.taxonomyLevel = this.taxonomyLevelForm.value;
 
-  addTool(value: string): void {
+    /*clear everything in the previous tool array*/
+    this.learningOutcome.tools = [];
+    for (let toolForm of this.toolsFormArray.controls) {
+      this.learningOutcome.tools.push({value: toolForm.value});
+    }
+
+    this.learningOutcome.purpose = this.purposeForm.value;
+
+    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
+      this.learningOutcomeService.update(this.learningOutcome);
+    } else {
+      this.learningOutcomeService.create(this.learningOutcome);
+    }
+
+  }
+
+  public deleteLearningOutcome(): void {
+    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
+      this.learningOutcomeService.delete(this.learningOutcome);
+    } else {
+      console.log("not implemented yet!")
+    }
+  }
+
+  public addTool(value: string): void {
     this.toolsFormArray.push(this.fb.control(value));
   }
 
-  removeTool(toolsFormIndex: number): void {
+  public removeTool(toolsFormIndex: number): void {
     this.toolsFormArray.removeAt(toolsFormIndex);
   }
 
-  clearToolsFormArray(): void {
+  private clearToolsFormArray(): void {
     this.toolsFormArray.controls.forEach((value, index) => this.removeTool(index));
   }
 
-  get toolsFormArray(): FormArray {
+  public get toolsFormArray(): FormArray {
     return this.learningOutcomeFormGroup.get('tools') as FormArray;
   }
 
-  get competenceFormGroup(): FormGroup {
+  public get competenceFormGroup(): FormGroup {
     return this.learningOutcomeFormGroup.get('competence') as FormGroup;
   }
 
-  get actionForm(): FormControl {
+  public get actionForm(): FormControl {
     return this.competenceFormGroup.get('action') as FormControl;
   }
 
-  get taxonomyLevelForm(): FormControl {
+  public get taxonomyLevelForm(): FormControl {
     return this.competenceFormGroup.get('taxonomyLevel') as FormControl;
   }
 
-  get purposeForm(): FormControl {
+  public get purposeForm(): FormControl {
     return this.learningOutcomeFormGroup.get('purpose') as FormControl;
   }
 
