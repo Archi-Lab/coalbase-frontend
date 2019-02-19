@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -74,7 +74,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     purpose: new FormControl('')
   });
 
-  constructor(private route: ActivatedRoute, private learningOutcomeService: LearningOutcomeService, private fb: FormBuilder) {
+  constructor(private router: Router, private route: ActivatedRoute, private learningOutcomeService: LearningOutcomeService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -128,16 +128,19 @@ export class LearningOutcomeEditorComponent implements OnInit {
     this.learningOutcome.purpose = this.purposeForm.value;
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
-      this.learningOutcomeService.update(this.learningOutcome);
+      this.learningOutcomeService.update(this.learningOutcome).subscribe();
     } else {
-      this.learningOutcomeService.create(this.learningOutcome);
+      this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
+        const learningOutcome: LearningOutcome = result as LearningOutcome;
+        this.router.navigate(['/learning-outcomes', learningOutcome.getIdFromUri()]);
+      });
     }
 
   }
 
   public deleteLearningOutcome(): void {
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
-      this.learningOutcomeService.delete(this.learningOutcome);
+      this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['/learning-outcomes']));
     } else {
       console.log("not implemented yet!")
     }
