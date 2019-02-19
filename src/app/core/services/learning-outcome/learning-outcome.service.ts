@@ -56,10 +56,12 @@ export class LearningOutcomeService extends RestService<LearningOutcome> {
       const newState: LearningOutcome[] = [];
 
       learningOutcomes.forEach(learningOutcome => {
+
         const condition = oldState.filter(oldLearningOutcome => oldLearningOutcome.getIdFromUri() === learningOutcome.getIdFromUri());
-        if (condition == null || condition === []) {
+        if (condition == null || condition.length === 0) {
           newState.push(learningOutcome);
         }
+        console.log(newState);
       });
       this._learningOutcomes.next(oldState.concat(newState));
     });
