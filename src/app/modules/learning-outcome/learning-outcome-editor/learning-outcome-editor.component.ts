@@ -100,8 +100,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
   private initializeForm(): void {
     this.actionForm.setValue(this.learningOutcome.competence.action);
     this.taxonomyLevelForm.setValue(this.learningOutcome.competence.taxonomyLevel);
-
-    this.toolsFormArray.setValue([]);
+    this.clearToolsFormArray();
     if (this.learningOutcome.tools != null && this.learningOutcome.tools.length > 0) {
       this.learningOutcome.tools.forEach(tool => this.addTool(tool.value));
     } else {
@@ -112,12 +111,16 @@ export class LearningOutcomeEditorComponent implements OnInit {
   }
 
 
-  addTool(value: string) {
+  addTool(value: string): void {
     this.toolsFormArray.push(this.fb.control(value));
   }
 
-  removeTool(toolsFormIndex: number) {
+  removeTool(toolsFormIndex: number): void {
     this.toolsFormArray.removeAt(toolsFormIndex);
+  }
+
+  clearToolsFormArray(): void {
+    this.toolsFormArray.controls.forEach((value, index) => this.removeTool(index));
   }
 
   get toolsFormArray(): FormArray {
