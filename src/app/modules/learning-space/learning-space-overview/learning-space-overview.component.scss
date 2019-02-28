@@ -1,0 +1,30 @@
+.learning-space-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-row-gap: 2em;
+  padding: 2em 2em 2em 2em;
+}
+
+.learning-space-card {
+  margin: auto;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 1024px) {
+  .learning-space-container {
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-row-gap: 2em;
+    padding: 2em 2em 2em 2em;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .learning-space-container {
+    display: grid;
+    grid-template-columns: auto ;
+    grid-row-gap: 2em;
+    padding: 2em 2em 2em 2em;
+  }
+}

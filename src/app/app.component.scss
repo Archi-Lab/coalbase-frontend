@@ -13,6 +13,8 @@
   background-size: cover;
   height: calc(100% - 100px);
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .footer {
