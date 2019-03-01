@@ -10,11 +10,26 @@ import {LearningOutcome} from "../../../shared/models/learning-outcome.model";
 export class LearningSpaceOverviewComponent implements OnInit {
 
   space1 = new LearningSpace("space1");
-  space2 = new LearningSpace("space2", new LearningOutcome(), this.space1);
-  space3 = new LearningSpace("space3", new LearningOutcome(), this.space2);
-  space4 = new LearningSpace("space4", new LearningOutcome(), this.space3);
-  space5 = new LearningSpace("space5", new LearningOutcome(), this.space4);
-  space6 = new LearningSpace("space6", new LearningOutcome(), this.space5);
+  space2 = new LearningSpace("space2", new LearningOutcome({
+    action: "action1",
+    taxonomyLevel: "LEVEL1"
+  }, [{value: "tool1"}, {value: "tool2"}], {value: "purpose1"}), this.space1);
+  space3 = new LearningSpace("space3", new LearningOutcome({
+    action: "action1",
+    taxonomyLevel: "LEVEL1"
+  }, [{value: "tool1"}, {value: "tool2"}], {value: "purpose1"}), this.space2);
+  space4 = new LearningSpace("space4", new LearningOutcome({
+    action: "action1",
+    taxonomyLevel: "LEVEL1"
+  }, [{value: "tool1"}, {value: "tool2"}], {value: "purpose1"}), this.space3);
+  space5 = new LearningSpace("space5", new LearningOutcome({
+    action: "action1",
+    taxonomyLevel: "LEVEL1"
+  }, [{value: "tool1"}, {value: "tool2"}], {value: "purpose1"}), this.space4);
+  space6 = new LearningSpace("space6", new LearningOutcome({
+    action: "action1",
+    taxonomyLevel: "LEVEL1"
+  }, [{value: "tool1"}, {value: "tool2"}], {value: "purpose1"}), this.space5);
 
   sampleLearningSpaces: LearningSpace[] = [
     this.space2, this.space3, this.space6, this.space1, this.space4, this.space5
@@ -26,6 +41,9 @@ export class LearningSpaceOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.space1._links = {};
+    this.space1._links.self = {};
+    this.space1._links.self.href = "http://test.io/123uahsdj1331";
     this.sortedLearningSpaces = this.sortLearningSpaces(this.sampleLearningSpaces);
   }
 

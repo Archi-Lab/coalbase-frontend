@@ -20,4 +20,11 @@ export class LearningOutcome extends Resource {
     const selfUri: string = this._links.self.href;
     return selfUri.substring(selfUri.lastIndexOf('/') + 1, selfUri.length).trim();
   }
+
+  public isEmpty(): boolean {
+    return (this.competence == null || this.competence.action.length <= 0)
+      || (this.tools == null || this.tools.length <= 0)
+      || (this.purpose == null || this.purpose.value.length <= 0);
+  }
+
 }
