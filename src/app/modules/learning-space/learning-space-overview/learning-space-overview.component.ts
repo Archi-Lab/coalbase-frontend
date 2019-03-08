@@ -36,6 +36,15 @@ export class LearningSpaceOverviewComponent implements OnInit {
       (requirement: LearningSpace) => {
         aLearningSpace.requirement = requirement;
         this.sortedLearningSpaces.push(aLearningSpace);
+        this.sortedLearningSpaces.sort((lowerElement, higherElement): number => {
+          if (!lowerElement.isFirst() && lowerElement.requirement.title === higherElement.title) {
+            return 1;
+          }
+          if (!higherElement.isFirst() && higherElement.requirement.title === lowerElement.title) {
+            return -1;
+          }
+          return 0;
+        });
       },
       (error) => {
         if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
