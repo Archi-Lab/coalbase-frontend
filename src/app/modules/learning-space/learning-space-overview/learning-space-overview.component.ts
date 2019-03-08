@@ -18,24 +18,32 @@ export class LearningSpaceOverviewComponent implements OnInit {
   ngOnInit() {
     this.learningSpaceService.learningSpaces.subscribe(learningSpaces => {
         learningSpaces.forEach(learningSpace => {
-          learningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
-            (learningOutcome: LearningOutcome) => learningSpace.learningOutcome = learningOutcome
-          );
-          learningSpace.getRelation(LearningSpace, 'requirement').subscribe(
-            (requirement: LearningSpace) => {
-              learningSpace.requirement = requirement;
-              this.sortedLearningSpaces.push(learningSpace);
-            },
-            (error) => {
-              if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
-                console.log('There is more than one learningSpace without requirement, ' +
-                  'this can happen if the backend reponds with an error');
-              } else {
-                this.sortedLearningSpaces.unshift(learningSpace);
-              }
-            }
-          );
+          this.resolveLearningOutcomeOf(learningSpace);
+          this.resolveRequirementOf(learningSpace);
         });
+      }
+    );
+  }
+
+  private resolveLearningOutcomeOf(aLearningSpace: LearningSpace) {
+    aLearningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
+      (learningOutcome: LearningOutcome) => aLearningSpace.learningOutcome = learningOutcome
+    );
+  }
+
+  private resolveRequirementOf(aLearningSpace: LearningSpace) {
+    aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
+      (requirement: LearningSpace) => {
+        aLearningSpace.requirement = requirement;
+        this.sortedLearningSpaces.push(aLearningSpace);
+      },
+      (error) => {
+        if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
+          console.log('There is more than one learningSpace without requirement, ' +
+            'this can happen if the backend reponds with an error');
+        } else {
+          this.sortedLearningSpaces.unshift(aLearningSpace);
+        }
       }
     );
   }
