@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {LearningSpace} from "../../../shared/models/learning-space.model";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LearningOutcomeService} from "../../../core/services/learning-outcome/learning-outcome.service";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {LearningSpaceService} from "../../../core/services/learning-space/learning-space.service";
-import {LearningOutcome} from "../../../shared/models/learning-outcome.model";
+import {LearningSpace} from '../../../shared/models/learning-space.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
+import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -13,7 +13,7 @@ import {LearningOutcome} from "../../../shared/models/learning-outcome.model";
 })
 export class LearningSpaceEditorComponent implements OnInit {
 
-  learningSpace: LearningSpace = new LearningSpace("Test");
+  learningSpace: LearningSpace = new LearningSpace();
 
   learningOutcomes: LearningOutcome[] = [];
   learningSpaces: LearningSpace[] = [];
@@ -24,26 +24,63 @@ export class LearningSpaceEditorComponent implements OnInit {
     requirement: new FormControl('')
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private learningSpaceService: LearningSpaceService, private learningOutcomeService: LearningOutcomeService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private learningSpaceService: LearningSpaceService,
+    private learningOutcomeService: LearningOutcomeService) {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const identifier = params.get('learningSpaceIdentifier');
+      if (identifier === 'new') {
+        this.learningSpace = new LearningSpace('');
+        this.initializeForm(this.learningSpace);
+      } else if (identifier) {
+        this.learningSpaceService.get(identifier).subscribe(learningSpace => {
+          this.learningSpace = learningSpace;
+          this.learningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
+            (learningOutcome: LearningOutcome) => {
+              this.learningSpace.learningOutcome = learningOutcome;
+              this.learningSpace.getRelation(LearningSpace, 'requirement').subscribe(
+                (requirement: LearningSpace) => {
+                  this.learningSpace.requirement = requirement;
+                  this.initializeForm(this.learningSpace);
+                },
+                (error) => this.initializeForm(this.learningSpace));
+            });
+        });
+      } else {
+        this.learningSpaceService.getFirstLearningSpace().subscribe(
+          learningSpace => {
+            console.log(`$ {JSON.stringify(learningSpace)}`);
+            this.learningSpace = learningSpace;
+            this.initializeForm(this.learningSpace);
+          });
+      }
+    });
   }
 
   private initializeForm(learningSpace: LearningSpace): void {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome != null && learningSpace.learningOutcome._links != null) {
+      console.log('Set LO Linkt to: ' + learningSpace.learningOutcome._links.self.href);
       this.learningOutcomeForm.setValue(learningSpace.learningOutcome._links.self.href);
     }
     if (learningSpace.requirement != null && learningSpace.requirement._links != null) {
+      console.log('Set Requirement Link to: ' + learningSpace.requirement._links.self.href);
       this.requirementForm.setValue(learningSpace.requirement._links.self.href);
     }
   }
 
   private saveLearningSpaceFromForm(): void {
     this.learningSpace.title = this.learningSpaceForm.value;
-    this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(learningOutcome => this.learningSpace.learningOutcome = learningOutcome);
-    this.learningSpaceService.getBySelfLink(this.requirementForm.value).subscribe(requirement => this.learningSpace.requirement = requirement);
+    this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(
+      learningOutcome => this.learningSpace.learningOutcome = learningOutcome);
+    this.learningSpaceService.getBySelfLink(this.requirementForm.value).subscribe(
+      requirement => this.learningSpace.requirement = requirement);
 
   }
 

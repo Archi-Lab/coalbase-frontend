@@ -94,7 +94,6 @@ export class LearningOutcomeEditorComponent implements OnInit {
         });
       } else {
         this.learningOutcomeService.getFirstLearningOutcome().subscribe(firstLearningOutcome => {
-          console.log(`${JSON.stringify(firstLearningOutcome)}`);
           this.learningOutcome = firstLearningOutcome;
           this.initializeForm();
         });
@@ -127,7 +126,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
     this.learningOutcome.purpose = this.purposeForm.value;
 
-    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
+    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.update(this.learningOutcome).subscribe();
     } else {
       this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
@@ -139,10 +138,10 @@ export class LearningOutcomeEditorComponent implements OnInit {
   }
 
   public deleteLearningOutcome(): void {
-    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty("self")) {
+    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['/learning-outcomes']));
     } else {
-      console.log("not implemented yet!")
+      console.log('not implemented yet!');
     }
   }
 
