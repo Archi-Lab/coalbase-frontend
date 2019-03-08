@@ -11,14 +11,14 @@
            *ngIf="learningSpace.learningOutcome && !learningSpace.learningOutcome.isEmpty()">
         <h3 class="learning-space-learning-outcome-container-title">Learning Outcome</h3>
         <div class="learning-space-learning-outcome">
-          <mat-label class="learning-space-learning-outcome-label"><b>Was:</b></mat-label>
+          <mat-label class="learning-space-learning-outcome-label"><strong>Was:</strong></mat-label>
           <mat-label
             class="learning-space-learning-outcome-value">{{learningSpace.learningOutcome.competence.action}}</mat-label>
-          <mat-label class="learning-space-learning-outcome-label"><b>Womit:</b></mat-label>
+          <mat-label class="learning-space-learning-outcome-label"><strong>Womit:</strong></mat-label>
           <div class="learning-space-learning-outcome-value">
             <mat-label *ngFor="let tool of learningSpace.learningOutcome.tools">{{tool.value}}</mat-label>
           </div>
-          <mat-label class="learning-space-learning-outcome-label"><b>Wozu:</b></mat-label>
+          <mat-label class="learning-space-learning-outcome-label"><strong>Wozu:</strong></mat-label>
           <mat-label
             class="learning-space-learning-outcome-value">{{learningSpace.learningOutcome.purpose.value}}</mat-label>
         </div>
