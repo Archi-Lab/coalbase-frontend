@@ -55,22 +55,21 @@ export class LearningSpaceEditorComponent implements OnInit {
       } else {
         this.learningSpaceService.getFirstLearningSpace().subscribe(
           learningSpace => {
-            console.log(`$ {JSON.stringify(learningSpace)}`);
             this.learningSpace = learningSpace;
             this.initializeForm(this.learningSpace);
           });
       }
     });
+    this.learningOutcomeService.getAll().subscribe(learningOutcomes => this.learningOutcomes = learningOutcomes);
+    this.learningSpaceService.getAll().subscribe(learningSpaces => this.learningSpaces = learningSpaces);
   }
 
   private initializeForm(learningSpace: LearningSpace): void {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome != null && learningSpace.learningOutcome._links != null) {
-      console.log('Set LO Linkt to: ' + learningSpace.learningOutcome._links.self.href);
       this.learningOutcomeForm.setValue(learningSpace.learningOutcome._links.self.href);
     }
     if (learningSpace.requirement != null && learningSpace.requirement._links != null) {
-      console.log('Set Requirement Link to: ' + learningSpace.requirement._links.self.href);
       this.requirementForm.setValue(learningSpace.requirement._links.self.href);
     }
   }
@@ -85,7 +84,6 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public saveLearningSpace(): void {
-    /* TODO use when service is done!
     this.saveLearningSpaceFromForm();
 
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
@@ -95,10 +93,8 @@ export class LearningSpaceEditorComponent implements OnInit {
     }
 
 
-    this.learningSpace.addRelation("learningOutcome", this.learningSpace.learningOutcome);
-    this.learningSpace.addRelation("requirement", this.learningSpace.requirement);
-    */
-
+    this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome);
+    this.learningSpace.addRelation('requirement', this.learningSpace.requirement);
   }
 
   public deleteLearningSpace(): void {
