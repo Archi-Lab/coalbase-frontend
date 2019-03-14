@@ -75,17 +75,16 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private saveLearningSpaceFromForm(): void {
-    this.learningSpace.title = this.learningSpaceForm.value;
+    this.learningSpace.title = this.titleForm.value;
     this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(
       learningOutcome => this.learningSpace.learningOutcome = learningOutcome);
+
     this.learningSpaceService.getBySelfLink(this.requirementForm.value).subscribe(
       requirement => this.learningSpace.requirement = requirement);
-
   }
 
   public saveLearningSpace(): void {
     this.saveLearningSpaceFromForm();
-
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
       this.learningSpaceService.update(this.learningSpace);
     } else {
