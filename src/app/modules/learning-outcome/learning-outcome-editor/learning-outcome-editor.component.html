@@ -1,7 +1,9 @@
 <mat-card-title>Learning Outcome</mat-card-title>
-<mat-card-content [formGroup]="learningOutcomeFormGroup"
+<mat-card-content *ngIf="isNotEmptyOrNew()" [formGroup]="learningOutcomeFormGroup"
                   class="learning-outcome-editor-content">
-  <mat-label class="learning-outcome-editor-label"><strong>WAS</strong></mat-label>
+
+  <mat-label class="learning-outcome-editor-label"><strong>WAS</strong>
+  </mat-label>
 
   <div [formGroup]="competenceFormGroup"
        class="competence-form-group">
@@ -20,17 +22,18 @@
       </mat-select>
     </mat-form-field>
   </div>
-
   <mat-label class="learning-outcome-editor-label"><strong>WOMIT</strong></mat-label>
   <div class="tools-form-array">
     <div formArrayName="tools" *ngFor="let tool of toolsFormArray.controls; let toolFormIndex = index">
       <mat-form-field
-                      color="accent"
-                      class="tools-form-control">
+        color="accent"
+        class="tools-form-control">
           <textarea matInput placeholder="Ein Werkzeug"
                     [formControlName]="toolFormIndex"></textarea>
       </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="removeTool(toolsFormIndex)"><mat-icon aria-label="Button um ein Werkzeug zu löschen">delete</mat-icon></button>
+      <button mat-mini-fab color="primary" (click)="removeTool(toolsFormIndex)">
+        <mat-icon aria-label="Button um ein Werkzeug zu löschen">delete</mat-icon>
+      </button>
     </div>
 
     <button mat-mini-fab (click)="addTool('')">

@@ -145,6 +145,10 @@ export class LearningOutcomeEditorComponent implements OnInit {
     }
   }
 
+  public isNotEmptyOrNew() {
+    return !!(this.router.url.indexOf('new') > -1 || this.learningOutcome.competence.action);
+  }
+
   public addTool(value: string): void {
     this.toolsFormArray.push(this.fb.control(value));
   }

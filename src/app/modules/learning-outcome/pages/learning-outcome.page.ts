@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {Observable} from 'rxjs';
 
@@ -12,8 +12,18 @@ import {Observable} from 'rxjs';
 export class LearningOutcomePage {
   learningOutcomes: Observable<LearningOutcome[]>;
 
-  constructor(private learningOutcomeService: LearningOutcomeService, private router: Router) {
+  constructor(private learningOutcomeService: LearningOutcomeService, private router: Router, private route: ActivatedRoute) {
     this.learningOutcomes = this.learningOutcomeService.learningOutcomes;
+    this.redirectIfEmpty();
   }
 
+  private redirectIfEmpty() {
+    this.learningOutcomes.subscribe(learningOutcomes => {
+      console.log('check length: ' + learningOutcomes.length);
+      if (learningOutcomes.length === 0) {
+        console.log('Navigate to /new');
+        this.router.navigate(['new'], {relativeTo: this.route});
+      }
+    });
+  }
 }
