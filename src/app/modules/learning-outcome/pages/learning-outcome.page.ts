@@ -19,9 +19,7 @@ export class LearningOutcomePage {
 
   private redirectIfEmpty() {
     this.learningOutcomes.subscribe(learningOutcomes => {
-      console.log('check length: ' + learningOutcomes.length);
       if (learningOutcomes.length === 0) {
-        console.log('Navigate to /new');
         this.router.navigate(['new'], {relativeTo: this.route});
       }
     });
