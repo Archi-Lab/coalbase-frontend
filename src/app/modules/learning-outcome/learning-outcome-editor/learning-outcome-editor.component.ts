@@ -139,7 +139,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
   public deleteLearningOutcome(): void {
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['/learning-outcomes']));
+      this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
     } else {
       console.log('not implemented yet!');
     }

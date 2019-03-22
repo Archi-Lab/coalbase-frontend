@@ -5,6 +5,7 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -87,22 +88,23 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.saveLearningSpaceFromForm();
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
       this.learningSpaceService.update(this.learningSpace).subscribe(
-        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace)).unsubscribe();
+        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace));
     } else {
       this.learningSpaceService.create(this.learningSpace).subscribe(
-        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace)).unsubscribe();
+        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace));
     }
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
     learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
-      .subscribe().unsubscribe();
-    learningSpace.addRelation('requirement', this.learningSpace.requirement)
-      .subscribe().unsubscribe();
+      .subscribe();
+    learningSpace.addRelation('requirement', this.learningSpace.requirement).pipe(first())
+      .subscribe();
   }
 
   public deleteLearningSpace(): void {
-    this.learningSpaceService.delete(this.learningSpace);
+    this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
   }
 
   public get titleForm(): FormControl {
