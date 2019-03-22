@@ -86,14 +86,19 @@ export class LearningSpaceEditorComponent implements OnInit {
   public saveLearningSpace(): void {
     this.saveLearningSpaceFromForm();
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
-      this.learningSpaceService.update(this.learningSpace);
+      this.learningSpaceService.update(this.learningSpace).subscribe(
+        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace)).unsubscribe();
     } else {
-      this.learningSpaceService.create(this.learningSpace);
+      this.learningSpaceService.create(this.learningSpace).subscribe(
+        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace)).unsubscribe();
     }
+  }
 
-
-    this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome);
-    this.learningSpace.addRelation('requirement', this.learningSpace.requirement);
+  private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
+    learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
+      .subscribe().unsubscribe();
+    learningSpace.addRelation('requirement', this.learningSpace.requirement)
+      .subscribe().unsubscribe();
   }
 
   public deleteLearningSpace(): void {
