@@ -5,7 +5,6 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -99,7 +98,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
     learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
       .subscribe();
-    learningSpace.addRelation('requirement', this.learningSpace.requirement).pipe(first())
+    learningSpace.addRelation('requirement', this.learningSpace.requirement)
       .subscribe();
   }
 
