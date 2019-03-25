@@ -1,6 +1,11 @@
 <mat-toolbar class="header">
-  <a mat-button routerLink="/learning-outcomes">Learning Outcomes</a>
-  <a mat-button routerLink="/learning-spaces">Lernräume</a>
+  <div class="toolbar-left">
+    <a mat-button routerLink="/learning-outcomes">Learning Outcomes</a>
+    <a mat-button routerLink="/learning-spaces">Lernräume</a>
+  </div>
+  <div class="toolbar-right">
+    <button mat-button (click)="logout()">Abmelden</button>
+  </div>
 </mat-toolbar>
 <div class="content">
   <router-outlet></router-outlet>
