@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
-import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
+import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({

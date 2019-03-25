@@ -1,8 +1,8 @@
 import {Injectable, Injector} from '@angular/core';
 import {RestService} from 'angular4-hal';
-import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
-import {BehaviorSubject, from, Observable} from "rxjs";
-import {reject} from "q";
+import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
+import {BehaviorSubject, from, Observable} from 'rxjs';
+import {reject} from 'q';
 
 @Injectable()
 export class LearningOutcomeService extends RestService<LearningOutcome> {

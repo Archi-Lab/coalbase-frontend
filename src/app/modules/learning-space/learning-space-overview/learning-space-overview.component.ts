@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {LearningSpace} from '../../../shared/models/learning-space.model';
+import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {Router} from '@angular/router';
-import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
+import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 
 @Component({
   selector: 'app-learning-space-overview',

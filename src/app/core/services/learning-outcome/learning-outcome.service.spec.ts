@@ -5,7 +5,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {ExternalConfigurationService} from '../external-configuration.service';
 import {AngularHalModule} from 'angular4-hal';
 import {environment} from '../../../../environments/environment';
-import {LearningOutcome} from '../../../shared/models/learning-outcome.model';
+import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 
 describe('Service: Learning Outcome', () => {
   let service: LearningOutcomeService;

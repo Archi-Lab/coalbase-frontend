@@ -1,1 +1,14 @@
-<div>Courses</div>
+<div>
+  <mat-card>
+    <mat-card-title>Lehrveranstaltungen</mat-card-title>
+    <mat-card-content>
+      <mat-action-list>
+        <mat-list-item *ngFor="let course of courses | async">
+          {{course.title}}
+          {{course.description}}
+          {{course.learningSpaces}}
+        </mat-list-item>
+      </mat-action-list>
+    </mat-card-content>
+  </mat-card>
+</div>

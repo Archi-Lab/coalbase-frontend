@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {RestService} from 'angular4-hal';
 import {BehaviorSubject, from, Observable} from 'rxjs';
-import {LearningSpace} from '../../../shared/models/learning-space.model';
+import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {reject} from 'q';
 
 @Injectable()
