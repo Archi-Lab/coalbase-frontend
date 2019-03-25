@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {KeycloakService} from 'keycloak-angular';
-import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +13,6 @@ export class AppComponent {
   }
 
   logout() {
-    this.keycloakservice.logout(environment.keyCloak);
+    this.keycloakservice.logout();
   }
 }
