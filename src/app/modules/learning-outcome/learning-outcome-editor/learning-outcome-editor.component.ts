@@ -93,7 +93,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
           this.initializeForm();
         });
       } else {
-        this.learningOutcomeService.getFirstLearningOutcome().subscribe(firstLearningOutcome => {
+        this.learningOutcomeService.getFirstElement().subscribe(firstLearningOutcome => {
           this.learningOutcome = firstLearningOutcome;
           this.initializeForm();
         });
@@ -120,7 +120,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
     /*clear everything in the previous tool array*/
     this.learningOutcome.tools = [];
-    for (let toolForm of this.toolsFormArray.controls) {
+    for (const toolForm of this.toolsFormArray.controls) {
       this.learningOutcome.tools.push({value: toolForm.value});
     }
 

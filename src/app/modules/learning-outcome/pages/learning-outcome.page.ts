@@ -13,7 +13,7 @@ export class LearningOutcomePage {
   learningOutcomes: Observable<LearningOutcome[]>;
 
   constructor(private learningOutcomeService: LearningOutcomeService, private router: Router, private route: ActivatedRoute) {
-    this.learningOutcomes = this.learningOutcomeService.learningOutcomes;
+    this.learningOutcomes = this.learningOutcomeService.listResource;
     this.redirectIfEmpty();
   }
 

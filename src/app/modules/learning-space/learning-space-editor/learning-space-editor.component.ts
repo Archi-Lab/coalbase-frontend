@@ -53,7 +53,7 @@ export class LearningSpaceEditorComponent implements OnInit {
             });
         });
       } else {
-        this.learningSpaceService.getFirstLearningSpace().subscribe(
+        this.learningSpaceService.getFirstElement().subscribe(
           learningSpace => {
             this.learningSpace = learningSpace;
             this.initializeForm(this.learningSpace);

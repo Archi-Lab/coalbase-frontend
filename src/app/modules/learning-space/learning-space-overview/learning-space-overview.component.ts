@@ -16,7 +16,7 @@ export class LearningSpaceOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.learningSpaceService.learningSpaces.subscribe(learningSpaces => {
+    this.learningSpaceService.listResource.subscribe(learningSpaces => {
         learningSpaces.forEach(learningSpace => {
           this.resolveLearningOutcomeOf(learningSpace);
           this.resolveRequirementOf(learningSpace);
