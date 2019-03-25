@@ -17,6 +17,15 @@ export class Course extends Resource {
     this._description = description || '';
   }
 
+  public getIdFromUri(): string {
+    if (this._links != null && this._links.hasOwnProperty('self')) {
+      const selfUri: string = this._links.self.href;
+      return selfUri.substring(selfUri.lastIndexOf('/') + 1, selfUri.length).trim();
+    } else {
+      return '';
+    }
+  }
+
   get title(): string {
     return this._title;
   }
