@@ -1,8 +1,8 @@
 <mat-toolbar class="header">
   <div class="toolbar-left">
-    <a mat-button routerLink="/courses">Lehrveranstaltungen</a>
-    <a mat-button routerLink="/learning-outcomes">Learning Outcomes</a>
-    <a mat-button routerLink="/learning-spaces">Lernräume</a>
+    <a mat-button routerLink="/courses" routerLinkActive="underline">Lehrveranstaltungen</a>
+    <a mat-button routerLink="/learning-outcomes" routerLinkActive="underline">Learning Outcomes</a>
+    <a mat-button routerLink="/learning-spaces" routerLinkActive="underline">Lernräume</a>
   </div>
   <div class="toolbar-right">
     <button mat-button (click)="logout()">Abmelden</button>
@@ -12,8 +12,8 @@
   <router-outlet></router-outlet>
 </div>
 <mat-toolbar class="footer">
-  <a mat-button routerLink="/privacy">Datenschutz</a>
-  <a mat-button routerLink="/imprint">Impressum</a>
+  <a mat-button routerLink="/privacy" routerLinkActive="underline">Datenschutz</a>
+  <a mat-button routerLink="/imprint" routerLinkActive="underline">Impressum</a>
   <a mat-button href="https://archi-lab.io">ArchiLab</a>
 </mat-toolbar>
 
