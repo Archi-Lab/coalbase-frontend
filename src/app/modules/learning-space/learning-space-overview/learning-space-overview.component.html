@@ -2,7 +2,8 @@
   <mat-card>
     <mat-card-content>
       <div cdkDropList (cdkDropListDropped)="drop($event)">
-        <mat-card class="learning-space-card" *ngFor="let learningSpace of sortedLearningSpaces;" cdkDrag>
+        <mat-card class="learning-space-card" cdkDrag
+                  *ngFor="let learningSpace of sortedLearningSpaces;">
           <mat-card-header>
             <mat-card-title>{{learningSpace.title}}</mat-card-title>
             <mat-card-subtitle *ngIf="!learningSpace.isFirst()">
@@ -10,19 +11,31 @@
           </mat-card-header>
           <div class="learning-space-card-placeholder" *cdkDragPlaceholder></div>
           <mat-card-content>
-            <div class="learning-space-content">
-              <div *ngIf="learningSpace.learningOutcome && !learningSpace.learningOutcome.isEmpty()">
-                <h3>Ziel des Lernraums:</h3>
-                <p>
-                  {{learningSpace.learningOutcome.competence.action}},
-                </p>
-                <p *ngFor="let tool of learningSpace.learningOutcome.tools; let first = first">
-                  {{first ? "indem Sie" : ""}}
-                  {{tool.value}},
-                </p>
-                <p>
-                  um {{learningSpace.learningOutcome.purpose.value}}
-                </p>
+            <div class="learning-space-content-container">
+
+              <div class="learning-space-content">
+                <div *ngIf="learningSpace.learningOutcome && !learningSpace.learningOutcome.isEmpty()">
+                  <h3>Ziel des Lernraums:</h3>
+                  <p>
+                    {{learningSpace.learningOutcome.competence.action}},
+                  </p>
+                  <p *ngFor="let tool of learningSpace.learningOutcome.tools; let first = first">
+                    {{first ? "indem Sie" : ""}}
+                    {{tool.value}},
+                  </p>
+                  <p>
+                    um {{learningSpace.learningOutcome.purpose.value}}
+                  </p>
+                </div>
+              </div>
+              <div  class="learning-space-drag-indicator">
+                <mat-icon class="drag-indicator"
+                          [matTooltip]="'Sie können dieses Element per Drag&Drop neu anordnen.'"
+                          [matTooltipShowDelay]="700"
+                          [matTooltipHideDelay]="300"
+                          [matTooltipPosition]="'above'" >
+                  drag_indicator
+                </mat-icon>
               </div>
             </div>
           </mat-card-content>
