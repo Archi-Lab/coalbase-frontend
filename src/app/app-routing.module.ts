@@ -12,10 +12,6 @@ const appRoutes: Routes = [
     loadChildren: './modules/learning-outcome/learning-outcome.module#LearningOutcomeModule'
   },
   {
-    path: 'learning-spaces',
-    loadChildren: './modules/learning-space/learning-space.module#LearningSpaceModule'
-  },
-  {
     path: 'imprint',
     loadChildren: './modules/imprint/imprint.module#ImprintModule'
   },

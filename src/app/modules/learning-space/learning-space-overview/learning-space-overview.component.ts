@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {CourseService} from "../../../core/services/course/course.service";
 
 @Component({
   selector: 'app-learning-space-overview',
@@ -13,26 +14,37 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 export class LearningSpaceOverviewComponent implements OnInit {
   sortedLearningSpaces: LearningSpace[] = [];
 
-  constructor(private learningSpaceService: LearningSpaceService, private router: Router) {
+  constructor(private learningSpaceService: LearningSpaceService,
+              private courseService: CourseService,
+              private router: Router,
+              private route: ActivatedRoute,) {
   }
 
   ngOnInit() {
-    this.learningSpaceService.listResource.subscribe(learningSpaces => {
+    this.route.paramMap.subscribe(params => {
+      const identifier: string = params.get('courseIdentifier') as string;
+      this.resolveLearningSpaces(identifier);
+    });
+  }
+
+  private resolveLearningSpaces(courseIdentifier: string): void {
+    this.courseService.get(courseIdentifier).subscribe(course => {
+      course.getRelationArray(LearningSpace, "learningSpaces").subscribe(learningSpaces => {
         learningSpaces.forEach(learningSpace => {
           this.resolveLearningOutcomeOf(learningSpace);
           this.resolveRequirementOf(learningSpace);
         });
-      }
-    );
+      });
+    });
   }
 
-  private resolveLearningOutcomeOf(aLearningSpace: LearningSpace) {
+  private resolveLearningOutcomeOf(aLearningSpace: LearningSpace): void {
     aLearningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
       (learningOutcome: LearningOutcome) => aLearningSpace.learningOutcome = learningOutcome
     );
   }
 
-  private resolveRequirementOf(aLearningSpace: LearningSpace) {
+  private resolveRequirementOf(aLearningSpace: LearningSpace): void {
     aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
       (requirement: LearningSpace) => {
         aLearningSpace.requirement = requirement;
@@ -61,7 +73,7 @@ export class LearningSpaceOverviewComponent implements OnInit {
     );
   }
 
-  drop(event: CdkDragDrop<LearningSpace[]>) {
+  drop(event: CdkDragDrop<LearningSpace[]>): void {
     moveItemInArray(this.sortedLearningSpaces, event.previousIndex, event.currentIndex);
     this.updateRelationForLearningSpace(event.currentIndex);
     this.updateRelationForLearningSpace(event.previousIndex);
