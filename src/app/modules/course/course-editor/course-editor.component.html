@@ -7,12 +7,21 @@
     <div class="course-editor-container" [formGroup]="courseForm">
       <mat-label class="course-editor-label"><strong>Titel</strong></mat-label>
       <mat-form-field color="accent">
-        <textarea matInput placeholder="Titel der Veranstaltung" [formControl]="titleForm"></textarea>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="3"
+                  placeholder="Titel der Veranstaltung"
+                  [formControl]="titleForm"></textarea>
       </mat-form-field>
 
       <mat-label class="course-editor-label"><strong>Beschreibung</strong></mat-label>
       <mat-form-field color="accent">
-        <textarea matInput placeholder="Kurzbeschreibung der Veranstaltung" [formControl]="descriptionForm"></textarea>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="10"
+                  placeholder="Kurzbeschreibung der Veranstaltung" [formControl]="descriptionForm"></textarea>
       </mat-form-field>
     </div>
   </mat-card-content>
