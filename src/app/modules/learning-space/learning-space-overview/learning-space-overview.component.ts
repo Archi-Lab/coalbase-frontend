@@ -61,22 +61,23 @@ export class LearningSpaceOverviewComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<LearningSpace[]>) {
-    console.log(`${event.previousIndex} now ${event.currentIndex} `);
     moveItemInArray(this.sortedLearningSpaces, event.previousIndex, event.currentIndex);
-    this.updateRelations();
+    this.updateRelationForLearningSpace(event.currentIndex);
+    this.updateRelationForLearningSpace(event.previousIndex);
+    if (this.sortedLearningSpaces.length > (event.previousIndex + 1)) {
+      this.updateRelationForLearningSpace((event.previousIndex + 1));
+    }
   }
 
-  private updateRelations(): void {
-    let prevLearningSpace: LearningSpace;
-    this.sortedLearningSpaces.forEach((learningSpace, index) => {
-      if (index === 0) {
-        learningSpace.requirement = undefined;
-      } else {
-        learningSpace.requirement = prevLearningSpace;
-      }
-      prevLearningSpace = learningSpace;
-      console.log(JSON.stringify(learningSpace));
-    });
+  private updateRelationForLearningSpace(indexToUpdate: number): void {
+    console.log(`Try to update ${indexToUpdate}`);
+    if (indexToUpdate === 0) {
+      this.sortedLearningSpaces[indexToUpdate].deleteRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+      this.sortedLearningSpaces[indexToUpdate].requirement = undefined;
+    } else {
+      this.sortedLearningSpaces[indexToUpdate].requirement = this.sortedLearningSpaces[indexToUpdate - 1];
+      this.sortedLearningSpaces[indexToUpdate].updateRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+    }
   }
 
 }
