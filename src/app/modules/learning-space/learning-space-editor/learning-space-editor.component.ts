@@ -20,8 +20,7 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   learningSpaceForm: FormGroup = new FormGroup({
     title: new FormControl(''),
-    learningOutcome: new FormControl(''),
-    requirement: new FormControl('')
+    learningOutcome: new FormControl('')
   });
 
   constructor(
@@ -69,18 +68,12 @@ export class LearningSpaceEditorComponent implements OnInit {
     if (learningSpace.learningOutcome != null && learningSpace.learningOutcome._links != null) {
       this.learningOutcomeForm.setValue(learningSpace.learningOutcome._links.self.href);
     }
-    if (learningSpace.requirement != null && learningSpace.requirement._links != null) {
-      this.requirementForm.setValue(learningSpace.requirement._links.self.href);
-    }
   }
 
   private saveLearningSpaceFromForm(): void {
     this.learningSpace.title = this.titleForm.value;
     this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(
       learningOutcome => this.learningSpace.learningOutcome = learningOutcome);
-
-    this.learningSpaceService.getBySelfLink(this.requirementForm.value).subscribe(
-      requirement => this.learningSpace.requirement = requirement);
   }
 
   public saveLearningSpace(): void {
@@ -98,8 +91,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
     learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
       .subscribe();
-    learningSpace.addRelation('requirement', this.learningSpace.requirement as LearningSpace)
-      .subscribe();
+
   }
 
   public deleteLearningSpace(): void {
@@ -112,10 +104,6 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   public get learningOutcomeForm(): FormControl {
     return this.learningSpaceForm.get('learningOutcome') as FormControl;
-  }
-
-  public get requirementForm(): FormControl {
-    return this.learningSpaceForm.get('requirement') as FormControl;
   }
 
 }

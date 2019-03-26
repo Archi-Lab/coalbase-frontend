@@ -24,15 +24,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-label class="learning-space-editor-label"><strong>Vorbedingter Lernraum</strong></mat-label>
-      <mat-form-field color="accent">
-        <mat-select placeholder="Wählen Sie einen Lernraum als Vorbedingung"
-                    [formControl]="requirementForm">
-          <mat-option *ngFor="let learningSpaceOption of learningSpaces" [value]="learningSpaceOption._links.self.href">
-            {{learningSpaceOption.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
     </div>
 
 
