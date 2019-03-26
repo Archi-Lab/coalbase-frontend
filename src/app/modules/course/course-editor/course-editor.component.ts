@@ -63,7 +63,7 @@ export class CourseEditorComponent implements OnInit {
   }
 
   public deleteCourse() {
-    this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
+    this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route.parent}));
   }
 
   private saveCourseForm(): void {
