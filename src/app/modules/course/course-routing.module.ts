@@ -10,7 +10,16 @@ const CourseRoutes: Routes = [
     component: CoursePage,
     children: [
       {path: '', component: CourseOverviewComponent},
-      {path: ':courseIdentifier', component: CourseEditorComponent},
+      {
+        path: ':courseIdentifier',
+        children: [
+          {path: '', component: CourseEditorComponent},
+          {
+            path: 'learning-spaces',
+            loadChildren: '../learning-space/learning-space.module#LearningSpaceModule'
+          }
+        ]
+      }
     ],
   }
 ];

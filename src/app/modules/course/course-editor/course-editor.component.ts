@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Course} from '../../../shared/models/course/course.model';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-course-editor',
@@ -7,6 +9,13 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./course-editor.component.scss']
 })
 export class CourseEditorComponent implements OnInit {
+  course: Course = new Course();
+
+  courseForm: FormGroup = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl('')
+  });
+  
   constructor(private router: Router, private route: ActivatedRoute) {
   }
 

@@ -12,7 +12,9 @@
     <mat-card-actions>
       <button mat-button color="accent" [routerLink]="['/courses', course.getIdFromUri()]">Veranstaltung bearbeiten
       </button>
-      <button mat-button color="accent" [routerLink]="['/learning-spaces']">Lernräume verwalten</button>
+      <button mat-button color="accent" [routerLink]="['/courses', course.getIdFromUri(),'learning-spaces']">Lernräume
+        verwalten
+      </button>
     </mat-card-actions>
   </mat-card>
   <mat-card class="course-card course-add">
