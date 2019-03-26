@@ -6,12 +6,15 @@ import {MaterialModule} from '../../shared/material.module';
 import {CourseEditorComponent} from './course-editor/course-editor.component';
 import {CourseService} from '../../core/services/course/course.service';
 import {CourseOverviewComponent} from './course-overview/course-overview.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [CoursePage, CourseEditorComponent, CourseOverviewComponent],
   imports: [
     CourseRoutingModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   providers: [
