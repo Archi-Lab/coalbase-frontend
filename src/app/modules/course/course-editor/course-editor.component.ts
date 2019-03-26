@@ -51,13 +51,22 @@ export class CourseEditorComponent implements OnInit {
     return this.courseForm.get('description') as FormControl;
   }
 
-  saveCourse() {
-    console.log('Save Course');
-    // TODO save course
+  public saveCourse() {
+    this.saveCourseForm();
+    if (this.course._links != null && this.course._links.self != null) {
+      this.courseService.update(this.course).subscribe();
+    } else {
+      this.courseService.create(this.course).subscribe();
+    }
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  deleteCourse() {
-    console.log('Delete Course');
-    // TODO delete course
+  public deleteCourse() {
+    this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
+  }
+
+  private saveCourseForm(): void {
+    this.course.title = this.titleForm.value;
+    this.course.description = this.descriptionForm.value;
   }
 }
