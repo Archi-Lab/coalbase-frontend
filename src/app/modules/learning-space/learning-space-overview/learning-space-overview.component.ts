@@ -53,6 +53,7 @@ export class LearningSpaceOverviewComponent implements OnInit {
         if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
           console.log('There is more than one learningSpace without requirement, ' +
             'this can happen if the backend reponds with an error');
+          this.sortedLearningSpaces.push(aLearningSpace);
         } else {
           this.sortedLearningSpaces.unshift(aLearningSpace);
         }
@@ -70,7 +71,6 @@ export class LearningSpaceOverviewComponent implements OnInit {
   }
 
   private updateRelationForLearningSpace(indexToUpdate: number): void {
-    console.log(`Try to update ${indexToUpdate}`);
     if (indexToUpdate === 0) {
       this.sortedLearningSpaces[indexToUpdate].deleteRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
       this.sortedLearningSpaces[indexToUpdate].requirement = undefined;
