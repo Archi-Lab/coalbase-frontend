@@ -12,6 +12,7 @@ export class CourseEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
+      console.log('identify parameter');
       const identifier = params.get('courseIdentifier');
       if (identifier === 'new') {
         // TODO create new Course

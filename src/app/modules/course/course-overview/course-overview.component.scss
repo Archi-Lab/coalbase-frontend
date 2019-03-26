@@ -1,0 +1,25 @@
+@import '~src/assets/scss/coalbase-colors';
+
+.course-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+}
+
+.course-card {
+  max-width: 500px;
+  margin: 5px;
+}
+
+.course-add {
+  height: fit-content;
+  justify-content: center;
+  align-content: center;
+}
+
+.example-course-image {
+  background-image: url('~src/assets/images/coalbase-background.svg');
+  background-size: cover;
+  background-position: center;
+}

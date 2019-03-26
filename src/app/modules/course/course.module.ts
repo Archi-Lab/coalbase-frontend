@@ -5,9 +5,10 @@ import {CourseRoutingModule} from './course-routing.module';
 import {MaterialModule} from '../../shared/material.module';
 import {CourseEditorComponent} from './course-editor/course-editor.component';
 import {CourseService} from '../../core/services/course/course.service';
+import {CourseOverviewComponent} from './course-overview/course-overview.component';
 
 @NgModule({
-  declarations: [CoursePage, CourseEditorComponent],
+  declarations: [CoursePage, CourseEditorComponent, CourseOverviewComponent],
   imports: [
     CourseRoutingModule,
     CommonModule,
