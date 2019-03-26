@@ -33,6 +33,7 @@ export class CourseEditorComponent implements OnInit {
       } else if (identifier) {
         this.courseService.get(identifier).subscribe(course => {
           this.course = course;
+          this.initalizeForm(this.course);
         });
       }
     });
@@ -58,7 +59,7 @@ export class CourseEditorComponent implements OnInit {
     } else {
       this.courseService.create(this.course).subscribe();
     }
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
 
   public deleteCourse() {
