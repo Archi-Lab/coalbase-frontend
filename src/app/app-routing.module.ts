@@ -2,7 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: 'learning-outcomes', pathMatch: 'full'},
+  {path: '', redirectTo: 'courses', pathMatch: 'full'},
   {
     path: 'courses',
     loadChildren: './modules/course/course.module#CourseModule'
