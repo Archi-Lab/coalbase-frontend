@@ -3,6 +3,7 @@ import {LearningSpace} from '../../../shared/models/learning-space/learning-spac
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {Router} from '@angular/router';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-learning-space-overview',
@@ -37,10 +38,12 @@ export class LearningSpaceOverviewComponent implements OnInit {
         aLearningSpace.requirement = requirement;
         this.sortedLearningSpaces.push(aLearningSpace);
         this.sortedLearningSpaces.sort((lowerElement, higherElement): number => {
-          if (!lowerElement.isFirst() && lowerElement.requirement.title === higherElement.title) {
+
+
+          if (!lowerElement.isFirst() && lowerElement.isRequirement(higherElement)) {
             return 1;
           }
-          if (!higherElement.isFirst() && higherElement.requirement.title === lowerElement.title) {
+          if (!higherElement.isFirst() && higherElement.isRequirement(lowerElement)) {
             return -1;
           }
           return 0;
@@ -56,4 +59,24 @@ export class LearningSpaceOverviewComponent implements OnInit {
       }
     );
   }
+
+  drop(event: CdkDragDrop<LearningSpace[]>) {
+    console.log(`${event.previousIndex} now ${event.currentIndex} `);
+    moveItemInArray(this.sortedLearningSpaces, event.previousIndex, event.currentIndex);
+    this.updateRelations();
+  }
+
+  private updateRelations(): void {
+    let prevLearningSpace: LearningSpace;
+    this.sortedLearningSpaces.forEach((learningSpace, index) => {
+      if (index === 0) {
+        learningSpace.requirement = undefined;
+      } else {
+        learningSpace.requirement = prevLearningSpace;
+      }
+      prevLearningSpace = learningSpace;
+      console.log(JSON.stringify(learningSpace));
+    });
+  }
+
 }

@@ -28,6 +28,7 @@ export class LearningSpace extends Resource {
     return this._requirement === requirement;
   }
 
+
   public getIdFromUri(): string {
     if (this._links != null && this._links.hasOwnProperty('self')) {
       const selfUri: string = this._links.self.href;
@@ -41,7 +42,7 @@ export class LearningSpace extends Resource {
     this._title = value;
   }
 
-  set requirement(value: LearningSpace) {
+  set requirement(value: LearningSpace | undefined) {
     this._requirement = value;
   }
 
@@ -53,7 +54,7 @@ export class LearningSpace extends Resource {
     return this._title;
   }
 
-  get requirement(): LearningSpace {
+  get requirement(): LearningSpace | undefined {
     return this._requirement as LearningSpace;
   }
 
