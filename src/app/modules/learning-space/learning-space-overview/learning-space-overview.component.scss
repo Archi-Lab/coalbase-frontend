@@ -12,7 +12,7 @@
   box-sizing: border-box;
 }
 
-.learning-space-content-container{
+.learning-space-content-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -20,7 +20,7 @@
   height: 100%;
 }
 
-.learning-space-content{
+.learning-space-content {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -32,17 +32,17 @@
   background: #ccc;
   border: dotted 3px #999;
   min-height: 100px;
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 250ms cubic-bezier(0, 0, .2, 1);
 }
 
 .learning-space-button-add {
   font-size: 1.2em;
 }
 
-.learning-space-drag-indicator{
+.learning-space-drag-indicator {
   margin: auto 0 auto 0;
 
-  .drag-indicator{
+  .drag-indicator {
     font-size: 2em;
   }
 }
