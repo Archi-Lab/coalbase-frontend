@@ -1,15 +1,14 @@
 import {Resource, RestService} from 'angular4-hal';
 import {BehaviorSubject, from, Observable} from 'rxjs';
-import {reject} from 'q';
 
 export abstract class ListResourceService<T extends Resource> extends RestService<T> {
-  private _listResource: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
+  private readonly _listResource: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 
   public getFirstElement(): Observable<T> {
     return from(new Promise(resolve => {
       this.getAll().subscribe(value => {
         resolve(value[0]);
-      }, error => reject(error));
+      }, error => Promise.reject(error));
     }));
   }
 

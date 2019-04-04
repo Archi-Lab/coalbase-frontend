@@ -10,11 +10,11 @@ import {CacheHelper} from "angular4-hal";
 export class AppComponent {
   title = 'CoalBase';
 
-  constructor(private keycloakservice: KeycloakService) {
+  constructor(private readonly keycloakService: KeycloakService) {
     CacheHelper.isActive = false;
   }
 
   logout() {
-    this.keycloakservice.logout();
+    this.keycloakService.logout();
   }
 }

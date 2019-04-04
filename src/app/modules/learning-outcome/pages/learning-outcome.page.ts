@@ -12,7 +12,9 @@ import {Observable} from 'rxjs';
 export class LearningOutcomePage {
   learningOutcomes: Observable<LearningOutcome[]>;
 
-  constructor(private learningOutcomeService: LearningOutcomeService, private router: Router, private route: ActivatedRoute) {
+  constructor(private readonly learningOutcomeService: LearningOutcomeService,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute) {
     this.learningOutcomes = this.learningOutcomeService.listResource;
     this.redirectIfEmpty();
   }

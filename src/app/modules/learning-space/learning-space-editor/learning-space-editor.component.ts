@@ -26,12 +26,12 @@ export class LearningSpaceEditorComponent implements OnInit {
   });
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private learningSpaceService: LearningSpaceService,
-    private courseService: CourseService,
-    private learningOutcomeService: LearningOutcomeService) {
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly fb: FormBuilder,
+    private readonly learningSpaceService: LearningSpaceService,
+    private readonly courseService: CourseService,
+    private readonly learningOutcomeService: LearningOutcomeService) {
   }
 
   ngOnInit() {
@@ -97,7 +97,7 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   private removeLearningSpaceInCourse(learningSpace: LearningSpace): void {
     const indexToRemove: number = this.course.learningSpaces.findIndex(learningSpaceSearch => learningSpaceSearch._links.self.href === learningSpace._links.self.href);
-    this.course.learningSpaces.slice(indexToRemove, 1);
+    this.course.learningSpaces = this.course.learningSpaces.slice(indexToRemove, 1);
   }
 
   public saveLearningSpace(): void {

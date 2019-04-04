@@ -15,10 +15,10 @@ export class LearningSpaceOverviewComponent implements OnInit {
   sortedLearningSpaces: LearningSpace[] = [];
   courseIdentifier: string = "";
 
-  constructor(private learningSpaceService: LearningSpaceService,
-              private courseService: CourseService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private readonly learningSpaceService: LearningSpaceService,
+              private readonly courseService: CourseService,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute) {
   }
 
   ngOnInit() {

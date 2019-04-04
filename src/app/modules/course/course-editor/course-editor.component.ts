@@ -18,10 +18,10 @@ export class CourseEditorComponent implements OnInit {
   });
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private courseService: CourseService) {
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly fb: FormBuilder,
+    private readonly courseService: CourseService) {
   }
 
   ngOnInit(): void {

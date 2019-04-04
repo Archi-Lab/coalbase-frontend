@@ -74,7 +74,10 @@ export class LearningOutcomeEditorComponent implements OnInit {
     purpose: new FormControl('')
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private learningOutcomeService: LearningOutcomeService, private fb: FormBuilder) {
+  constructor(private readonly router: Router,
+              private readonly route: ActivatedRoute,
+              private readonly learningOutcomeService: LearningOutcomeService,
+              private readonly fb: FormBuilder) {
   }
 
   ngOnInit(): void {

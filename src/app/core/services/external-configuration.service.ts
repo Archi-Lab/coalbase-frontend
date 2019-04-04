@@ -18,7 +18,7 @@ export class ExternalConfigurationService implements ExternalConfigurationHandle
     return this.http;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   getExternalConfiguration(): ExternalConfiguration {
