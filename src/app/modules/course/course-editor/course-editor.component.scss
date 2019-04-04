@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/coalbase-colors';
+
+.course-editor-card {
+  margin: 1.5em auto 0 auto;
+  max-width: 800px;
+  min-width: 800px;
+  box-sizing: border-box;
+}
+
+.course-editor-container {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.course-editor-label {
+  margin: auto;
+  color: $coalbase-green;
+}

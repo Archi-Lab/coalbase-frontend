@@ -1,1 +1,32 @@
-<div>Course-Editor</div>
+<mat-card class="course-editor-card">
+  <mat-card-header>
+    <mat-card-title>{{course.title}}</mat-card-title>
+    <mat-card-subtitle>Lehrveranstaltung</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="course-editor-container" [formGroup]="courseForm">
+      <mat-label class="course-editor-label"><strong>Titel</strong></mat-label>
+      <mat-form-field color="accent">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="3"
+                  placeholder="Titel der Veranstaltung"
+                  [formControl]="titleForm"></textarea>
+      </mat-form-field>
+
+      <mat-label class="course-editor-label"><strong>Beschreibung</strong></mat-label>
+      <mat-form-field color="accent">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="10"
+                  placeholder="Kurzbeschreibung der Veranstaltung" [formControl]="descriptionForm"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="accent" (click)="saveCourse()">Speichern</button>
+    <button mat-raised-button color="primary" (click)="deleteCourse()">Löschen</button>
+  </mat-card-actions>
+</mat-card>

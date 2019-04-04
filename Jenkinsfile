@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools{
-      nodejs "nodejs8111"
+      nodejs "nodejs1013"
     }
 
     stages {
@@ -23,6 +23,7 @@ pipeline {
         }
         stage("Quality Check") {
             steps {
+                sh "/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/nodejs1013/bin/npm install typescript"
                 script { scannerHome = tool "SonarQube Scanner"; }
                 withSonarQubeEnv("SonarQube-Server") { sh "${scannerHome}/bin/sonar-scanner -X" }
             }
