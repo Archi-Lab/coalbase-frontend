@@ -79,7 +79,7 @@ export class CourseEditorComponent implements OnInit {
 
   private openDeleteDialog(learningSpaceAmount: number) {
     const dialogRef = this.dialog.open(CourseEditorDeleteDialogComponent, {
-      data: {courseTitle: this.course.title, learningSpaceAmount: learningSpaceAmount}
+      data: {courseTitle: this.course.title, learningSpaceAmount}
     });
     dialogRef.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
