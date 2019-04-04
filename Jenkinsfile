@@ -24,7 +24,7 @@ pipeline {
         stage("Quality Check") {
             steps {
                 script { scannerHome = tool "SonarQube Scanner"; }
-                withSonarQubeEnv("SonarQube-Server") { sh "${scannerHome}/bin/sonar-scanner" }
+                withSonarQubeEnv("SonarQube-Server") { sh "${scannerHome}/bin/sonar-scanner -X" }
             }
             post {
                 always {
