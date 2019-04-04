@@ -13,18 +13,27 @@ import {CourseService} from "../../../core/services/course/course.service";
 })
 export class LearningSpaceOverviewComponent implements OnInit {
   sortedLearningSpaces: LearningSpace[] = [];
+  courseIdentifier: string = "";
 
   constructor(private learningSpaceService: LearningSpaceService,
               private courseService: CourseService,
               private router: Router,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      const identifier: string = params.get('courseIdentifier') as string;
-      this.resolveLearningSpaces(identifier);
+      this.courseIdentifier = params.get('courseIdentifier') as string;
     });
+
+    this.route.url.subscribe(urlSegment => {
+      console.log("Path: " + JSON.stringify(urlSegment));
+      if (this.courseIdentifier !== "") {
+        console.log("called");
+        this.resolveLearningSpaces(this.courseIdentifier);
+      }
+    });
+
   }
 
   private resolveLearningSpaces(courseIdentifier: string): void {

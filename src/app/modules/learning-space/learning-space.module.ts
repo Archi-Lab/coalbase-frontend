@@ -8,7 +8,6 @@ import {LearningSpacePage} from "./pages/learning-space.page";
 import {LearningSpaceEditorComponent} from './learning-space-editor/learning-space-editor.component';
 import {LearningSpaceOverviewComponent} from './learning-space-overview/learning-space-overview.component';
 import {LearningOutcomeService} from "../../core/services/learning-outcome/learning-outcome.service";
-import {CourseService} from "../../core/services/course/course.service";
 
 @NgModule({
   declarations: [
@@ -25,8 +24,7 @@ import {CourseService} from "../../core/services/course/course.service";
   ],
   providers: [
     LearningSpaceService,
-    LearningOutcomeService,
-    CourseService
+    LearningOutcomeService
   ]
 })
 export class LearningSpaceModule {

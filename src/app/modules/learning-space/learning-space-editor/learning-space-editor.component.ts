@@ -5,6 +5,8 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
+import {Course} from "../../../shared/models/course/course.model";
+import {CourseService} from "../../../core/services/course/course.service";
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -13,8 +15,8 @@ import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-
 })
 export class LearningSpaceEditorComponent implements OnInit {
 
+  course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
-
   learningOutcomes: LearningOutcome[] = [];
   learningSpaces: LearningSpace[] = [];
 
@@ -28,17 +30,28 @@ export class LearningSpaceEditorComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private learningSpaceService: LearningSpaceService,
+    private courseService: CourseService,
     private learningOutcomeService: LearningOutcomeService) {
   }
 
   ngOnInit() {
+
+    if (this.route.parent) {
+      this.route.parent.paramMap.subscribe(parentParams => {
+        const courseIdentifier: string = parentParams.get('courseIdentifier') as string;
+        this.courseService.get(courseIdentifier).subscribe(course => {
+          this.course = course;
+        });
+      });
+    }
     this.route.paramMap.subscribe(params => {
-      const identifier = params.get('learningSpaceIdentifier');
-      if (identifier === 'new') {
+      const learningSpaceIdentifier: string = params.get('learningSpaceIdentifier') as string;
+
+      if (learningSpaceIdentifier === 'new') {
         this.learningSpace = new LearningSpace('');
         this.initializeForm(this.learningSpace);
-      } else if (identifier) {
-        this.learningSpaceService.get(identifier).subscribe(learningSpace => {
+      } else if (learningSpaceIdentifier) {
+        this.learningSpaceService.get(learningSpaceIdentifier).subscribe(learningSpace => {
           this.learningSpace = learningSpace;
           this.learningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
             (learningOutcome: LearningOutcome) => {
@@ -51,12 +64,6 @@ export class LearningSpaceEditorComponent implements OnInit {
                 (error) => this.initializeForm(this.learningSpace));
             });
         });
-      } else {
-        this.learningSpaceService.getFirstElement().subscribe(
-          learningSpace => {
-            this.learningSpace = learningSpace;
-            this.initializeForm(this.learningSpace);
-          });
       }
     });
     this.learningOutcomeService.getAll().subscribe(learningOutcomes => this.learningOutcomes = learningOutcomes);
@@ -76,26 +83,49 @@ export class LearningSpaceEditorComponent implements OnInit {
       learningOutcome => this.learningSpace.learningOutcome = learningOutcome);
   }
 
-  public saveLearningSpace(): void {
-    this.saveLearningSpaceFromForm();
-    if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
-      this.learningSpaceService.update(this.learningSpace).subscribe(
-        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace));
-    } else {
-      this.learningSpaceService.create(this.learningSpace).subscribe(
-        learningSpace => this.addRelationsToLearningSpace(learningSpace as LearningSpace));
-    }
-    this.router.navigate(['../'], {relativeTo: this.route});
+  private addRelationToCourse(learningSpace: LearningSpace): void {
+    this.course.updateRelation("learningSpaces", learningSpace).subscribe();
+    this.course.learningSpaces.push(learningSpace);
+
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
     learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
       .subscribe();
+  }
+
+
+  private removeLearningSpaceInCourse(learningSpace: LearningSpace): void {
+    const indexToRemove: number = this.course.learningSpaces.findIndex(learningSpaceSearch => learningSpaceSearch._links.self.href === learningSpace._links.self.href);
+    this.course.learningSpaces.slice(indexToRemove, 1);
+  }
+
+  public saveLearningSpace(): void {
+    this.saveLearningSpaceFromForm();
+
+    if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
+      this.learningSpaceService.update(this.learningSpace).subscribe(
+        learningSpace => {
+          const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+          this.addRelationsToLearningSpace(learningSpaceUpdated);
+          this.router.navigate(['../'], {relativeTo: this.route});
+        });
+    } else {
+      this.learningSpaceService.create(this.learningSpace).subscribe(
+        learningSpace => {
+          const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+          this.addRelationsToLearningSpace(learningSpaceUpdated);
+          this.addRelationToCourse(learningSpaceUpdated);
+          this.router.navigate(['../'], {relativeTo: this.route});
+        });
+    }
+
 
   }
 
   public deleteLearningSpace(): void {
     this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
+    this.removeLearningSpaceInCourse(this.learningSpace);
   }
 
   public get titleForm(): FormControl {

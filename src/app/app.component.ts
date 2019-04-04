@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {KeycloakService} from 'keycloak-angular';
+import {CacheHelper} from "angular4-hal";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ export class AppComponent {
   title = 'CoalBase';
 
   constructor(private keycloakservice: KeycloakService) {
+    CacheHelper.isActive = false;
   }
 
   logout() {
