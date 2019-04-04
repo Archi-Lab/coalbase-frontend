@@ -23,7 +23,7 @@ pipeline {
         }
         stage("Quality Check") {
             steps {
-                sh "/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/nodejs1013/npm"
+                sh "/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/nodejs1013/bin/npm"
                 script { scannerHome = tool "SonarQube Scanner"; }
                 withSonarQubeEnv("SonarQube-Server") { sh "${scannerHome}/bin/sonar-scanner -X" }
             }
