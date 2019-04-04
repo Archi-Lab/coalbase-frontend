@@ -91,11 +91,17 @@ export class LearningSpaceOverviewComponent implements OnInit {
 
   private updateRelationForLearningSpace(indexToUpdate: number): void {
     if (indexToUpdate === 0) {
-      this.sortedLearningSpaces[indexToUpdate].deleteRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
-      this.sortedLearningSpaces[indexToUpdate].requirement = undefined;
+      if (this.sortedLearningSpaces[indexToUpdate].requirement) {
+        this.sortedLearningSpaces[indexToUpdate].deleteRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+        this.sortedLearningSpaces[indexToUpdate].requirement = undefined;
+      }
     } else {
       this.sortedLearningSpaces[indexToUpdate].requirement = this.sortedLearningSpaces[indexToUpdate - 1];
-      this.sortedLearningSpaces[indexToUpdate].updateRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+      if (this.sortedLearningSpaces[indexToUpdate].requirement) {
+        this.sortedLearningSpaces[indexToUpdate].addRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+      } else {
+        this.sortedLearningSpaces[indexToUpdate].updateRelation('requirement', this.sortedLearningSpaces[indexToUpdate].requirement as LearningSpace).subscribe();
+      }
     }
   }
 
