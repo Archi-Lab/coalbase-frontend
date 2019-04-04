@@ -5,7 +5,6 @@ import {MaterialModule} from '../../shared/material.module';
 import {LearningOutcomePage} from './pages/learning-outcome.page';
 import {LearningOutcomeRoutingModule} from './learning-outcome-routing.module';
 import {LearningOutcomeEditorComponent} from './learning-outcome-editor/learning-outcome-editor.component';
-import {LearningOutcomeService} from '../../core/services/learning-outcome/learning-outcome.service';
 
 @NgModule({
   imports: [
@@ -18,9 +17,6 @@ import {LearningOutcomeService} from '../../core/services/learning-outcome/learn
   declarations: [
     LearningOutcomePage,
     LearningOutcomeEditorComponent
-  ],
-  providers: [
-    LearningOutcomeService
   ],
   exports: [
     LearningOutcomePage
