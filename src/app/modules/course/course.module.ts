@@ -6,9 +6,11 @@ import {MaterialModule} from '../../shared/material.module';
 import {CourseEditorComponent} from './course-editor/course-editor.component';
 import {CourseOverviewComponent} from './course-overview/course-overview.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CourseEditorDeleteDialogComponent} from './course-editor-delete-dialog/course-editor-delete-dialog.component';
+import {LearningSpaceService} from '../../core/services/learning-space/learning-space.service';
 
 @NgModule({
-  declarations: [CoursePage, CourseEditorComponent, CourseOverviewComponent],
+  declarations: [CoursePage, CourseEditorComponent, CourseOverviewComponent, CourseEditorDeleteDialogComponent],
   imports: [
     CourseRoutingModule,
     CommonModule,
@@ -16,7 +18,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule,
     MaterialModule
   ],
+  entryComponents: [CourseEditorDeleteDialogComponent],
   providers: [
+    LearningSpaceService
   ],
   exports: [
     CoursePage

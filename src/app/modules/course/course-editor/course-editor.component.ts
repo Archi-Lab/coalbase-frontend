@@ -3,6 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../../../shared/models/course/course.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {CourseService} from '../../../core/services/course/course.service';
+import {MatDialog} from '@angular/material';
+import {CourseEditorDeleteDialogComponent} from '../course-editor-delete-dialog/course-editor-delete-dialog.component';
+import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
+import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 
 @Component({
   selector: 'app-course-editor',
@@ -21,7 +25,9 @@ export class CourseEditorComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly fb: FormBuilder,
-    private readonly courseService: CourseService) {
+    private readonly courseService: CourseService,
+    private readonly learningSpaceService: LearningSpaceService,
+    private readonly dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -63,7 +69,23 @@ export class CourseEditorComponent implements OnInit {
   }
 
   public deleteCourse() {
-    this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route.parent}));
+    this.course.getRelationArray(LearningSpace, 'learningSpaces').subscribe(learningSpaces => {
+        this.openDeleteDialog(learningSpaces.length);
+      }, error => {
+        this.openDeleteDialog(0);
+      }
+    );
+  }
+
+  private openDeleteDialog(learningSpaceAmount: number) {
+    const dialogRef = this.dialog.open(CourseEditorDeleteDialogComponent, {
+      data: {courseTitle: this.course.title, learningSpaceAmount: learningSpaceAmount}
+    });
+    dialogRef.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route.parent}));
+      }
+    });
   }
 
   private saveCourseForm(): void {
