@@ -23,3 +23,17 @@
   background-size: cover;
   background-position: center;
 }
+
+.course-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $coalbase-green;
+  background-size: cover;
+  background-position: center;
+  div {
+    font-size: 1.3em;
+    text-align: center;
+    color: white;
+  }
+}
