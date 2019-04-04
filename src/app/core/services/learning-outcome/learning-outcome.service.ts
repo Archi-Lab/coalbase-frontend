@@ -2,7 +2,9 @@ import {Injectable, Injector} from '@angular/core';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {ListResourceService} from '../ListResourceService';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LearningOutcomeService extends ListResourceService<LearningOutcome> {
 
   constructor(injector: Injector) {
