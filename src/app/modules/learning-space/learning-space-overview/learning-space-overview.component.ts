@@ -27,9 +27,7 @@ export class LearningSpaceOverviewComponent implements OnInit {
     });
 
     this.route.url.subscribe(urlSegment => {
-      console.log("Path: " + JSON.stringify(urlSegment));
       if (this.courseIdentifier !== "") {
-        console.log("called");
         this.resolveLearningSpaces(this.courseIdentifier);
       }
     });

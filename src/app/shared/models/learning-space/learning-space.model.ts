@@ -5,7 +5,7 @@ export class LearningSpace extends Resource {
 
 
   private _title: string;
-  private _requirement: LearningSpace | undefined;
+  private _requirement?: LearningSpace;
   private _learningOutcome: LearningOutcome;
 
   constructor();

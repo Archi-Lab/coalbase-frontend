@@ -11,7 +11,7 @@ import {CourseService} from '../../../core/services/course/course.service';
 export class CourseOverviewComponent {
   courses: Observable<Course[]>;
 
-  constructor(private courseService: CourseService) {
+  constructor(private readonly courseService: CourseService) {
     this.courses = this.courseService.listResource;
   }
 }
