@@ -4,13 +4,14 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializer} from './security/security.init';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from './shared/material.module';
 import {AppRoutingModule} from './app-routing.module';
 import {ExternalConfigurationService} from './core/services/external-configuration.service';
 import {AngularHalModule} from 'angular4-hal';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
+import {CacheInterceptor} from "./core/interceptors/cache/cache.interceptor";
 
 
 @NgModule({
@@ -37,6 +38,11 @@ import {ReactiveFormsModule} from "@angular/forms";
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
