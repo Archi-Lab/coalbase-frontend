@@ -14,4 +14,8 @@ export class CourseOverviewComponent {
   constructor(private readonly courseService: CourseService) {
     this.courses = this.courseService.listResource;
   }
+
+  public buildShortName(course: Course): string {
+    return course.title.substr(0,1) + course.title.substr(course.title.length-2);
+  }
 }
