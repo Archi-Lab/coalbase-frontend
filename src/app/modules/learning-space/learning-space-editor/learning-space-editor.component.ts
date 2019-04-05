@@ -5,8 +5,8 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
-import {Course} from "../../../shared/models/course/course.model";
-import {CourseService} from "../../../core/services/course/course.service";
+import {Course} from '../../../shared/models/course/course.model';
+import {CourseService} from '../../../core/services/course/course.service';
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -84,7 +84,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private addRelationToCourse(learningSpace: LearningSpace): void {
-    this.course.updateRelation("learningSpaces", learningSpace).subscribe();
+    this.course.updateRelation('learningSpaces', learningSpace).subscribe();
     this.course.learningSpaces.push(learningSpace);
 
   }
@@ -128,6 +128,10 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.removeLearningSpaceInCourse(this.learningSpace);
   }
 
+  public backToOverview() {
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
   public get titleForm(): FormControl {
     return this.learningSpaceForm.get('title') as FormControl;
   }
@@ -135,5 +139,6 @@ export class LearningSpaceEditorComponent implements OnInit {
   public get learningOutcomeForm(): FormControl {
     return this.learningSpaceForm.get('learningOutcome') as FormControl;
   }
+
 
 }
