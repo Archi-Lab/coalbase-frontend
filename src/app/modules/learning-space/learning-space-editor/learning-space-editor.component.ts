@@ -7,6 +7,8 @@ import {LearningSpaceService} from '../../../core/services/learning-space/learni
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {Course} from '../../../shared/models/course/course.model';
 import {CourseService} from '../../../core/services/course/course.service';
+import {MatDialog} from '@angular/material';
+import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -31,7 +33,8 @@ export class LearningSpaceEditorComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly learningSpaceService: LearningSpaceService,
     private readonly courseService: CourseService,
-    private readonly learningOutcomeService: LearningOutcomeService) {
+    private readonly learningOutcomeService: LearningOutcomeService,
+    private readonly dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -124,8 +127,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public deleteLearningSpace(): void {
-    this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
-    this.removeLearningSpaceInCourse(this.learningSpace);
+    this.openDeleteDialog();
   }
 
   public backToOverview() {
@@ -138,6 +140,18 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   public get learningOutcomeForm(): FormControl {
     return this.learningSpaceForm.get('learningOutcome') as FormControl;
+  }
+
+  private openDeleteDialog() {
+    const dialogRef = this.dialog.open(LearningSpaceDeleteDialogComponent, {
+      data: {learningSpaceTitle: this.learningSpace.title}
+    });
+    dialogRef.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
+        this.removeLearningSpaceInCourse(this.learningSpace);
+      }
+    });
   }
 
 

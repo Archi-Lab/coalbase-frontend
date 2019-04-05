@@ -2,17 +2,16 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 export interface DialogData {
-  courseTitle: string;
-  learningSpaceAmount: number;
+  learningSpaceTitle: string;
 }
 
 @Component({
   selector: 'app-course-editor-delete-dialog',
-  templateUrl: './course-editor-delete-dialog.component.html',
-  styleUrls: ['./course-editor-delete-dialog..component.scss']
+  templateUrl: './learning-space-delete-dialog.component.html',
+  styleUrls: ['./learning-space-delete-dialog..component.scss']
 })
-export class CourseEditorDeleteDialogComponent {
-  constructor(private readonly dialogRef: MatDialogRef<CourseEditorDeleteDialogComponent>,
+export class LearningSpaceDeleteDialogComponent {
+  constructor(private readonly dialogRef: MatDialogRef<LearningSpaceDeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 

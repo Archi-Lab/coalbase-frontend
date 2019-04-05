@@ -78,7 +78,7 @@ export class CourseEditorComponent implements OnInit {
   }
 
   public backToOverview() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
 
   private openDeleteDialog(learningSpaceAmount: number) {
