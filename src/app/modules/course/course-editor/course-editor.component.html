@@ -26,7 +26,17 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="accent" (click)="saveCourse()">Speichern</button>
-    <button mat-raised-button color="primary" (click)="deleteCourse()">Löschen</button>
+    <button mat-raised-button (click)="backToOverview()">
+      <mat-icon>arrow_back_ios</mat-icon>
+      Abbrechen
+    </button>
+    <button mat-raised-button color="primary" (click)="deleteCourse()">
+      <mat-icon>close</mat-icon>
+      Löschen
+    </button>
+    <button mat-raised-button color="accent" (click)="saveCourse()">
+      <mat-icon>check</mat-icon>
+      Speichern
+    </button>
   </mat-card-actions>
 </mat-card>

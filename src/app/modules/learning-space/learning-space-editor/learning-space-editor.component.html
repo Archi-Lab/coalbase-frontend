@@ -5,7 +5,6 @@
   </mat-card-header>
 
   <mat-card-content>
-
     <div class="learning-space-editor-container"
          [formGroup]="learningSpaceForm">
       <mat-label class="learning-space-editor-label"><strong>Lernraum Titel</strong></mat-label>
@@ -18,19 +17,27 @@
       <mat-form-field color="accent">
         <mat-select placeholder="Wählen Sie ein Learning Outcome"
                     [formControl]="learningOutcomeForm">
-          <mat-option *ngFor="let learningOutcomeOption of learningOutcomes" [value]="learningOutcomeOption._links.self.href">
+          <mat-option *ngFor="let learningOutcomeOption of learningOutcomes"
+                      [value]="learningOutcomeOption._links.self.href">
             {{learningOutcomeOption.competence.action}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-
     </div>
-
 
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="accent" (click)="saveLearningSpace()">Speichern</button>
-    <button mat-raised-button color="primary" (click)="deleteLearningSpace()">Löschen</button>
+    <button mat-raised-button (click)="backToOverview()">
+      <mat-icon>arrow_back_ios</mat-icon>
+      Abbrechen
+    </button>
+    <button mat-raised-button color="primary" (click)="deleteLearningSpace()">
+      <mat-icon>close</mat-icon>
+      Löschen
+    </button>
+    <button mat-raised-button color="accent" (click)="saveLearningSpace()">
+      <mat-icon>check</mat-icon>
+      Speichern
+    </button>
   </mat-card-actions>
 </mat-card>

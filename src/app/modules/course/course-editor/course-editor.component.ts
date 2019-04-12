@@ -77,6 +77,10 @@ export class CourseEditorComponent implements OnInit {
     );
   }
 
+  public backToOverview() {
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
+  }
+
   private openDeleteDialog(learningSpaceAmount: number) {
     const dialogRef = this.dialog.open(CourseEditorDeleteDialogComponent, {
       data: {courseTitle: this.course.title, learningSpaceAmount}
@@ -92,4 +96,6 @@ export class CourseEditorComponent implements OnInit {
     this.course.title = this.titleForm.value;
     this.course.description = this.descriptionForm.value;
   }
+
+
 }

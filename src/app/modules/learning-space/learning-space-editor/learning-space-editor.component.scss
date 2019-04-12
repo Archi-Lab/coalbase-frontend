@@ -16,3 +16,7 @@
   margin: auto;
   color: $coalbase-green;
 }
+
+.mat-card-actions .mat-raised-button:first-child {
+  margin-right: 8px;
+}
