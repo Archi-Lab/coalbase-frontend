@@ -5,7 +5,6 @@ services:
     image: docker.nexus.archi-lab.io/archilab/coalbase-frontend
     ports:
     - 4201:80
-    restart: always
     logging:
       driver: gelf
       options:
