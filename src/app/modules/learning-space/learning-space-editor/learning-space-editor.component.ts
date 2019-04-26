@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
@@ -28,6 +29,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   });
 
   constructor(
+    private readonly location: Location,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly fb: FormBuilder,
@@ -122,16 +124,14 @@ export class LearningSpaceEditorComponent implements OnInit {
           this.router.navigate(['../'], {relativeTo: this.route});
         });
     }
-
-
   }
 
   public deleteLearningSpace(): void {
     this.openDeleteDialog();
   }
 
-  public backToOverview() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+  public backToPreviousPage() {
+    this.location.back();
   }
 
   public get titleForm(): FormControl {

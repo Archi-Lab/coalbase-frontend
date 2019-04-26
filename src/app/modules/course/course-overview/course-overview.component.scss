@@ -8,8 +8,8 @@
 }
 
 .course-card {
-  max-width: 500px;
-  margin: 5px;
+  width: 100%;
+  margin: 10px 20px;
 }
 
 .course-add {
@@ -31,9 +31,47 @@
   background-color: $coalbase-green;
   background-size: cover;
   background-position: center;
+
   div {
     font-size: 1.3em;
     text-align: center;
     color: white;
   }
 }
+
+h3 {
+  display: block;
+  font-size: 1em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.learning-space-card {
+  margin: 1%;
+  box-sizing: border-box;
+  display: inline-block;
+  max-width: 31%;
+}
+
+.learning-space-edit {
+  height: 100%;
+  width: 100%;
+}
+
+.learning-space-title {
+  margin: 0;
+  display: block;
+  vertical-align: middle;
+  padding-bottom: 0.1em;
+}
+
+.mat-card-actions
+{
+  width: fit-content;
+  margin: auto;
+  padding: 0;
+}
+

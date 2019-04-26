@@ -7,7 +7,26 @@
       <mat-card-title>{{course.title}}</mat-card-title>
       <mat-card-subtitle>Lehrveranstaltung</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="assets/images/coalbase-background.svg" alt="No Image found">
+
+    <h3>
+      Lernräume
+    </h3>
+    <p *ngIf="course.learningSpaces.length == 0">
+      Keine Lernräume vorhanden
+    </p>
+    <mat-card class="learning-space-card" *ngFor="let learningSpace of course.learningSpaces;">
+      <mat-card-title class="learning-space-title">
+        {{learningSpace.title}}
+      </mat-card-title>
+
+      <button mat-raised-button class="learning-space-edit" color="accent" [routerLink]="['./' , course.getIdFromUri(), 'learning-spaces', learningSpace.getIdFromUri()]">
+        Bearbeiten
+      </button>
+    </mat-card>
+
+    <h3>
+      Beschreibung
+    </h3>
     <mat-card-content>
       {{course.description}}
     </mat-card-content>
