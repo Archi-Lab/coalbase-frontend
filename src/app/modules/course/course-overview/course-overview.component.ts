@@ -19,7 +19,7 @@ export class CourseOverviewComponent {
   ngOnInit() {
     this.courses.subscribe(
       courses => {
-        for (let course of courses) {
+        for (const course of courses) {
           this.resolveLearningSpaces(course);
         }
       }
