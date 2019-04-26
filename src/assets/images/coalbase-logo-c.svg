@@ -1,1 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 461.81 400.5"><defs><style>.cls-1{fill:#fff;stroke:#000;stroke-miterlimit:10;stroke-width:20px;}.cls-2{font-size:300px;fill:#2e7d32;font-family:Roboto-Bold, Roboto;font-weight:700;}</style></defs><title>coalbase-logo-c</title><g id="Hexa_miner"><polygon class="cls-1" points="339.69 10.25 448.44 200.25 339.69 390.25 122.19 390.25 13.44 200.25 122.19 10.25 339.69 10.25"/></g><g id="Ebene_4" data-name="Ebene 4"><text class="cls-2" transform="translate(132.76 309.38)">C</text></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 461.81 400.5"
+   version="1.1"
+   id="svg2361"
+   sodipodi:docname="coalbase-logo-c.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata2365">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview2363"
+     showgrid="false"
+     inkscape:zoom="0.58926342"
+     inkscape:cx="230.905"
+     inkscape:cy="200.25"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2361" />
+  <defs
+     id="defs2351">
+    <style
+       id="style2349">.cls-1{fill:#fff;stroke:#000;stroke-miterlimit:10;stroke-width:20px;}.cls-2{font-size:300px;fill:#2e7d32;font-family:Roboto-Bold, Roboto;font-weight:700;}</style>
+  </defs>
+  <title
+     id="title2353">coalbase-logo-c</title>
+  <g
+     id="Hexa_miner">
+    <polygon
+       class="cls-1"
+       points="339.69 10.25 448.44 200.25 339.69 390.25 122.19 390.25 13.44 200.25 122.19 10.25 339.69 10.25"
+       id="polygon2355" />
+  </g>
+  <g
+     id="Ebene_4"
+     data-name="Ebene 4"
+     transform="translate(-18.182203,-1.6970339)"
+     style="fill:#c81e0f;fill-opacity:1">
+    <text
+       class="cls-2"
+       transform="translate(132.76,309.38)"
+       id="text2358"
+       style="font-weight:700;font-size:300px;font-family:Roboto-Bold, Roboto;fill:#c81e0f;fill-opacity:1">C</text>
+  </g>
+</svg>

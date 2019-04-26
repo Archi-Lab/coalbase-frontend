@@ -54,8 +54,23 @@ $th-red: (
   )
 );
 
+$th-orange: (
+  100: #ff8b3b,
+  500: #ea5a00,
+  700: #b02700,
+  contrast: (
+    100: $dark-primary-text,
+    500: $dark-primary-text,
+    700: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
 $app-primary: mat-palette($coalbase-grey);
-$app-accent: mat-palette($coalbase-green);
+$app-accent: mat-palette($th-orange);
 
 // The warn palette is optional (defaults to red).
 $app-warn: mat-palette($th-red);
