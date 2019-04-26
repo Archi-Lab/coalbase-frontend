@@ -12,6 +12,7 @@ import {AngularHalModule} from 'angular4-hal';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CacheInterceptor} from "./core/interceptors/cache/cache.interceptor";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {CacheInterceptor} from "./core/interceptors/cache/cache.interceptor";
     KeycloakAngularModule,
     MaterialModule,
     AppRoutingModule,
+    MatExpansionModule,
     AngularHalModule.forRoot()
   ],
   providers: [
