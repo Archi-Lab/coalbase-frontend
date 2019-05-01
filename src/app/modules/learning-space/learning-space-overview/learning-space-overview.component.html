@@ -1,5 +1,8 @@
 <div class="learning-space-container">
   <mat-card>
+    <mat-card-title>
+      {{course.title}}
+    </mat-card-title>
     <mat-card-content>
       <div cdkDropList (cdkDropListDropped)="drop($event)">
         <mat-card class="learning-space-card" cdkDrag

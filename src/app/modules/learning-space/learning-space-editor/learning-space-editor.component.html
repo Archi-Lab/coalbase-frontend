@@ -7,6 +7,8 @@
   <mat-card-content>
     <div class="learning-space-editor-container"
          [formGroup]="learningSpaceForm">
+      <mat-label class="learning-space-editor-label"><strong>Lehrveranstaltung</strong></mat-label>
+      <mat-label class="learning-space-editor-course-label">{{course.title}}</mat-label>
       <mat-label class="learning-space-editor-label"><strong>Lernraum Titel</strong></mat-label>
       <mat-form-field color="accent">
         <textarea matInput placeholder="Titel für den Lernraum eingeben"

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CourseService} from "../../../core/services/course/course.service";
+import {Course} from "../../../shared/models/course/course.model";
 
 @Component({
   selector: 'app-learning-space-overview',
@@ -13,6 +14,7 @@ import {CourseService} from "../../../core/services/course/course.service";
 })
 export class LearningSpaceOverviewComponent implements OnInit {
   sortedLearningSpaces: LearningSpace[] = [];
+  course: Course = new Course();
   courseIdentifier: string = "";
 
   constructor(private readonly learningSpaceService: LearningSpaceService,
@@ -28,10 +30,16 @@ export class LearningSpaceOverviewComponent implements OnInit {
 
     this.route.url.subscribe(urlSegment => {
       if (this.courseIdentifier !== "") {
+        this.resolveCourse(this.courseIdentifier);
         this.resolveLearningSpaces(this.courseIdentifier);
       }
     });
+  }
 
+  private resolveCourse(courseIdentifier: string) : void {
+    this.courseService.get(courseIdentifier).subscribe(course => {
+      this.course = course;
+    });
   }
 
   private resolveLearningSpaces(courseIdentifier: string): void {
