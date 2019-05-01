@@ -1,16 +1,14 @@
 @import '~src/assets/scss/coalbase-colors';
 
 .course-page {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
   padding: 1.5% 0 1.5% 0;
+  margin: 0 auto;
+  max-width: 600px;
 }
 
 .course-card {
-  width: 100%;
+  display: block;
   margin: 10px 20px;
-  max-width: 600px;
 }
 
 .course-add {
