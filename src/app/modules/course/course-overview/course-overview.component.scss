@@ -40,6 +40,8 @@
 
 .course-description-card {
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 h3 {
