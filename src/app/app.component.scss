@@ -15,6 +15,11 @@
   border-bottom-color: #d4d4d4;
 }
 
+.header-logo {
+  margin-top: 8px;
+  height: 42px;
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -39,6 +44,17 @@
   border-top-width: 1px;
   border-top-color: #d4d4d4;
 }
+
+.footer-logo-container {
+  box-sizing: border-box;
+  padding-top: 5px;
+  height: 45px;
+}
+
+.footer-logo {
+  height: 35px;
+}
+
 
 .title-center {
   margin: 0 auto;
