@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material';
 import {CourseEditorDeleteDialogComponent} from '../course-editor-delete-dialog/course-editor-delete-dialog.component';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-course-editor',
@@ -25,6 +26,7 @@ export class CourseEditorComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly fb: FormBuilder,
+    private readonly snack: MatSnackBar,
     private readonly courseService: CourseService,
     private readonly learningSpaceService: LearningSpaceService,
     private readonly dialog: MatDialog) {
@@ -62,8 +64,10 @@ export class CourseEditorComponent implements OnInit {
     this.saveCourseForm();
     if (this.course._links != null && this.course._links.self != null) {
       this.courseService.update(this.course).subscribe();
+      this.snack.open("Lehrveranstaltung bearbeitet", undefined, { duration: 2000});
     } else {
       this.courseService.create(this.course).subscribe();
+      this.snack.open("Lehrveranstaltung gespeichert", undefined, { duration: 2000});
     }
     this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
@@ -88,6 +92,7 @@ export class CourseEditorComponent implements OnInit {
     dialogRef.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
         this.courseService.delete(this.course).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route.parent}));
+        this.snack.open("Lehrveranstaltung gelöscht", undefined, { duration: 2000});
       }
     });
   }

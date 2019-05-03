@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Möchten sie den Kurs "{{data.courseTitle}}" wirklich löschen?</h1>
+<h1 mat-dialog-title>Möchten Sie die Lehrveranstaltung "{{data.courseTitle}}" wirklich löschen?</h1>
 <mat-dialog-content class="center">
   <div *ngIf="data.learningSpaceAmount == 0">
-    Der Kurs hat keine Lernräume.
+    Die Lehrveranstaltung hat keine Lernräume.
   </div>
   <div *ngIf="data.learningSpaceAmount > 0">
-    Der Kurs besitzt noch {{data.learningSpaceAmount}} Lernräume.
+    Die Lehrveranstaltung besitzt noch {{data.learningSpaceAmount}} Lernräume.
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="center">

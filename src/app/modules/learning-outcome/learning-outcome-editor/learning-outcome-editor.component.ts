@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-learning-outcome-editor',
@@ -76,6 +77,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
   constructor(private readonly router: Router,
               private readonly route: ActivatedRoute,
+              private readonly snack: MatSnackBar,
               private readonly learningOutcomeService: LearningOutcomeService,
               private readonly fb: FormBuilder) {
   }
@@ -131,11 +133,13 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.update(this.learningOutcome).subscribe();
+      this.snack.open("Learning Outcome bearbeitet", undefined, { duration: 2000});
     } else {
       this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
         const learningOutcome: LearningOutcome = result as LearningOutcome;
         this.router.navigate(['/learning-outcomes', learningOutcome.getIdFromUri()]);
       });
+      this.snack.open("Learning Outcome gespeichert", undefined, { duration: 2000});
     }
 
   }
@@ -143,6 +147,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
   public deleteLearningOutcome(): void {
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
+      this.snack.open("Learning Outcome gelöscht", undefined, { duration: 2000});
     } else {
       console.log('not implemented yet!');
     }

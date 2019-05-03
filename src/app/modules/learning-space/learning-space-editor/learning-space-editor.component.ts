@@ -8,7 +8,7 @@ import {LearningSpaceService} from '../../../core/services/learning-space/learni
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {Course} from '../../../shared/models/course/course.model';
 import {CourseService} from '../../../core/services/course/course.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
 
 @Component({
@@ -33,6 +33,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly fb: FormBuilder,
+    private readonly snack: MatSnackBar,
     private readonly learningSpaceService: LearningSpaceService,
     private readonly courseService: CourseService,
     private readonly learningOutcomeService: LearningOutcomeService,
@@ -115,6 +116,7 @@ export class LearningSpaceEditorComponent implements OnInit {
           this.addRelationsToLearningSpace(learningSpaceUpdated);
           this.router.navigate(['../'], {relativeTo: this.route});
         });
+      this.snack.open("Lernraum bearbeitet", undefined, { duration: 2000});
     } else {
       this.learningSpaceService.create(this.learningSpace).subscribe(
         learningSpace => {
@@ -123,6 +125,7 @@ export class LearningSpaceEditorComponent implements OnInit {
           this.addRelationToCourse(learningSpaceUpdated);
           this.router.navigate(['../'], {relativeTo: this.route});
         });
+      this.snack.open("Lernraum gespeichert", undefined, { duration: 2000});
     }
   }
 
@@ -150,6 +153,7 @@ export class LearningSpaceEditorComponent implements OnInit {
       if (shouldDelete) {
         this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
         this.removeLearningSpaceInCourse(this.learningSpace);
+        this.snack.open("Lernraum gelöscht", undefined, { duration: 2000});
       }
     });
   }
