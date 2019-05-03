@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  frontend:
+  angular-server:
     image: docker.nexus.archi-lab.io/archilab/coalbase-frontend
     ports:
     - 4201:80
