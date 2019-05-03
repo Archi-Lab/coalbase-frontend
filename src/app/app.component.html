@@ -1,5 +1,8 @@
 <mat-toolbar class="header">
   <div class="toolbar-left">
+    <img class="header-logo" src="../assets/images/coalbase-logo-small.svg" alt="Coalbase Logo"/>
+  </div>
+  <div class="toolbar-center">
     <a mat-button routerLink="/courses" routerLinkActive="underline">Lehrveranstaltungen</a>
     <a mat-button routerLink="/learning-outcomes" routerLinkActive="underline">Learning Outcomes</a>
   </div>
@@ -11,9 +14,17 @@
   <router-outlet></router-outlet>
 </div>
 <mat-toolbar class="footer">
-  <a mat-button routerLink="/privacy" routerLinkActive="underline">Datenschutz</a>
-  <a mat-button routerLink="/imprint" routerLinkActive="underline">Impressum</a>
-  <a mat-button href="https://archi-lab.io">ArchiLab</a>
+  <div>
+    <a mat-button routerLink="/privacy" routerLinkActive="underline">Datenschutz</a>
+    <a mat-button routerLink="/imprint" routerLinkActive="underline">Impressum</a>
+    <a mat-button href="https://archi-lab.io">ArchiLab</a>
+  </div>
+    <a class="footer-logo-container" href="https://www.th-koeln.de/">
+    <img class="footer-logo" src="../assets/images/th-koeln-logo.png" alt="TH-Köln Logo"/>
+    </a>
+
+
+
 </mat-toolbar>
 
 
