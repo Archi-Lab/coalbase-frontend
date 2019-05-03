@@ -28,7 +28,7 @@ export class CacheService {
 
   public put(req: HttpRequest<any>, res: HttpResponse<any>): void {
     const contentType: string = res.headers.get("Content-Type") as string;
-    if (contentType !== undefined && contentType.includes("application/json")) {
+    if (contentType != undefined && contentType.includes("application/json")) {
       const url: string = this.getUrl(req);
       const expiresOn: number = Date.now() + this.maxAge;
       this.cache.set(url, {expiresOn, data: res});
@@ -46,7 +46,6 @@ export class CacheService {
     if (cacheResponse) {
       this.cache.delete(url);
     }
-
   }
 
   private isExpired(cacheResponse: CacheResponse): boolean {
