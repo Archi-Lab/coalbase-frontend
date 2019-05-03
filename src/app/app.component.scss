@@ -21,7 +21,11 @@
 }
 
 .underline {
-  text-decoration: underline;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: $th-koeln-orange;
 }
 
 .content {
@@ -35,7 +39,7 @@
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   height: 50px;
   width: 100%;
   background-color: #f7f7f7;
@@ -46,6 +50,8 @@
 }
 
 .footer-logo-container {
+  position: fixed;
+  left: calc(100% - 65px);
   box-sizing: border-box;
   padding-top: 5px;
   height: 45px;
