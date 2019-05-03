@@ -5,8 +5,14 @@
   justify-content: space-between;
   height: 50px;
   width: 100%;
-  background-color: $coalbase-grey;
-  color: white;
+  border-top-style: solid;
+  border-top-color: $th-koeln-orange;
+  border-top-width: 3px;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 1px -5px rgba(0, 0, 0, .1), 0 1px 2px 1px rgba(0, 0, 0, .02), 0 1px 2px 1px rgba(0, 0, 0, .02);
+  border-bottom: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #d4d4d4;
 }
 
 .underline {
@@ -24,9 +30,16 @@
 
 .footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   height: 50px;
   width: 100%;
-  background-color: $coalbase-grey;
-  color: white;
+  background-color: #f7f7f7;
+  box-shadow: 0 -1px 1px -5px rgba(0, 0, 0, .1), 0 -1px 2px 1px rgba(0, 0, 0, .02), 0 -1px 2px 1px rgba(0, 0, 0, .02);
+  border-top: solid;
+  border-top-width: 1px;
+  border-top-color: #d4d4d4;
+}
+
+.title-center {
+  margin: 0 auto;
 }
