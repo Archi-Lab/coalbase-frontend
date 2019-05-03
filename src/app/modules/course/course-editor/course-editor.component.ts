@@ -3,11 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../../../shared/models/course/course.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {CourseService} from '../../../core/services/course/course.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {CourseEditorDeleteDialogComponent} from '../course-editor-delete-dialog/course-editor-delete-dialog.component';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
-import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-course-editor',
