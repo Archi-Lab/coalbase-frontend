@@ -96,7 +96,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
-    learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome)
+    learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome)
       .subscribe();
   }
 
