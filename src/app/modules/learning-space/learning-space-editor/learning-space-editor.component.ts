@@ -92,7 +92,6 @@ export class LearningSpaceEditorComponent implements OnInit {
   private addRelationToCourse(learningSpace: LearningSpace): void {
     this.course.updateRelation('learningSpaces', learningSpace).subscribe();
     this.course.learningSpaces.push(learningSpace);
-
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
@@ -107,7 +106,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public saveLearningSpace(): void {
-    this.saveLearningSpaceFromForm();
+    this.saveLearningSpaceFromForm(); // TODO method has to wait for learning outcome to be loaded
 
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
       this.learningSpaceService.update(this.learningSpace).subscribe(
@@ -151,9 +150,14 @@ export class LearningSpaceEditorComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.learningSpaceService.delete(this.learningSpace).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
-        this.removeLearningSpaceInCourse(this.learningSpace);
-        this.snack.open("Lernraum gelöscht", undefined, { duration: 2000});
+        this.learningSpaceService.delete(this.learningSpace).subscribe(
+          () => {
+            this.snack.open("Lernraum gelöscht", undefined, { duration: 2000});
+            this.removeLearningSpaceInCourse(this.learningSpace);
+            this.router.navigate(['../'], {relativeTo: this.route});
+          },
+          () => this.snack.open("Lernraum konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Lernraum?", undefined, { duration: 2000})
+        );
       }
     });
   }
