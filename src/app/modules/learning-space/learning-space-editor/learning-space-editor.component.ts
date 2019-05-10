@@ -88,7 +88,7 @@ export class LearningSpaceEditorComponent implements OnInit {
       this.learningSpace.title = this.titleForm.value;
       this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(
         learningOutcome => {
-          this.learningSpace.learningOutcome = learningOutcome
+          this.learningSpace.learningOutcome = learningOutcome;
           resolve();
         },
         error => reject(error)
