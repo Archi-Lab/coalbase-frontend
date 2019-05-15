@@ -10,7 +10,6 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     if (req.method.toLowerCase() === "get") {
       const cachedResponse = this.cacheService.get(req);
       return cachedResponse ? of(cachedResponse) : this.sendRequest(req, next);
@@ -18,7 +17,6 @@ export class CacheInterceptor implements HttpInterceptor {
       this.cacheService.deleteAll();
       return this.sendRequest(req, next);
     }
-
   }
 
   sendRequest(
@@ -26,7 +24,7 @@ export class CacheInterceptor implements HttpInterceptor {
     next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(event => {
-        if (event instanceof HttpResponse) {
+        if (event instanceof HttpResponse && req.method.toLowerCase() === "get") {
           this.cacheService.put(req, event);
         }
       })
