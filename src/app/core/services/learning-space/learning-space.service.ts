@@ -10,6 +10,4 @@ export class LearningSpaceService extends ListResourceService<LearningSpace> {
     super(LearningSpace, 'learningSpaces', injector);
     this.fetchListResource();
   }
-
-
 }

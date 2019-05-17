@@ -13,8 +13,13 @@ export abstract class ListResourceService<T extends Resource> extends RestServic
   }
 
   delete(entity: T): Observable<Object> {
-    this.deleteResourceFromState(entity);
-    return super.delete(entity);
+    return from(new Promise((resolve, reject) => {
+      super.delete(entity).subscribe(() => {
+        this.deleteResourceFromState(entity);
+        resolve();
+      },
+      (error) => reject(error));
+    }));
   }
 
   create(entity: T): Observable<Observable<never> | T> {
@@ -27,13 +32,23 @@ export abstract class ListResourceService<T extends Resource> extends RestServic
   }
 
   update(entity: T): Observable<Observable<never> | T> {
-    this.updateResourceInState(entity);
-    return super.update(entity);
+    return from(new Promise((resolve, reject) => {
+      super.update(entity).subscribe((resource) => {
+          this.updateResourceInState(resource as T);
+          resolve(resource);
+        },
+        (error) => reject(error));
+    }));
   }
 
   patch(entity: T): Observable<Observable<never> | T> {
-    this.updateResourceInState(entity);
-    return super.patch(entity);
+    return from(new Promise((resolve, reject) => {
+      super.patch(entity).subscribe((resource) => {
+          this.updateResourceInState(resource as T);
+          resolve(resource);
+        },
+        (error) => reject(error));
+    }));
   }
 
   public get listResource(): Observable<T[]> {

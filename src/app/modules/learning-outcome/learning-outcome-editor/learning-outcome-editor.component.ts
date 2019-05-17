@@ -141,16 +141,30 @@ export class LearningOutcomeEditorComponent implements OnInit {
       });
       this.snack.open("Learning Outcome gespeichert", undefined, { duration: 2000});
     }
-
   }
 
   public deleteLearningOutcome(): void {
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.learningOutcomeService.delete(this.learningOutcome).subscribe(result => this.router.navigate(['../'], {relativeTo: this.route}));
-      this.snack.open("Learning Outcome gelöscht", undefined, { duration: 2000});
+      this.learningOutcomeService.delete(this.learningOutcome).subscribe(
+        () => {
+          this.navigateToNextLearningOutcome();
+          this.snack.open("Learning Outcome gelöscht", undefined, { duration: 2000});
+        },
+        () => this.snack.open("Learning Outcome konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Learning Outcome?", undefined, { duration: 2000})
+      );
     } else {
       console.log('not implemented yet!');
     }
+  }
+
+  private navigateToNextLearningOutcome() : void {
+    this.learningOutcomeService.getFirstElement().subscribe(firstLearningOutcome => {
+      if (firstLearningOutcome == null) {
+        this.router.navigate(['../new'], {relativeTo: this.route});
+      } else {
+        this.router.navigate(['../', firstLearningOutcome.getIdFromUri()], {relativeTo: this.route});
+      }
+    });
   }
 
   public isNotEmptyOrNew() {
