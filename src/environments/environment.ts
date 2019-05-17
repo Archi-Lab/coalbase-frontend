@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   keyCloak: 'http://localhost:8090/auth',
-  realm: 'coalbase',
+  realm: 'archilab',
   clientID: 'coalbase',
   coalbaseAPI: 'http://localhost:8080/'
 };
