@@ -24,7 +24,7 @@ export class CacheInterceptor implements HttpInterceptor {
     next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(event => {
-        if (event instanceof HttpResponse && req.method.toLowerCase() === "get") {
+        if (event instanceof HttpResponse && event.status == 200 && req.method.toLowerCase() === "get") {
           this.cacheService.put(req, event);
         }
       })
