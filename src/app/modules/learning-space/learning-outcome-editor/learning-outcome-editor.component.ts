@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
@@ -12,6 +12,7 @@ import {MatSnackBar} from "@angular/material";
 })
 export class LearningOutcomeEditorComponent implements OnInit {
   learningOutcome: LearningOutcome = new LearningOutcome();
+  @Output() closeComponent: EventEmitter<boolean> = new EventEmitter<boolean>();
   readonly taxonomyLevels = [
     {
       backend: 'KNOWLEDGE',
@@ -154,30 +155,39 @@ export class LearningOutcomeEditorComponent implements OnInit {
     // Requirements
     this.learningOutcome.requirements = [];
     for (const requirementForm of this.requirementsFormArray.controls as FormGroup[]) {
-      this.learningOutcome.requirements.push({value: requirementForm.controls.requirement.value, taxonomyLevel: requirementForm.controls.taxonomyLevel.value});
+      this.learningOutcome.requirements.push({
+        value: requirementForm.controls.requirement.value,
+        taxonomyLevel: requirementForm.controls.taxonomyLevel.value
+      });
     }
 
     // Abilities
     this.learningOutcome.abilities = [];
     for (const abilityForm of this.abilitiesFormArray.controls as FormGroup[]) {
-      this.learningOutcome.abilities.push({value: abilityForm.controls.ability.value, taxonomyLevel: abilityForm.controls.taxonomyLevel.value});
+      this.learningOutcome.abilities.push({
+        value: abilityForm.controls.ability.value,
+        taxonomyLevel: abilityForm.controls.taxonomyLevel.value
+      });
     }
 
     // Purposes
     this.learningOutcome.purposes = [];
     for (const purposeForm of this.purposesFormArray.controls as FormGroup[]) {
-      this.learningOutcome.purposes.push({value: purposeForm.controls.purpose.value, taxonomyLevel: purposeForm.controls.taxonomyLevel.value});
+      this.learningOutcome.purposes.push({
+        value: purposeForm.controls.purpose.value,
+        taxonomyLevel: purposeForm.controls.taxonomyLevel.value
+      });
     }
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.update(this.learningOutcome).subscribe();
-      this.snack.open("Learning Outcome bearbeitet", undefined, { duration: 2000});
+      this.snack.open("Learning Outcome bearbeitet", undefined, {duration: 2000});
     } else {
       this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
         const learningOutcome: LearningOutcome = result as LearningOutcome;
         this.router.navigate(['/learning-outcomes', learningOutcome.getIdFromUri()]);
       });
-      this.snack.open("Learning Outcome gespeichert", undefined, { duration: 2000});
+      this.snack.open("Learning Outcome gespeichert", undefined, {duration: 2000});
     }
   }
 
@@ -186,16 +196,16 @@ export class LearningOutcomeEditorComponent implements OnInit {
       this.learningOutcomeService.delete(this.learningOutcome).subscribe(
         () => {
           this.navigateToNextLearningOutcome();
-          this.snack.open("Learning Outcome gelöscht", undefined, { duration: 2000});
+          this.snack.open("Learning Outcome gelöscht", undefined, {duration: 2000});
         },
-        () => this.snack.open("Learning Outcome konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Learning Outcome?", undefined, { duration: 2000})
+        () => this.snack.open("Learning Outcome konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Learning Outcome?", undefined, {duration: 2000})
       );
     } else {
       console.log('not implemented yet!');
     }
   }
 
-  private navigateToNextLearningOutcome() : void {
+  private navigateToNextLearningOutcome(): void {
     this.learningOutcomeService.getFirstElement().subscribe(firstLearningOutcome => {
       if (firstLearningOutcome == null) {
         this.router.navigate(['../new'], {relativeTo: this.route});
@@ -277,5 +287,9 @@ export class LearningOutcomeEditorComponent implements OnInit {
 
   public removePurpose(formIndex: number): void {
     this.purposesFormArray.removeAt(formIndex);
+  }
+
+  private closeLearningOutcomeEditor() {
+    this.closeComponent.emit(true);
   }
 }

@@ -1,4 +1,12 @@
-@import '~src/assets/scss/coalbase-colors';
+@import '../../../../assets/scss/coalbase-colors';
+
+.learning-outcome-editor {
+  margin: 0 auto;
+  width: 68.5%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
 
 .learning-outcome-editor-content {
   display: grid;

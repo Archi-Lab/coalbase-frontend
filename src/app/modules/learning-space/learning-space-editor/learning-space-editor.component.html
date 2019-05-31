@@ -1,4 +1,4 @@
-<mat-card class="learning-space-editor-card">
+<mat-card class="learning-space-editor-card" *ngIf="showLearningSpaceEditor">
   <mat-card-header>
     <mat-card-title>{{learningSpace.title}}</mat-card-title>
     <mat-card-subtitle>Lernraum</mat-card-subtitle>
@@ -16,15 +16,28 @@
       </mat-form-field>
 
       <mat-label class="learning-space-editor-label"><strong>Learning Outcome</strong></mat-label>
-      <mat-form-field color="accent">
-        <mat-select placeholder="Wählen Sie ein Learning Outcome"
-                    [formControl]="learningOutcomeForm">
-          <mat-option *ngFor="let learningOutcomeOption of learningOutcomes"
-                      [value]="learningOutcomeOption._links.self.href">
-            {{learningOutcomeOption.competence.action}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button mat-raised-button
+              *ngIf="learningSpace.learningOutcome === undefined
+              || learningSpace.learningOutcome._links === undefined
+              || learningSpace.learningOutcome._links.self === undefined"
+              (click)="openLearningOutcomeEditor()">Erstellen
+      </button>
+
+
+      <button mat-raised-button
+              *ngIf="learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined && learningSpace.learningOutcome._links.self"
+              (click)="openLearningOutcomeEditor()">Bearbeiten
+      </button>
+
+      <!--      <mat-form-field color="accent">-->
+      <!--        <mat-select placeholder="Wählen Sie ein Learning Outcome"-->
+      <!--                    [formControl]="learningOutcomeForm">-->
+      <!--          <mat-option *ngFor="let learningOutcomeOption of learningOutcomes"-->
+      <!--                      [value]="learningOutcomeOption._links.self.href">-->
+      <!--            {{learningOutcomeOption.competence.action}}-->
+      <!--          </mat-option>-->
+      <!--        </mat-select>-->
+      <!--      </mat-form-field>-->
     </div>
 
   </mat-card-content>
@@ -43,3 +56,6 @@
     </button>
   </mat-card-actions>
 </mat-card>
+
+
+<app-learning-outcome-editor *ngIf="showLearningOutcomeEditor" (closeComponent)="closeLearningOutcomeEditor($event)" ></app-learning-outcome-editor>

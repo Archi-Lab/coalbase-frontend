@@ -8,10 +8,6 @@ const appRoutes: Routes = [
     loadChildren: './modules/course/course.module#CourseModule'
   },
   {
-    path: 'learning-outcomes',
-    loadChildren: './modules/learning-outcome/learning-outcome.module#LearningOutcomeModule'
-  },
-  {
     path: 'imprint',
     loadChildren: './modules/imprint/imprint.module#ImprintModule'
   },

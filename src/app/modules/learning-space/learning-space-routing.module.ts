@@ -10,7 +10,10 @@ const LearningSpaceRoutes: Routes = [
     component: LearningSpacePage,
     children: [
       {path: '', component: LearningSpaceOverviewComponent},
-      {path: ':learningSpaceIdentifier', component: LearningSpaceEditorComponent},
+      {
+        path: ':learningSpaceIdentifier',
+        component: LearningSpaceEditorComponent,
+      },
     ],
   }
 ];

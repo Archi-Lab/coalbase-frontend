@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -13,6 +13,9 @@ import {Course} from "../../../shared/models/course/course.model";
   styleUrls: ['./learning-space-overview.component.scss']
 })
 export class LearningSpaceOverviewComponent implements OnInit {
+
+
+
   sortedLearningSpaces: LearningSpace[] = [];
   course: Course = new Course();
   courseIdentifier: string = "";

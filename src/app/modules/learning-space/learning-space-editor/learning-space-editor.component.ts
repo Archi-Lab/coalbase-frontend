@@ -18,6 +18,9 @@ import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialo
 })
 export class LearningSpaceEditorComponent implements OnInit {
 
+  showLearningOutcomeEditor: boolean = false;
+  showLearningSpaceEditor: boolean = true;
+
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
   learningOutcomes: LearningOutcome[] = [];
@@ -92,7 +95,7 @@ export class LearningSpaceEditorComponent implements OnInit {
           resolve();
         },
         error => reject(error)
-        );
+      );
     });
   }
 
@@ -121,7 +124,7 @@ export class LearningSpaceEditorComponent implements OnInit {
             this.addRelationsToLearningSpace(learningSpaceUpdated);
             this.router.navigate(['../'], {relativeTo: this.route});
           });
-        this.snack.open("Lernraum bearbeitet", undefined, { duration: 2000});
+        this.snack.open("Lernraum bearbeitet", undefined, {duration: 2000});
       } else {
         this.learningSpaceService.create(this.learningSpace).subscribe(
           learningSpace => {
@@ -130,7 +133,7 @@ export class LearningSpaceEditorComponent implements OnInit {
             this.addRelationToCourse(learningSpaceUpdated);
             this.router.navigate(['../'], {relativeTo: this.route});
           });
-        this.snack.open("Lernraum gespeichert", undefined, { duration: 2000});
+        this.snack.open("Lernraum gespeichert", undefined, {duration: 2000});
       }
     }).catch((error) => console.log(error));
   }
@@ -159,14 +162,26 @@ export class LearningSpaceEditorComponent implements OnInit {
       if (shouldDelete) {
         this.learningSpaceService.delete(this.learningSpace).subscribe(
           () => {
-            this.snack.open("Lernraum gelöscht", undefined, { duration: 2000});
+            this.snack.open("Lernraum gelöscht", undefined, {duration: 2000});
             this.removeLearningSpaceInCourse(this.learningSpace);
             this.router.navigate(['../'], {relativeTo: this.route});
           },
-          () => this.snack.open("Lernraum konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Lernraum?", undefined, { duration: 2000})
+          () => this.snack.open("Lernraum konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Lernraum?", undefined, {duration: 2000})
         );
       }
     });
+  }
+
+  private openLearningOutcomeEditor(): void {
+    this.showLearningOutcomeEditor = true;
+    this.showLearningSpaceEditor = false;
+  }
+
+  private closeLearningOutcomeEditor(event: boolean): void {
+    if (event) {
+      this.showLearningOutcomeEditor = false;
+      this.showLearningSpaceEditor = true;
+    }
   }
 
 
