@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
@@ -11,9 +11,11 @@ import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
   templateUrl: './learning-outcome-editor.component.html',
   styleUrls: ['./learning-outcome-editor.component.scss']
 })
-export class LearningOutcomeEditorComponent implements OnInit {
+export class LearningOutcomeEditorComponent implements OnChanges {
   learningOutcome: LearningOutcome = new LearningOutcome();
-  @Output() closeComponent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input() learningOutcomeReference: string | undefined = undefined;
+  @Output() closeComponent: EventEmitter<LearningOutcome> = new EventEmitter<LearningOutcome>();
   taxonomyLevels = TAXONOMY_LEVELS;
 
   learningOutcomeFormGroup = new FormGroup({
@@ -34,33 +36,32 @@ export class LearningOutcomeEditorComponent implements OnInit {
               private readonly fb: FormBuilder) {
   }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const identifier = params.get('learningOutcomeIdentifier');
-      if (identifier === 'new') {
-        this.learningOutcome = new LearningOutcome(
-          {value: ''},
-          {action: '', taxonomyLevel: ''},
-          [],
-          [],
-          []
-        );
+  ngOnChanges(): void {
+    console.log("TEST: " + this.learningOutcomeReference);
+    if (this.learningOutcomeReference === undefined) {
+      console.log("test");
+    }
+    if (this.learningOutcomeReference === "new") {
+      this.learningOutcome = new LearningOutcome(
+        {value: ''},
+        {action: '', taxonomyLevel: ''},
+        [],
+        [],
+        []
+      );
+      this.initializeForm();
+    } else if (this.learningOutcomeReference) {
+      this.learningOutcomeService.getBySelfLink(this.learningOutcomeReference).subscribe(learningOutcome => {
+        this.learningOutcome = learningOutcome;
         this.initializeForm();
-      } else if (identifier) {
-        this.learningOutcomeService.get(identifier).subscribe(learingOutcome => {
-          this.learningOutcome = learingOutcome;
-          this.initializeForm();
-        });
-      } else {
-        this.learningOutcomeService.getFirstElement().subscribe(firstLearningOutcome => {
-          this.learningOutcome = firstLearningOutcome;
-          this.initializeForm();
-        });
-      }
-    });
+      });
+    }
   }
 
   private initializeForm(): void {
+
+    console.log(JSON.stringify(this.learningOutcome));
+
     // Role
     this.roleFormControl.setValue(this.learningOutcome.role.value);
 
@@ -129,14 +130,12 @@ export class LearningOutcomeEditorComponent implements OnInit {
     }
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.learningOutcomeService.update(this.learningOutcome).subscribe();
+      this.closeLearningOutcomeEditor(this.learningOutcome);
       this.snack.open("Learning Outcome bearbeitet", undefined, {duration: 2000});
     } else {
-      this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
-        const learningOutcome: LearningOutcome = result as LearningOutcome;
-        this.router.navigate(['/learning-outcomes', learningOutcome.getIdFromUri()]);
-      });
+      this.closeLearningOutcomeEditor(this.learningOutcome);
       this.snack.open("Learning Outcome gespeichert", undefined, {duration: 2000});
+
     }
   }
 
@@ -144,7 +143,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.delete(this.learningOutcome).subscribe(
         () => {
-          this.navigateToNextLearningOutcome();
+          this.closeLearningOutcomeEditor(undefined);
           this.snack.open("Learning Outcome gelöscht", undefined, {duration: 2000});
         },
         () => this.snack.open("Learning Outcome konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Learning Outcome?", undefined, {duration: 2000})
@@ -154,19 +153,6 @@ export class LearningOutcomeEditorComponent implements OnInit {
     }
   }
 
-  private navigateToNextLearningOutcome(): void {
-    this.learningOutcomeService.getFirstElement().subscribe(firstLearningOutcome => {
-      if (firstLearningOutcome == null) {
-        this.router.navigate(['../new'], {relativeTo: this.route});
-      } else {
-        this.router.navigate(['../', firstLearningOutcome.getIdFromUri()], {relativeTo: this.route});
-      }
-    });
-  }
-
-  public isNotEmptyOrNew() {
-    return !!(this.router.url.indexOf('new') > -1 || this.learningOutcome.competence.action);
-  }
 
   // Role Form
   public get roleFormControl(): FormControl {
@@ -238,7 +224,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     this.purposesFormArray.removeAt(formIndex);
   }
 
-  private closeLearningOutcomeEditor() {
-    this.closeComponent.emit(true);
+  private closeLearningOutcomeEditor(learningOutcomeReference: LearningOutcome | undefined) {
+    this.closeComponent.emit(learningOutcomeReference);
   }
 }

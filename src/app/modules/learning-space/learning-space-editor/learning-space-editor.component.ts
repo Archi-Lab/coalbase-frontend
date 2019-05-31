@@ -23,12 +23,10 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
-  learningOutcomes: LearningOutcome[] = [];
-  learningSpaces: LearningSpace[] = [];
-
+  learningOutcomesIsNew: boolean = false;
+  learningOutcomeSelfRef: string = "new";
   learningSpaceForm: FormGroup = new FormGroup({
-    title: new FormControl(''),
-    learningOutcome: new FormControl('')
+    title: new FormControl('')
   });
 
   constructor(
@@ -71,31 +69,28 @@ export class LearningSpaceEditorComponent implements OnInit {
                   this.initializeForm(this.learningSpace);
                 },
                 (error) => this.initializeForm(this.learningSpace));
+            }, (error) => {
+              this.initializeForm(this.learningSpace)
             });
         });
       }
     });
-    this.learningOutcomeService.getAll().subscribe(learningOutcomes => this.learningOutcomes = learningOutcomes);
-    this.learningSpaceService.getAll().subscribe(learningSpaces => this.learningSpaces = learningSpaces);
   }
 
   private initializeForm(learningSpace: LearningSpace): void {
     this.titleForm.setValue(learningSpace.title);
-    if (learningSpace.learningOutcome != null && learningSpace.learningOutcome._links != null) {
-      this.learningOutcomeForm.setValue(learningSpace.learningOutcome._links.self.href);
+    if (learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined) {
+      this.learningOutcomeSelfRef = learningSpace.learningOutcome._links.self.href;
+      this.learningOutcomesIsNew = false;
+    } else {
+      this.learningOutcomeSelfRef = "new";
+      this.learningOutcomesIsNew = true;
     }
   }
 
   private saveLearningSpaceFromForm(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.learningSpace.title = this.titleForm.value;
-      this.learningOutcomeService.getBySelfLink(this.learningOutcomeForm.value).subscribe(
-        learningOutcome => {
-          this.learningSpace.learningOutcome = learningOutcome;
-          resolve();
-        },
-        error => reject(error)
-      );
     });
   }
 
@@ -105,7 +100,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
-    learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome)
+    learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome as LearningOutcome)
       .subscribe();
   }
 
@@ -118,6 +113,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   public saveLearningSpace(): void {
     this.saveLearningSpaceFromForm().then(() => {
       if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
+        this.saveLearningOutcome();
         this.learningSpaceService.update(this.learningSpace).subscribe(
           learningSpace => {
             const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
@@ -126,6 +122,7 @@ export class LearningSpaceEditorComponent implements OnInit {
           });
         this.snack.open("Lernraum bearbeitet", undefined, {duration: 2000});
       } else {
+        this.saveLearningOutcome();
         this.learningSpaceService.create(this.learningSpace).subscribe(
           learningSpace => {
             const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
@@ -138,6 +135,17 @@ export class LearningSpaceEditorComponent implements OnInit {
     }).catch((error) => console.log(error));
   }
 
+  public saveLearningOutcome(): void {
+    if (this.learningOutcomesIsNew) {
+      this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).subscribe(res => {
+        this.learningSpace.learningOutcome = res as LearningOutcome;
+      });
+    } else {
+      this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).subscribe();
+    }
+
+  }
+
   public deleteLearningSpace(): void {
     this.openDeleteDialog();
   }
@@ -148,10 +156,6 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   public get titleForm(): FormControl {
     return this.learningSpaceForm.get('title') as FormControl;
-  }
-
-  public get learningOutcomeForm(): FormControl {
-    return this.learningSpaceForm.get('learningOutcome') as FormControl;
   }
 
   private openDeleteDialog() {
@@ -172,16 +176,30 @@ export class LearningSpaceEditorComponent implements OnInit {
     });
   }
 
+  private deleteLearningOutcome(): void {
+    const learningOutcome = this.learningSpace.learningOutcome as LearningOutcome;
+    this.learningSpace.deleteRelation("learningOutcome", learningOutcome).subscribe(() => {
+      this.learningOutcomeService.delete(learningOutcome).subscribe(() => {
+        this.learningSpace.learningOutcome = undefined;
+        this.learningOutcomeSelfRef = "new";
+      });
+    });
+
+  }
+
   private openLearningOutcomeEditor(): void {
     this.showLearningOutcomeEditor = true;
     this.showLearningSpaceEditor = false;
   }
 
-  private closeLearningOutcomeEditor(event: boolean): void {
-    if (event) {
-      this.showLearningOutcomeEditor = false;
-      this.showLearningSpaceEditor = true;
+  private closeLearningOutcomeEditor(learningOutcome: LearningOutcome | undefined): void {
+
+    if (learningOutcome !== undefined) {
+      // Update LearningOutcome
+      this.learningSpace.learningOutcome = learningOutcome;
     }
+    this.showLearningOutcomeEditor = false;
+    this.showLearningSpaceEditor = true;
   }
 
 

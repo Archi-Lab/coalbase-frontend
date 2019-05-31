@@ -1,6 +1,6 @@
 <mat-card class="learning-outcome-editor">
   <mat-card-title>Learning Outcome</mat-card-title>
-  <mat-card-content *ngIf="isNotEmptyOrNew()" [formGroup]="learningOutcomeFormGroup"
+  <mat-card-content  [formGroup]="learningOutcomeFormGroup"
                     class="learning-outcome-editor-content">
 
     <mat-label class="learning-outcome-editor-label"><strong>Als</strong></mat-label>
@@ -119,13 +119,13 @@
     </div>
 
     <div class="learning-outcome-editor-button-group">
+      <button mat-raised-button (click)="closeLearningOutcomeEditor(undefined)">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Abbrechen
+      </button>
       <button mat-raised-button color="accent" (click)="saveLearningOutcome()">
         Speichern
       </button>
-      <button mat-raised-button color="primary" (click)="deleteLearningOutcome()">
-        Löschen
-      </button>
-      <button mat-raised-button color="primary" (click)="closeLearningOutcomeEditor()">Zurück</button>
     </div>
 
   </mat-card-content>
