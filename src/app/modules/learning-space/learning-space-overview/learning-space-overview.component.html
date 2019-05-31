@@ -28,19 +28,19 @@
                   </p>
                   <p>
                     <strong>kann ich</strong>
-                    {{learningSpace.learningOutcome.competence.action}}
+                    {{buildCompetenceWithTaxonomy(learningSpace.learningOutcome.competence)}}
                   </p>
                   <p *ngFor="let requirement of learningSpace.learningOutcome.requirements; let first = first; let last = last">
                     <strong>{{first ? "vorausgesetzt, ich kann" : ""}}</strong>
-                    {{last ? requirement.value : requirement.value + ","}}
+                    {{last ? buildRequirementWithTaxonomy(requirement) : buildRequirementWithTaxonomy(requirement) + ","}}
                   </p>
                   <p *ngFor="let ability of learningSpace.learningOutcome.abilities; let first = first; let last = last">
                     <strong>{{first ? "indem ich" : ""}}</strong>
-                    {{last ? ability.value : ability.value + ","}}
+                    {{last ? buildAbilityWithTaxonomy(ability) : buildAbilityWithTaxonomy(ability) + ","}}
                   </p>
                   <p *ngFor="let purpose of learningSpace.learningOutcome.purposes; let first = first; let last = last">
                     <strong>{{first ? "sodass ich" : ""}}</strong>
-                    {{last ? purpose.value : purpose.value + ","}}
+                    {{last ? buildPurposeWithTaxonomy(purpose) : buildPurposeWithTaxonomy(purpose) + ","}}
                   </p>
                 </div>
               </div>
