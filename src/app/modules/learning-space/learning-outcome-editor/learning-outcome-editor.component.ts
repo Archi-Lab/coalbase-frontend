@@ -129,14 +129,18 @@ export class LearningOutcomeEditorComponent implements OnInit {
     }
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.learningOutcomeService.update(this.learningOutcome).subscribe();
-      this.snack.open("Learning Outcome bearbeitet", undefined, {duration: 2000});
+      this.learningOutcomeService.update(this.learningOutcome).subscribe(
+        () => this.snack.open("Learning Outcome bearbeitet", undefined, {duration: 2000}),
+        () => this.snack.open("Fehler beim Bearbeiten des Learning Outcomes", undefined, {duration: 2000})
+      );
     } else {
       this.learningOutcomeService.create(this.learningOutcome).subscribe(result => {
         const learningOutcome: LearningOutcome = result as LearningOutcome;
         this.router.navigate(['/learning-outcomes', learningOutcome.getIdFromUri()]);
-      });
-      this.snack.open("Learning Outcome gespeichert", undefined, {duration: 2000});
+        this.snack.open("Learning Outcome gespeichert", undefined, {duration: 2000});
+      },
+        () => this.snack.open("Fehler beim Erstellen des Learning Outcomes", undefined, {duration: 2000})
+    );
     }
   }
 
