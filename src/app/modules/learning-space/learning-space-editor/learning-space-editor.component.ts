@@ -186,7 +186,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     });
   }
 
-  private deleteLearningOutcome(): void {
+  public deleteLearningOutcome(): void {
     const learningOutcome = this.learningSpace.learningOutcome as LearningOutcome;
     this.learningSpace.deleteRelation("learningOutcome", learningOutcome).subscribe(() => {
       this.learningOutcomeService.delete(learningOutcome).subscribe(() => {
@@ -198,12 +198,12 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   }
 
-  private openLearningOutcomeEditor(): void {
+  public openLearningOutcomeEditor(): void {
     this.showLearningOutcomeEditor = true;
     this.showLearningSpaceEditor = false;
   }
 
-  private closeLearningOutcomeEditor(learningOutcome: LearningOutcome | undefined): void {
+  public closeLearningOutcomeEditor(learningOutcome: LearningOutcome | undefined): void {
     if (learningOutcome !== undefined) {
       // Update LearningOutcome
       this.learningSpace.learningOutcome = learningOutcome;
@@ -211,6 +211,4 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.showLearningOutcomeEditor = false;
     this.showLearningSpaceEditor = true;
   }
-
-
 }

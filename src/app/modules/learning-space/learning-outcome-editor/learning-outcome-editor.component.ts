@@ -216,7 +216,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     this.purposesFormArray.removeAt(formIndex);
   }
 
-  private closeLearningOutcomeEditor(learningOutcomeReference: LearningOutcome | undefined) {
+  public closeLearningOutcomeEditor(learningOutcomeReference: LearningOutcome | undefined) {
     this.closeComponent.emit(learningOutcomeReference);
   }
 }
