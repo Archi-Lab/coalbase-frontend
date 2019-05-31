@@ -23,7 +23,7 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
-  learningOutcomesIsNew: boolean = false;
+  learningOutcomeIsNew: boolean = false;
   learningOutcomeSelfRef: string = "new";
   learningSpaceForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -81,17 +81,15 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined) {
       this.learningOutcomeSelfRef = learningSpace.learningOutcome._links.self.href;
-      this.learningOutcomesIsNew = false;
+      this.learningOutcomeIsNew = false;
     } else {
       this.learningOutcomeSelfRef = "new";
-      this.learningOutcomesIsNew = true;
+      this.learningOutcomeIsNew = true;
     }
   }
 
-  private saveLearningSpaceFromForm(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.learningSpace.title = this.titleForm.value;
-    });
+  private saveLearningSpaceFromForm() {
+    this.learningSpace.title = this.titleForm.value;
   }
 
   private addRelationToCourse(learningSpace: LearningSpace): void {
@@ -111,39 +109,51 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public saveLearningSpace(): void {
-    this.saveLearningSpaceFromForm().then(() => {
+    this.saveLearningSpaceFromForm();
+    this.saveLearningOutcome().then(() => {
       if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
-        this.saveLearningOutcome();
-        this.learningSpaceService.update(this.learningSpace).subscribe(
-          learningSpace => {
-            const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
-            this.addRelationsToLearningSpace(learningSpaceUpdated);
-            this.router.navigate(['../'], {relativeTo: this.route});
-          });
-        this.snack.open("Lernraum bearbeitet", undefined, {duration: 2000});
+        this.updateLearningSpace();
       } else {
-        this.saveLearningOutcome();
-        this.learningSpaceService.create(this.learningSpace).subscribe(
-          learningSpace => {
-            const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
-            this.addRelationsToLearningSpace(learningSpaceUpdated);
-            this.addRelationToCourse(learningSpaceUpdated);
-            this.router.navigate(['../'], {relativeTo: this.route});
-          });
-        this.snack.open("Lernraum gespeichert", undefined, {duration: 2000});
+        this.createLearningSpace();
       }
-    }).catch((error) => console.log(error));
+    }).catch(() => this.snack.open("Fehler beim Speichern des Learning Outcomes", undefined, {duration: 2000}));
   }
 
-  public saveLearningOutcome(): void {
-    if (this.learningOutcomesIsNew) {
-      this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).subscribe(res => {
-        this.learningSpace.learningOutcome = res as LearningOutcome;
-      });
-    } else {
-      this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).subscribe();
-    }
+  private createLearningSpace(): void {
+    this.learningSpaceService.create(this.learningSpace).subscribe(
+      learningSpace => {
+        const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+        this.addRelationsToLearningSpace(learningSpaceUpdated);
+        this.addRelationToCourse(learningSpaceUpdated);
+        this.router.navigate(['../'], {relativeTo: this.route});
+        this.snack.open("Lernraum gespeichert", undefined, {duration: 2000});
+      }, () => this.snack.open("Fehler beim Speichern des Lernraums", undefined, {duration: 2000}));
+  }
 
+  private updateLearningSpace(): void {
+    this.learningSpaceService.update(this.learningSpace).subscribe(
+      learningSpace => {
+        const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+        this.addRelationsToLearningSpace(learningSpaceUpdated);
+        this.router.navigate(['../'], {relativeTo: this.route});
+        this.snack.open("Lernraum bearbeitet", undefined, {duration: 2000});
+      }, () => this.snack.open("Fehler beim Speichern des Lernraums", undefined, {duration: 2000}));
+  }
+
+  public saveLearningOutcome(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.learningOutcomeIsNew) {
+        this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).subscribe(res => {
+          this.learningSpace.learningOutcome = res as LearningOutcome;
+          resolve();
+        }, () => reject());
+      } else {
+        this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).subscribe(
+          () => resolve(),
+          () => reject()
+        );
+      }
+    });
   }
 
   public deleteLearningSpace(): void {
@@ -182,6 +192,7 @@ export class LearningSpaceEditorComponent implements OnInit {
       this.learningOutcomeService.delete(learningOutcome).subscribe(() => {
         this.learningSpace.learningOutcome = undefined;
         this.learningOutcomeSelfRef = "new";
+        this.learningOutcomeIsNew = true;
       });
     });
 
@@ -193,7 +204,6 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private closeLearningOutcomeEditor(learningOutcome: LearningOutcome | undefined): void {
-
     if (learningOutcome !== undefined) {
       // Update LearningOutcome
       this.learningSpace.learningOutcome = learningOutcome;

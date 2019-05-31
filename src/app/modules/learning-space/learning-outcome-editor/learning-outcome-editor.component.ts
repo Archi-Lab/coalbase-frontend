@@ -37,10 +37,6 @@ export class LearningOutcomeEditorComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log("TEST: " + this.learningOutcomeReference);
-    if (this.learningOutcomeReference === undefined) {
-      console.log("test");
-    }
     if (this.learningOutcomeReference === "new") {
       this.learningOutcome = new LearningOutcome(
         {value: ''},
@@ -59,9 +55,6 @@ export class LearningOutcomeEditorComponent implements OnChanges {
   }
 
   private initializeForm(): void {
-
-    console.log(JSON.stringify(this.learningOutcome));
-
     // Role
     this.roleFormControl.setValue(this.learningOutcome.role.value);
 

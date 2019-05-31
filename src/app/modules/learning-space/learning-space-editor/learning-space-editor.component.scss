@@ -28,3 +28,9 @@
 .mat-form-field{
   margin-bottom: 10px;
 }
+
+.learning-outcome-edit-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

@@ -23,11 +23,11 @@ export abstract class ListResourceService<T extends Resource> extends RestServic
   }
 
   create(entity: T): Observable<Observable<never> | T> {
-    return from(new Promise(resolve => {
+    return from(new Promise((resolve, reject) => {
       super.create(entity).subscribe(resource => {
         this.createResourceInState(resource as T);
         resolve(resource);
-      });
+      }, (error) => reject(error));
     }));
   }
 
