@@ -45,8 +45,8 @@ export class LearningOutcomeEditorComponent implements OnInit {
         ' oder inneren Strukturen entdecken. Sie erkennen Zusammenhänge.'
     },
     {
-      backend: 'SYNTHESIS',
-      name: 'Synthese',
+      backend: 'EVALUATION',
+      name: 'Beurteilung',
       description: 'Die Lernenden zeigen eine konstruktive Leistung.' +
         ' Sie müssen verschiedene Teile zusammenfügen,' +
         ' die sie noch nicht zusammen erlebt oder gesehen haben.' +
@@ -55,8 +55,8 @@ export class LearningOutcomeEditorComponent implements OnInit {
         ' oder in der Kenntnis der Lernenden noch nicht vorhanden.'
     },
     {
-      backend: 'EVALUATION',
-      name: 'Beurteilung',
+      backend: 'SYNTHESIS',
+      name: 'Synthese',
       description: 'Die Lernenden zeigen eine konstruktive Leistung.' +
         ' Sie müssen verschiedene Teile zusammenfügen,' +
         ' die sie noch nicht zusammen erlebt oder gesehen haben.' +
@@ -67,12 +67,14 @@ export class LearningOutcomeEditorComponent implements OnInit {
   ];
 
   learningOutcomeFormGroup = new FormGroup({
+    role: new FormControl(''),
     competence: new FormGroup({
       action: new FormControl(''),
       taxonomyLevel: new FormControl('')
     }),
-    tools: this.fb.array([]),
-    purpose: new FormControl('')
+    requirements: this.fb.array([]),
+    abilities: this.fb.array([]),
+    purposes: this.fb.array([]),
   });
 
   constructor(private readonly router: Router,
@@ -87,9 +89,11 @@ export class LearningOutcomeEditorComponent implements OnInit {
       const identifier = params.get('learningOutcomeIdentifier');
       if (identifier === 'new') {
         this.learningOutcome = new LearningOutcome(
+          {value: ''},
           {action: '', taxonomyLevel: ''},
           [],
-          {value: ''},
+          [],
+          []
         );
         this.initializeForm();
       } else if (identifier) {
@@ -107,29 +111,63 @@ export class LearningOutcomeEditorComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    this.actionForm.setValue(this.learningOutcome.competence.action);
-    this.taxonomyLevelForm.setValue(this.learningOutcome.competence.taxonomyLevel);
-    this.clearToolsFormArray();
-    if (this.learningOutcome.tools != null && this.learningOutcome.tools.length > 0) {
-      this.learningOutcome.tools.forEach(tool => this.addTool(tool.value));
+    // Role
+    this.roleFormControl.setValue(this.learningOutcome.role.value);
+
+    // Competence
+    this.competenceFormGroup.controls.action.setValue(this.learningOutcome.competence.action);
+    this.competenceFormGroup.controls.taxonomyLevel.setValue(this.learningOutcome.competence.taxonomyLevel);
+
+    // Requirements
+    this.clearRequirementsFormArray();
+    if (this.learningOutcome.requirements != null && this.learningOutcome.requirements.length > 0) {
+      this.learningOutcome.requirements.forEach(requirement => this.addRequirement(requirement.value, requirement.taxonomyLevel));
     } else {
-      this.addTool('');
+      this.addRequirement('', this.taxonomyLevels[0].name);
     }
 
-    this.purposeForm.setValue(this.learningOutcome.purpose.value);
+    // Abilities
+    this.clearAbilitiesFormArray();
+    if (this.learningOutcome.abilities != null && this.learningOutcome.abilities.length > 0) {
+      this.learningOutcome.abilities.forEach(ability => this.addAbility(ability.value, ability.taxonomyLevel));
+    } else {
+      this.addAbility('', this.taxonomyLevels[0].name);
+    }
+
+    // Purposes
+    this.clearPurposesFormArray();
+    if (this.learningOutcome.purposes != null && this.learningOutcome.purposes.length > 0) {
+      this.learningOutcome.purposes.forEach(purpose => this.addPurpose(purpose.value, purpose.taxonomyLevel));
+    } else {
+      this.addPurpose('', this.taxonomyLevels[0].name);
+    }
   }
 
   public saveLearningOutcome(): void {
-    this.learningOutcome.competence.action = this.actionForm.value;
-    this.learningOutcome.competence.taxonomyLevel = this.taxonomyLevelForm.value;
+    // Role
+    this.learningOutcome.role = this.roleFormControl.value;
 
-    /*clear everything in the previous tool array*/
-    this.learningOutcome.tools = [];
-    for (const toolForm of this.toolsFormArray.controls) {
-      this.learningOutcome.tools.push({value: toolForm.value});
+    // Competence
+    this.learningOutcome.competence.action = this.competenceFormGroup.controls.action.value;
+    this.learningOutcome.competence.taxonomyLevel = this.competenceFormGroup.controls.taxonomyLevel.value;
+
+    // Requirements
+    this.learningOutcome.requirements = [];
+    for (const requirementForm of this.requirementsFormArray.controls as FormGroup[]) {
+      this.learningOutcome.requirements.push({value: requirementForm.controls.requirement.value, taxonomyLevel: requirementForm.controls.taxonomyLevel.value});
     }
 
-    this.learningOutcome.purpose = this.purposeForm.value;
+    // Abilities
+    this.learningOutcome.abilities = [];
+    for (const abilityForm of this.abilitiesFormArray.controls as FormGroup[]) {
+      this.learningOutcome.abilities.push({value: abilityForm.controls.ability.value, taxonomyLevel: abilityForm.controls.taxonomyLevel.value});
+    }
+
+    // Purposes
+    this.learningOutcome.purposes = [];
+    for (const purposeForm of this.purposesFormArray.controls as FormGroup[]) {
+      this.learningOutcome.purposes.push({value: purposeForm.controls.purpose.value, taxonomyLevel: purposeForm.controls.taxonomyLevel.value});
+    }
 
     if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
       this.learningOutcomeService.update(this.learningOutcome).subscribe();
@@ -171,36 +209,73 @@ export class LearningOutcomeEditorComponent implements OnInit {
     return !!(this.router.url.indexOf('new') > -1 || this.learningOutcome.competence.action);
   }
 
-  public addTool(value: string): void {
-    this.toolsFormArray.push(this.fb.control(value));
+  // Role Form
+  public get roleFormControl(): FormControl {
+    return this.learningOutcomeFormGroup.get('role') as FormControl;
   }
 
-  public removeTool(toolsFormIndex: number): void {
-    this.toolsFormArray.removeAt(toolsFormIndex);
-  }
-
-  private clearToolsFormArray(): void {
-    this.toolsFormArray.controls.forEach((value, index) => this.removeTool(index));
-  }
-
-  public get toolsFormArray(): FormArray {
-    return this.learningOutcomeFormGroup.get('tools') as FormArray;
-  }
-
+  // Competence Form
   public get competenceFormGroup(): FormGroup {
     return this.learningOutcomeFormGroup.get('competence') as FormGroup;
   }
 
-  public get actionForm(): FormControl {
-    return this.competenceFormGroup.get('action') as FormControl;
+  // Requirement Forms
+  private clearRequirementsFormArray(): void {
+    this.requirementsFormArray.controls = [];
   }
 
-  public get taxonomyLevelForm(): FormControl {
-    return this.competenceFormGroup.get('taxonomyLevel') as FormControl;
+  public get requirementsFormArray(): FormArray {
+    return this.learningOutcomeFormGroup.get('requirements') as FormArray;
   }
 
-  public get purposeForm(): FormControl {
-    return this.learningOutcomeFormGroup.get('purpose') as FormControl;
+  public addRequirement(requirement: string, taxonomyLevel: string): void {
+    this.requirementsFormArray.push(new FormGroup({
+      requirement: new FormControl(requirement),
+      taxonomyLevel: new FormControl(taxonomyLevel)
+    }));
   }
 
+  public removeRequirement(formIndex: number): void {
+    this.requirementsFormArray.removeAt(formIndex);
+  }
+
+  // Ability Forms
+  private clearAbilitiesFormArray(): void {
+    this.abilitiesFormArray.controls = [];
+  }
+
+  public get abilitiesFormArray(): FormArray {
+    return this.learningOutcomeFormGroup.get('abilities') as FormArray;
+  }
+
+  public addAbility(ability: string, taxonomyLevel: string): void {
+    this.abilitiesFormArray.push(new FormGroup({
+      ability: new FormControl(ability),
+      taxonomyLevel: new FormControl(taxonomyLevel)
+    }));
+  }
+
+  public removeAbility(formIndex: number): void {
+    this.abilitiesFormArray.removeAt(formIndex);
+  }
+
+  // Purpose Forms
+  private clearPurposesFormArray(): void {
+    this.purposesFormArray.controls = [];
+  }
+
+  public get purposesFormArray(): FormArray {
+    return this.learningOutcomeFormGroup.get('purposes') as FormArray;
+  }
+
+  public addPurpose(purpose: string, taxonomyLevel: string): void {
+    this.purposesFormArray.push(new FormGroup({
+      purpose: new FormControl(purpose),
+      taxonomyLevel: new FormControl(taxonomyLevel)
+    }));
+  }
+
+  public removePurpose(formIndex: number): void {
+    this.purposesFormArray.removeAt(formIndex);
+  }
 }

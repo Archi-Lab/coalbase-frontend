@@ -2,16 +2,18 @@ import {Resource} from 'angular4-hal';
 import {LearningSpace} from '../learning-space/learning-space.model';
 
 export class Course extends Resource {
+  private _shortTitle: string;
   private _title: string;
   private _description: string;
   private _learningSpaces: LearningSpace[];
 
   constructor();
-  constructor(title: string);
-  constructor(title: string, learningSpaces: LearningSpace[]);
-  constructor(title: string, learningSpaces: LearningSpace[], description: string);
-  constructor(title?: string, learningSpaces?: LearningSpace[], description?: string) {
+  constructor(shortTitle: string, title: string);
+  constructor(shortTitle: string, title: string, learningSpaces: LearningSpace[]);
+  constructor(shortTitle: string, title: string, learningSpaces: LearningSpace[], description: string);
+  constructor(shortTitle?: string, title?: string, learningSpaces?: LearningSpace[], description?: string) {
     super();
+    this._shortTitle = shortTitle || '';
     this._title = title || '';
     this._learningSpaces = learningSpaces || [];
     this._description = description || '';
@@ -24,6 +26,14 @@ export class Course extends Resource {
     } else {
       return '';
     }
+  }
+
+  get shortTitle(): string {
+    return this._shortTitle;
+  }
+
+  set shortTitle(value: string) {
+    this._shortTitle = value;
   }
 
   get title(): string {

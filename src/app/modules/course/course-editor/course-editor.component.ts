@@ -17,6 +17,7 @@ export class CourseEditorComponent implements OnInit {
   course: Course = new Course();
 
   courseForm: FormGroup = new FormGroup({
+    shortTitle: new FormControl(''),
     title: new FormControl(''),
     description: new FormControl('')
   });
@@ -35,20 +36,25 @@ export class CourseEditorComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const identifier = params.get('courseIdentifier');
       if (identifier === 'new') {
-        this.course = new Course('');
-        this.initalizeForm(this.course);
+        this.course = new Course('', '');
+        this.initializeForm(this.course);
       } else if (identifier) {
         this.courseService.get(identifier).subscribe(course => {
           this.course = course;
-          this.initalizeForm(this.course);
+          this.initializeForm(this.course);
         });
       }
     });
   }
 
-  private initalizeForm(course: Course): void {
+  private initializeForm(course: Course): void {
+    this.shortTitleForm.setValue(course.shortTitle);
     this.titleForm.setValue(course.title);
     this.descriptionForm.setValue(course.description);
+  }
+
+  public get shortTitleForm(): FormControl {
+    return this.courseForm.get('shortTitle') as FormControl;
   }
 
   public get titleForm(): FormControl {
@@ -57,6 +63,10 @@ export class CourseEditorComponent implements OnInit {
 
   public get descriptionForm(): FormControl {
     return this.courseForm.get('description') as FormControl;
+  }
+
+  public buildShortTitle(title: string): string {
+    return title.substr(0,1) + title.substr(title.length-2);
   }
 
   public saveCourse() {
@@ -97,9 +107,12 @@ export class CourseEditorComponent implements OnInit {
   }
 
   private saveCourseForm(): void {
+    this.course.shortTitle = this.shortTitleForm.value;
     this.course.title = this.titleForm.value;
     this.course.description = this.descriptionForm.value;
+
+    if (this.course.shortTitle.length == 0) {
+      this.course.shortTitle = this.buildShortTitle(this.course.title);
+    }
   }
-
-
 }

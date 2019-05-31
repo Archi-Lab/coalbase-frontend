@@ -1,18 +1,24 @@
 import {Competence} from './competence.model';
 import {Resource} from 'angular4-hal';
 import {Purpose} from './purpose.model';
-import {Tool} from './tool.model';
+import {Ability} from './ability.model';
+import {Role} from "./role.model";
+import {Requirement} from "./requirement.model";
 
 export class LearningOutcome extends Resource {
+  role: Role;
   competence: Competence;
-  tools: Tool[];
-  purpose: Purpose;
+  requirements: Requirement[];
+  abilities: Ability[];
+  purposes: Purpose[];
 
-  constructor(competence?: Competence, tools?: Tool[], purpose?: Purpose, links?: any) {
+  constructor(role?: Role, competence?: Competence, requirements?: Requirement[], abilities?: Ability[], purposes?: Purpose[], links?: any) {
     super();
+    this.role = role || {value: ''};
     this.competence = competence || {action: '', taxonomyLevel: ''};
-    this.tools = tools || [];
-    this.purpose = purpose || {value: ''};
+    this.requirements = requirements || [];
+    this.abilities = abilities || [];
+    this.purposes = purposes || [];
     this._links = links;
   }
 
@@ -23,8 +29,8 @@ export class LearningOutcome extends Resource {
 
   public isEmpty(): boolean {
     return (this.competence == null || this.competence.action.length <= 0)
-      || (this.tools == null || this.tools.length <= 0)
-      || (this.purpose == null || this.purpose.value.length <= 0);
+      || (this.abilities == null || this.abilities.length <= 0)
+      || (this.purposes == null || this.purposes.length <= 0);
   }
 
 }

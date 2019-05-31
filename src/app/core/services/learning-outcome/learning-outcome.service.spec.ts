@@ -41,18 +41,28 @@ describe('Service: Learning Outcome', () => {
       '_embedded': {
         'learningOutcomes': [
           {
+            'role': {
+              'value': 'role1'
+            },
             'competence': {
               'action': 'action1',
               'taxonomyLevel': 'ANALYSIS'
             },
-            'tools': [
+            'requirements': [
               {
-                'value': 'tool1'
+                'value': 'requirement1'
               }
             ],
-            'purpose': {
-              'value': 'purpose1'
-            },
+            'abilities': [
+              {
+                'value': 'ability1'
+              }
+            ],
+            'purposes': [
+              {
+                'value': 'purpose1'
+              }
+            ],
             '_links': {
               'self': {
                 'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
@@ -63,18 +73,28 @@ describe('Service: Learning Outcome', () => {
             }
           },
           {
+            'role': {
+              'value': 'role1'
+            },
             'competence': {
               'action': 'action1',
               'taxonomyLevel': 'ANALYSIS'
             },
-            'tools': [
+            'requirements': [
               {
-                'value': 'tool1'
+                'value': 'requirement1'
               }
             ],
-            'purpose': {
-              'value': 'purpose1'
-            },
+            'abilities': [
+              {
+                'value': 'ability1'
+              }
+            ],
+            'purposes': [
+              {
+                'value': 'purpose1'
+              }
+            ],
             '_links': {
               'self': {
                 'href': 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
@@ -97,9 +117,11 @@ describe('Service: Learning Outcome', () => {
     };
     const serviceExpectedReturnValue = [
       new LearningOutcome(
+        {value: 'role1'},
         {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-        [{value: 'tool1'}],
-        {value: 'purpose1'},
+        [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+        [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+        [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}],
         {
           self: {
             href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
@@ -110,9 +132,11 @@ describe('Service: Learning Outcome', () => {
         }
       ),
       new LearningOutcome(
+        {value: 'role1'},
         {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-        [{value: 'tool1'}],
-        {value: 'purpose1'},
+        [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+        [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+        [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}],
         {
           self: {
             href: 'http://api.coalbase.io/learningOutcomes/b37551ca-6e59-4c65-bffe-97f577433c5b'
@@ -139,7 +163,7 @@ describe('Service: Learning Outcome', () => {
         'action': 'action1',
         'taxonomyLevel': 'ANALYSIS'
       },
-      'tools': [
+      'abilities': [
         {
           'value': 'tool1'
         }
@@ -157,20 +181,23 @@ describe('Service: Learning Outcome', () => {
       }
     };
     const servicePostValue: LearningOutcome = new LearningOutcome(
+      {value: 'role1'},
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-      [{value: 'tool1'}],
-      {value: 'purpose1'}
+      [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}]
     );
 
     const serviceExpectedReturnValue: LearningOutcome = new LearningOutcome(
+      {value: 'role1'},
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-      [{value: 'tool1'}],
-      {value: 'purpose1'}
+      [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}]
     );
     service.create(servicePostValue).subscribe((response: LearningOutcome | any) => {
       // Compare all values as the base objects are not equal (response has links and root/proxy url)
-      expect(response.purpose).toEqual(serviceExpectedReturnValue.purpose);
-      expect(response.tools).toEqual(serviceExpectedReturnValue.tools);
+      expect(response.role).toEqual(serviceExpectedReturnValue.role);
       expect(response.competence).toEqual(serviceExpectedReturnValue.competence);
       // Look if the Links exists
       expect(response._links).toEqual({
@@ -193,7 +220,7 @@ describe('Service: Learning Outcome', () => {
         'action': 'action1',
         'taxonomyLevel': 'ANALYSIS'
       },
-      'tools': [
+      'abilities': [
         {
           'value': 'tool1'
         }
@@ -211,9 +238,11 @@ describe('Service: Learning Outcome', () => {
       }
     };
     const servicePutValue: LearningOutcome = new LearningOutcome(
+      {value: 'role1'},
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-      [{value: 'tool1'}],
-      {value: 'purpose1'}
+      [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}]
     );
     servicePutValue._links = {
       'self': {
@@ -226,9 +255,11 @@ describe('Service: Learning Outcome', () => {
 
 
     const serviceExpectedReturnValue: LearningOutcome = new LearningOutcome(
+      {value: 'role1'},
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-      [{value: 'tool1'}],
-      {value: 'purpose1'}
+      [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}]
     );
     serviceExpectedReturnValue._links = {
       'self': {
@@ -251,9 +282,11 @@ describe('Service: Learning Outcome', () => {
   });
   it('Successful Delete Learning Outcome', () => {
     const serviceDeleteValue: LearningOutcome = new LearningOutcome(
+      {value: 'role1'},
       {action: 'action1', taxonomyLevel: 'ANALYSIS'},
-      [{value: 'tool1'}],
-      {value: 'purpose1'}
+      [{value: 'requirement1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'ability1', taxonomyLevel: 'ANALYSIS'}],
+      [{value: 'purpose1', taxonomyLevel: 'ANALYSIS'}]
     );
     serviceDeleteValue._links = {
       'self': {

@@ -1,4 +1,4 @@
-export interface Purpose {
+export interface Ability {
   value: string;
   taxonomyLevel: string;
 }

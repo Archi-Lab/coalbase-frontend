@@ -26,13 +26,39 @@ export class CourseOverviewComponent {
     );
   }
 
-  public buildShortName(course: Course): string {
-    return course.title.substr(0,1) + course.title.substr(course.title.length-2);
+  private resolveLearningSpaces(course: Course): void {
+    course.learningSpaces = [];
+    course.getRelationArray(LearningSpace, "learningSpaces").subscribe(learningSpaces => {
+      learningSpaces.forEach(learningSpace => {
+        this.resolveRequirementOfLearningSpace(course, learningSpace);
+      });
+    });
   }
 
-  private resolveLearningSpaces(course: Course): void {
-    course.getRelationArray(LearningSpace, "learningSpaces").subscribe(learningSpaces => {
-      course.learningSpaces = learningSpaces;
-    });
+  private resolveRequirementOfLearningSpace(aCourse: Course, aLearningSpace: LearningSpace): void {
+    aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
+      (requirement: LearningSpace) => {
+        aLearningSpace.requirement = requirement;
+        aCourse.learningSpaces.push(aLearningSpace);
+        aCourse.learningSpaces.sort((lowerElement, higherElement): number => {
+          if (!lowerElement.isFirst() && lowerElement.isRequirement(higherElement)) {
+            return 1;
+          }
+          if (!higherElement.isFirst() && higherElement.isRequirement(lowerElement)) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => {
+        if (aCourse.learningSpaces.length > 0 && aCourse.learningSpaces[0].isFirst()) {
+          console.log('There is more than one learningSpace without requirement, ' +
+            'this can happen if the backend reponds with an error');
+          aCourse.learningSpaces.push(aLearningSpace);
+        } else {
+          aCourse.learningSpaces.unshift(aLearningSpace);
+        }
+      }
+    );
   }
 }

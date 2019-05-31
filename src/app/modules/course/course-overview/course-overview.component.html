@@ -2,7 +2,7 @@
   <mat-card class="course-card" *ngFor="let course of courses | async">
     <mat-card-header>
       <div mat-card-avatar class="course-avatar">
-        <div>{{buildShortName(course)}}</div>
+        <div>{{course.shortTitle}}</div>
       </div>
       <mat-card-title>{{course.title}}</mat-card-title>
       <mat-card-subtitle>Lehrveranstaltung</mat-card-subtitle>

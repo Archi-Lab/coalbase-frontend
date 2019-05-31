@@ -5,6 +5,15 @@
   </mat-card-header>
   <mat-card-content>
     <div class="course-editor-container" [formGroup]="courseForm">
+      <mat-label class="course-editor-label"><strong>Kürzel</strong></mat-label>
+      <mat-form-field color="accent">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  maxlength="3"
+                  placeholder="Kürzel der Veranstaltung"
+                  [formControl]="shortTitleForm"></textarea>
+      </mat-form-field>
+
       <mat-label class="course-editor-label"><strong>Titel</strong></mat-label>
       <mat-form-field color="accent">
         <textarea matInput

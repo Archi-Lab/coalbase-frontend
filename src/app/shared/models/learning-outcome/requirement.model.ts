@@ -1,4 +1,4 @@
-export interface Purpose {
+export interface Requirement {
   value: string;
   taxonomyLevel: string;
 }
