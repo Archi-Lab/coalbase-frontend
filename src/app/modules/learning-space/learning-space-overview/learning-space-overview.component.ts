@@ -6,6 +6,11 @@ import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CourseService} from "../../../core/services/course/course.service";
 import {Course} from "../../../shared/models/course/course.model";
+import {Requirement} from "../../../shared/models/learning-outcome/requirement.model";
+import {Ability} from "../../../shared/models/learning-outcome/ability.model";
+import {Purpose} from "../../../shared/models/learning-outcome/purpose.model";
+import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
+import {Competence} from "../../../shared/models/learning-outcome/competence.model";
 
 @Component({
   selector: 'app-learning-space-overview',
@@ -116,4 +121,33 @@ export class LearningSpaceOverviewComponent implements OnInit {
     }
   }
 
+  // Taxonomy
+  private buildCompetenceWithTaxonomy(competence: Competence): string {
+    return this.buildStringWithTaxonomy(competence.action, competence.taxonomyLevel);
+  }
+
+  private buildRequirementWithTaxonomy(requirement: Requirement): string {
+    return this.buildStringWithTaxonomy(requirement.value, requirement.taxonomyLevel);
+  }
+
+  private buildAbilityWithTaxonomy(ability: Ability): string {
+    return this.buildStringWithTaxonomy(ability.value, ability.taxonomyLevel);
+  }
+
+  private buildPurposeWithTaxonomy(purpose: Purpose): string {
+    return this.buildStringWithTaxonomy(purpose.value, purpose.taxonomyLevel);
+  }
+
+  private buildStringWithTaxonomy(value: string, taxonomyID: string): string {
+    return value + ' (' + this.getTaxonomyLevelByID(taxonomyID) + ')';
+  }
+
+  private getTaxonomyLevelByID(taxonomyID: string): number {
+    for(let i=0; i < TAXONOMY_LEVELS.length; i++){
+      if (TAXONOMY_LEVELS[i].backend == taxonomyID) {
+        return i+1;
+      }
+    }
+    return -1;
+  }
 }

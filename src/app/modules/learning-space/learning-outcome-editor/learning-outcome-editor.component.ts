@@ -4,6 +4,7 @@ import {LearningOutcomeService} from '../../../core/services/learning-outcome/le
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MatSnackBar} from "@angular/material";
+import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
 
 @Component({
   selector: 'app-learning-outcome-editor',
@@ -13,59 +14,7 @@ import {MatSnackBar} from "@angular/material";
 export class LearningOutcomeEditorComponent implements OnInit {
   learningOutcome: LearningOutcome = new LearningOutcome();
   @Output() closeComponent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  readonly taxonomyLevels = [
-    {
-      backend: 'KNOWLEDGE',
-      name: 'Wissen',
-      description: 'Die Lernenden geben wieder, was sie vorher gelernt haben.' +
-        ' Der Prüfungsstoff musste auswendig gelernt oder geübt werden.'
-    },
-    {
-      backend: 'COMPREHENSION',
-      name: 'Verständnis',
-      description: 'Die Lernenden erklären z.B. einen Begriff, eine Formel,' +
-        ' einen Sachverhalt oder ein Gerät. Ihr Verständnis zeigt sich darin,' +
-        ' dass sie das Gelernte auch in einem Kontext präsent haben, der sich ' +
-        'vom Kontext unterscheidet, in dem gelernt worden ist. So können die' +
-        ' Lernenden z.B. einen Sachverhalt auch umgangssprachlich erläutern' +
-        ' oder den Zusammenhang graphisch darstellen.'
-    },
-    {
-      backend: 'APPLICATION',
-      name: 'Anwendung',
-      description: 'Die Lernenden wenden etwas Gelerntes' +
-        ' in einer neuen Situation an.' +
-        ' Diese Anwendungssituation ist bisher nicht vorgekommen.'
-    },
-    {
-      backend: 'ANALYSIS',
-      name: 'Analyse',
-      description: 'Die Lernenden zerlegen Modelle,' +
-        ' Verfahren oder anderes in deren Bestandteile.' +
-        ' Dabei müssen sie in komplexen Sachverhalten die Aufbauprinzipien' +
-        ' oder inneren Strukturen entdecken. Sie erkennen Zusammenhänge.'
-    },
-    {
-      backend: 'EVALUATION',
-      name: 'Beurteilung',
-      description: 'Die Lernenden zeigen eine konstruktive Leistung.' +
-        ' Sie müssen verschiedene Teile zusammenfügen,' +
-        ' die sie noch nicht zusammen erlebt oder gesehen haben.' +
-        ' Aus ihrer Sicht müssen sie eine schöpferische Leistung erbringen.' +
-        ' Das Neue ist aber in der bisherigen Erfahrung' +
-        ' oder in der Kenntnis der Lernenden noch nicht vorhanden.'
-    },
-    {
-      backend: 'SYNTHESIS',
-      name: 'Synthese',
-      description: 'Die Lernenden zeigen eine konstruktive Leistung.' +
-        ' Sie müssen verschiedene Teile zusammenfügen,' +
-        ' die sie noch nicht zusammen erlebt oder gesehen haben.' +
-        ' Aus ihrer Sicht müssen sie eine schöpferische Leistung erbringen.' +
-        ' Das Neue ist aber in der bisherigen Erfahrung' +
-        ' oder in der Kenntnis der Lernenden noch nicht vorhanden.'
-    }
-  ];
+  taxonomyLevels = TAXONOMY_LEVELS;
 
   learningOutcomeFormGroup = new FormGroup({
     role: new FormControl(''),
@@ -124,7 +73,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     if (this.learningOutcome.requirements != null && this.learningOutcome.requirements.length > 0) {
       this.learningOutcome.requirements.forEach(requirement => this.addRequirement(requirement.value, requirement.taxonomyLevel));
     } else {
-      this.addRequirement('', this.taxonomyLevels[0].name);
+      this.addRequirement('', TAXONOMY_LEVELS[0].name);
     }
 
     // Abilities
@@ -132,7 +81,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     if (this.learningOutcome.abilities != null && this.learningOutcome.abilities.length > 0) {
       this.learningOutcome.abilities.forEach(ability => this.addAbility(ability.value, ability.taxonomyLevel));
     } else {
-      this.addAbility('', this.taxonomyLevels[0].name);
+      this.addAbility('', TAXONOMY_LEVELS[0].name);
     }
 
     // Purposes
@@ -140,7 +89,7 @@ export class LearningOutcomeEditorComponent implements OnInit {
     if (this.learningOutcome.purposes != null && this.learningOutcome.purposes.length > 0) {
       this.learningOutcome.purposes.forEach(purpose => this.addPurpose(purpose.value, purpose.taxonomyLevel));
     } else {
-      this.addPurpose('', this.taxonomyLevels[0].name);
+      this.addPurpose('', TAXONOMY_LEVELS[0].name);
     }
   }
 
