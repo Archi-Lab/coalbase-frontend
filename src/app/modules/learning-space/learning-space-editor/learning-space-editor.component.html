@@ -13,6 +13,9 @@
       <mat-form-field color="accent">
         <textarea matInput placeholder="Titel für den Lernraum eingeben"
                   [formControl]="titleForm"></textarea>
+        <mat-error *ngIf="titleForm.hasError('required')">
+          Titel <strong>fehlt</strong>!
+        </mat-error>
       </mat-form-field>
 
       <mat-label class="learning-space-editor-label"><strong>Learning Outcome</strong></mat-label>
@@ -50,7 +53,8 @@
       <mat-icon>close</mat-icon>
       Löschen
     </button>
-    <button mat-raised-button color="accent" (click)="saveLearningSpace()">
+    <button mat-raised-button color="accent" (click)="saveLearningSpace()"
+            [disabled]="titleForm.hasError('required')">
       <mat-icon>check</mat-icon>
       Speichern
     </button>

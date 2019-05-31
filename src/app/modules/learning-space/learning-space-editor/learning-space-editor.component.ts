@@ -3,7 +3,7 @@ import {Location} from '@angular/common';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {Course} from '../../../shared/models/course/course.model';
@@ -27,8 +27,8 @@ export class LearningSpaceEditorComponent implements OnInit {
   learningSpaces: LearningSpace[] = [];
 
   learningSpaceForm: FormGroup = new FormGroup({
-    title: new FormControl(''),
-    learningOutcome: new FormControl('')
+    title: new FormControl('', Validators.required),
+    learningOutcome: new FormControl('', Validators.required)
   });
 
   constructor(
