@@ -1,9 +1,8 @@
 <mat-toolbar class="header">
   <div class="toolbar-left">
-    <img class="header-logo" src="../assets/images/coalbase-logo-text-right.svg" alt="Coalbase Logo"/>
-  </div>
-  <div class="toolbar-center">
-    <a mat-button routerLink="/courses" routerLinkActive="underline">Lehrveranstaltungen</a>
+    <a [routerLink]="['/courses']">
+     <img class="header-logo" src="../assets/images/coalbase-logo-text-right.svg" alt="Coalbase Logo"/>
+    </a>
   </div>
   <div class="toolbar-right">
     <button mat-button (click)="logout()">Abmelden</button>
@@ -21,9 +20,6 @@
     <a class="footer-logo-container" href="https://www.th-koeln.de/">
     <img class="footer-logo" src="../assets/images/th-koeln-logo.png" alt="TH-Köln Logo"/>
     </a>
-
-
-
 </mat-toolbar>
 
 
