@@ -24,7 +24,6 @@ export class LearningSpaceEditorComponent implements OnInit {
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
   learningOutcomeIsNew: boolean = false;
-  learningOutcomeSelfRef: string = "new";
   learningSpaceForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
   });
@@ -80,10 +79,8 @@ export class LearningSpaceEditorComponent implements OnInit {
   private initializeForm(learningSpace: LearningSpace): void {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined) {
-      this.learningOutcomeSelfRef = learningSpace.learningOutcome._links.self.href;
       this.learningOutcomeIsNew = false;
     } else {
-      this.learningOutcomeSelfRef = "new";
       this.learningOutcomeIsNew = true;
     }
   }
@@ -187,15 +184,13 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public deleteLearningOutcome(): void {
-    const learningOutcome = this.learningSpace.learningOutcome as LearningOutcome;
-    this.learningSpace.deleteRelation("learningOutcome", learningOutcome).subscribe(() => {
-      this.learningOutcomeService.delete(learningOutcome).subscribe(() => {
-        this.learningSpace.learningOutcome = undefined;
-        this.learningOutcomeSelfRef = "new";
-        this.learningOutcomeIsNew = true;
-      });
-    });
+    if (this.learningSpace._links !== undefined && this.learningSpace._links.learningOutcome !== undefined) {
+      const learningOutcome = this.learningSpace.learningOutcome as LearningOutcome;
+      this.learningSpace.deleteRelation("learningOutcome", learningOutcome).subscribe();
+    }
 
+    this.learningSpace.learningOutcome = undefined;
+    this.learningOutcomeIsNew = true;
   }
 
   public openLearningOutcomeEditor(): void {

@@ -6,7 +6,7 @@ export class LearningSpace extends Resource {
 
   private _title: string;
   private _requirement?: LearningSpace;
-  private _learningOutcome: LearningOutcome | undefined;
+  private _learningOutcome?: LearningOutcome;
 
   constructor();
   constructor(title: string);
@@ -16,7 +16,7 @@ export class LearningSpace extends Resource {
     super();
     this._title = title || '';
     this._requirement = requirement || undefined;
-    this._learningOutcome = learningOutcome || new LearningOutcome();
+    this._learningOutcome = learningOutcome || undefined;
 
   }
 

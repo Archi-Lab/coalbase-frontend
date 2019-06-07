@@ -53,4 +53,4 @@
 </mat-card>
 
 
-<app-learning-outcome-editor *ngIf="showLearningOutcomeEditor" [learningOutcomeReference]="learningOutcomeSelfRef" (closeComponent)="closeLearningOutcomeEditor($event)" ></app-learning-outcome-editor>
+<app-learning-outcome-editor *ngIf="showLearningOutcomeEditor" [learningOutcomeReference]="this.learningSpace.learningOutcome" (closeComponent)="closeLearningOutcomeEditor($event)" ></app-learning-outcome-editor>

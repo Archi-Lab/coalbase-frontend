@@ -14,7 +14,7 @@ import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
 export class LearningOutcomeEditorComponent implements OnChanges {
   learningOutcome: LearningOutcome = new LearningOutcome();
 
-  @Input() learningOutcomeReference: string | undefined = undefined;
+  @Input() learningOutcomeReference: LearningOutcome | undefined = undefined;
   @Output() closeComponent: EventEmitter<LearningOutcome> = new EventEmitter<LearningOutcome>();
   taxonomyLevels = TAXONOMY_LEVELS;
 
@@ -37,7 +37,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.learningOutcomeReference === "new") {
+    if (this.learningOutcomeReference === undefined) {
       this.learningOutcome = new LearningOutcome(
         {value: ''},
         {action: '', taxonomyLevel: ''},
@@ -45,13 +45,11 @@ export class LearningOutcomeEditorComponent implements OnChanges {
         [],
         []
       );
-      this.initializeForm();
-    } else if (this.learningOutcomeReference) {
-      this.learningOutcomeService.getBySelfLink(this.learningOutcomeReference).subscribe(learningOutcome => {
-        this.learningOutcome = learningOutcome;
-        this.initializeForm();
-      });
+    } else {
+        this.learningOutcome = this.learningOutcomeReference;
     }
+
+    this.initializeForm();
   }
 
   private initializeForm(): void {
@@ -89,7 +87,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
 
   public saveLearningOutcome(): void {
     // Role
-    this.learningOutcome.role = this.roleFormControl.value;
+    this.learningOutcome.role.value = this.roleFormControl.value;
 
     // Competence
     this.learningOutcome.competence.action = this.competenceFormGroup.controls.action.value;
@@ -122,29 +120,8 @@ export class LearningOutcomeEditorComponent implements OnChanges {
       });
     }
 
-    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.closeLearningOutcomeEditor(this.learningOutcome);
-      //this.snack.open("Fehler beim Bearbeiten des Learning Outcomes", undefined, {duration: 2000});
-    } else {
-      this.closeLearningOutcomeEditor(this.learningOutcome);
-      //this.snack.open("Fehler beim Erstellen des Learning Outcomes", undefined, {duration: 2000});
-    }
+    this.closeLearningOutcomeEditor(this.learningOutcome);
   }
-
-  public deleteLearningOutcome(): void {
-    if (this.learningOutcome._links != null && this.learningOutcome._links.hasOwnProperty('self')) {
-      this.learningOutcomeService.delete(this.learningOutcome).subscribe(
-        () => {
-          this.closeLearningOutcomeEditor(undefined);
-          this.snack.open("Learning Outcome gelöscht", undefined, {duration: 2000});
-        },
-        () => this.snack.open("Learning Outcome konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Learning Outcome?", undefined, {duration: 2000})
-      );
-    } else {
-      console.log('not implemented yet!');
-    }
-  }
-
 
   // Role Form
   public get roleFormControl(): FormControl {
