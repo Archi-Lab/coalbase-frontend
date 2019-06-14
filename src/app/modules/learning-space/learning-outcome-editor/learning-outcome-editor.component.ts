@@ -79,9 +79,9 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     // Purposes
     this.clearPurposesFormArray();
     if (this.learningOutcome.purposes != null && this.learningOutcome.purposes.length > 0) {
-      this.learningOutcome.purposes.forEach(purpose => this.addPurpose(purpose.value, purpose.taxonomyLevel));
+      this.learningOutcome.purposes.forEach(purpose => this.addPurpose(purpose.value));
     } else {
-      this.addPurpose('', TAXONOMY_LEVELS[0].name);
+      this.addPurpose('');
     }
   }
 
@@ -115,8 +115,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     this.learningOutcome.purposes = [];
     for (const purposeForm of this.purposesFormArray.controls as FormGroup[]) {
       this.learningOutcome.purposes.push({
-        value: purposeForm.controls.purpose.value,
-        taxonomyLevel: purposeForm.controls.taxonomyLevel.value
+        value: purposeForm.controls.purpose.value
       });
     }
 
@@ -182,10 +181,9 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     return this.learningOutcomeFormGroup.get('purposes') as FormArray;
   }
 
-  public addPurpose(purpose: string, taxonomyLevel: string): void {
+  public addPurpose(purpose: string): void {
     this.purposesFormArray.push(new FormGroup({
-      purpose: new FormControl(purpose),
-      taxonomyLevel: new FormControl(taxonomyLevel)
+      purpose: new FormControl(purpose)
     }));
   }
 

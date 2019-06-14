@@ -134,10 +134,6 @@ export class LearningSpaceOverviewComponent implements OnInit {
     return this.buildStringWithTaxonomy(ability.value, ability.taxonomyLevel);
   }
 
-  private buildPurposeWithTaxonomy(purpose: Purpose): string {
-    return this.buildStringWithTaxonomy(purpose.value, purpose.taxonomyLevel);
-  }
-
   private buildStringWithTaxonomy(value: string, taxonomyID: string): string {
     return value + ' (' + this.getTaxonomyLevelByID(taxonomyID) + ')';
   }

@@ -99,15 +99,6 @@
                     [formControl]="purpose.get('purpose')"></textarea>
         </mat-form-field>
 
-        <mat-form-field class="form-group-taxonomy" color="accent">
-          <mat-select placeholder="Taxonomiestufe"
-                      [formControl]="purpose.get('taxonomyLevel')">
-            <mat-option *ngFor="let taxonomyLevel of taxonomyLevels; let i = index"
-                        [value]="taxonomyLevel.backend">
-              {{'(' + (i + 1) + ') ' + taxonomyLevel.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
         <button mat-mini-fab color="primary" class="remove-button" (click)="removePurpose(purposeFormIndex)">
           <mat-icon aria-label="Button um einen Zweck zu löschen">delete</mat-icon>
         </button>

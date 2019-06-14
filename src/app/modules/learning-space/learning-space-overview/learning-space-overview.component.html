@@ -43,7 +43,7 @@
                   </p>
                   <p *ngFor="let purpose of learningSpace.learningOutcome.purposes; let first = first; let last = last">
                     <strong>{{first ? "sodass ich" : ""}}</strong>
-                    {{last ? buildPurposeWithTaxonomy(purpose) : buildPurposeWithTaxonomy(purpose) + ","}}
+                    {{last ? purpose.value : purpose.value + ","}}
                   </p>
                 </div>
               </div>
