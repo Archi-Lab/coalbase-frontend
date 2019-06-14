@@ -1,24 +1,48 @@
 <div class="learning-outcome-content">
   <div *ngIf="learningOutcome">
-    <p>
+    <p *ngIf="learningOutcome.role.value !== ''">
       <strong>Als</strong>
       {{learningOutcome.role.value}}
     </p>
-    <p>
+    <p *ngIf="learningOutcome.role.value === ''">
+      <strong>Als</strong>
+      ?
+    </p>
+
+    <p *ngIf="learningOutcome.competence.action !== ''">
       <strong>kann ich</strong>
       {{buildCompetenceWithTaxonomy(learningOutcome.competence)}}
     </p>
+    <p *ngIf="learningOutcome.competence.action === ''">
+      <strong>kann ich</strong>
+      ?
+    </p>
+
     <p *ngFor="let requirement of learningOutcome.requirements; let first = first; let last = last">
       <strong>{{first ? "vorausgesetzt, ich kann" : ""}}</strong>
       {{last ? buildRequirementWithTaxonomy(requirement) : buildRequirementWithTaxonomy(requirement) + ","}}
     </p>
+    <p *ngIf="learningOutcome.requirements.length === 0">
+      <strong>vorausgesetzt, ich kann</strong>
+      ?
+    </p>
+
     <p *ngFor="let ability of learningOutcome.abilities; let first = first; let last = last">
       <strong>{{first ? "indem ich" : ""}}</strong>
       {{last ? buildAbilityWithTaxonomy(ability) : buildAbilityWithTaxonomy(ability) + ","}}
     </p>
+    <p *ngIf="learningOutcome.abilities.length === 0">
+      <strong>indem ich</strong>
+      ?
+    </p>
+
     <p *ngFor="let purpose of learningOutcome.purposes; let first = first; let last = last">
       <strong>{{first ? "sodass ich" : ""}}</strong>
       {{last ? purpose.value : purpose.value + ","}}
+    </p>
+    <p *ngIf="learningOutcome.purposes.length === 0">
+      <strong>sodass ich</strong>
+      ?
     </p>
   </div>
 </div>

@@ -96,27 +96,33 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     // Requirements
     this.learningOutcome.requirements = [];
     for (const requirementForm of this.requirementsFormArray.controls as FormGroup[]) {
-      this.learningOutcome.requirements.push({
-        value: requirementForm.controls.requirement.value,
-        taxonomyLevel: requirementForm.controls.taxonomyLevel.value
-      });
+      if (requirementForm.controls.requirement.value !== '') {
+        this.learningOutcome.requirements.push({
+          value: requirementForm.controls.requirement.value,
+          taxonomyLevel: requirementForm.controls.taxonomyLevel.value
+        });
+      }
     }
 
     // Abilities
     this.learningOutcome.abilities = [];
     for (const abilityForm of this.abilitiesFormArray.controls as FormGroup[]) {
-      this.learningOutcome.abilities.push({
-        value: abilityForm.controls.ability.value,
-        taxonomyLevel: abilityForm.controls.taxonomyLevel.value
-      });
+      if (abilityForm.controls.ability.value !== '') {
+        this.learningOutcome.abilities.push({
+          value: abilityForm.controls.ability.value,
+          taxonomyLevel: abilityForm.controls.taxonomyLevel.value
+        });
+      }
     }
 
     // Purposes
     this.learningOutcome.purposes = [];
     for (const purposeForm of this.purposesFormArray.controls as FormGroup[]) {
-      this.learningOutcome.purposes.push({
-        value: purposeForm.controls.purpose.value
-      });
+      if (purposeForm.controls.purpose.value !== '') {
+        this.learningOutcome.purposes.push({
+          value: purposeForm.controls.purpose.value
+        });
+      }
     }
 
     this.closeLearningOutcomeEditor(this.learningOutcome);
