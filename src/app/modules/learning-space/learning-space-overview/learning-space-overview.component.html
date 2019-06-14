@@ -22,31 +22,9 @@
           <mat-card-content>
             <div class="learning-space-content-container">
 
-              <div class="learning-space-content">
-                <div *ngIf="learningSpace.learningOutcome && !learningSpace.learningOutcome.isEmpty()">
-                  <h3>Ziel des Lernraums:</h3>
-                  <p>
-                    <strong>Als</strong>
-                    {{learningSpace.learningOutcome.role.value}}
-                  </p>
-                  <p>
-                    <strong>kann ich</strong>
-                    {{buildCompetenceWithTaxonomy(learningSpace.learningOutcome.competence)}}
-                  </p>
-                  <p *ngFor="let requirement of learningSpace.learningOutcome.requirements; let first = first; let last = last">
-                    <strong>{{first ? "vorausgesetzt, ich kann" : ""}}</strong>
-                    {{last ? buildRequirementWithTaxonomy(requirement) : buildRequirementWithTaxonomy(requirement) + ","}}
-                  </p>
-                  <p *ngFor="let ability of learningSpace.learningOutcome.abilities; let first = first; let last = last">
-                    <strong>{{first ? "indem ich" : ""}}</strong>
-                    {{last ? buildAbilityWithTaxonomy(ability) : buildAbilityWithTaxonomy(ability) + ","}}
-                  </p>
-                  <p *ngFor="let purpose of learningSpace.learningOutcome.purposes; let first = first; let last = last">
-                    <strong>{{first ? "sodass ich" : ""}}</strong>
-                    {{last ? purpose.value : purpose.value + ","}}
-                  </p>
-                </div>
-              </div>
+              <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
+              <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+
               <div  class="learning-space-drag-indicator">
                 <mat-icon class="drag-indicator"
                           [matTooltip]="'Sie können dieses Element per Drag&Drop neu anordnen.'"

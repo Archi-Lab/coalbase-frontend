@@ -20,17 +20,21 @@
 
       <mat-label class="learning-space-editor-label"><strong>Learning Outcome</strong></mat-label>
 
-      <div class="learning-outcome-edit-buttons">
-        <button mat-mini-fab color="accent" (click)="openLearningOutcomeEditor()">
-          <mat-icon *ngIf="learningSpace.learningOutcome === undefined"
-                    aria-label="Button um ein LearningOutcome hinzuzufügen">add</mat-icon>
-          <mat-icon *ngIf="learningSpace.learningOutcome !== undefined"
-                    aria-label="Button um ein LearningOutcome zu editieren">edit</mat-icon>
-        </button>
+      <div>
+        <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
 
-        <button *ngIf="this.learningSpace.learningOutcome !== undefined" mat-mini-fab color="primary" (click)="deleteLearningOutcome()">
-          <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
-        </button>
+        <div class="learning-outcome-edit-buttons">
+          <button mat-mini-fab color="accent" (click)="openLearningOutcomeEditor()">
+            <mat-icon *ngIf="learningSpace.learningOutcome === undefined"
+                      aria-label="Button um ein LearningOutcome hinzuzufügen">add</mat-icon>
+            <mat-icon *ngIf="learningSpace.learningOutcome !== undefined"
+                      aria-label="Button um ein LearningOutcome zu editieren">edit</mat-icon>
+          </button>
+
+          <button *ngIf="this.learningSpace.learningOutcome !== undefined" mat-mini-fab color="primary" (click)="deleteLearningOutcome()">
+            <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
 
