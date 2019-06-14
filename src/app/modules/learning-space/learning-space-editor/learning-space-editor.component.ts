@@ -95,8 +95,8 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private addRelationsToLearningSpace(learningSpace: LearningSpace): void {
-    learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome as LearningOutcome)
-      .subscribe();
+    if (this.learningSpace.learningOutcome)
+      learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome as LearningOutcome).subscribe();
   }
 
 
@@ -105,15 +105,23 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.course.learningSpaces = this.course.learningSpaces.slice(indexToRemove, 1);
   }
 
-  public saveLearningSpace(): void {
+  public saveAll(): void {
+    if (this.learningSpace.learningOutcome) {
+      this.saveLearningOutcome().then(() => {
+        this.saveLearningSpace();
+      }).catch(() => this.snack.open("Fehler beim Speichern des Learning Outcomes", undefined, {duration: 2000}));
+    } else {
+      this.saveLearningSpace();
+    }
+  }
+
+  private saveLearningSpace(): void {
     this.saveLearningSpaceFromForm();
-    this.saveLearningOutcome().then(() => {
-      if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
-        this.updateLearningSpace();
-      } else {
-        this.createLearningSpace();
-      }
-    }).catch(() => this.snack.open("Fehler beim Speichern des Learning Outcomes", undefined, {duration: 2000}));
+    if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
+      this.updateLearningSpace();
+    } else {
+      this.createLearningSpace();
+    }
   }
 
   private createLearningSpace(): void {
