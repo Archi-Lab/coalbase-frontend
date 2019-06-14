@@ -21,9 +21,10 @@
           <div class="learning-space-card-placeholder" *cdkDragPlaceholder></div>
           <mat-card-content>
             <div class="learning-space-content-container">
-
-              <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
-              <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+              <div>
+                <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
+                <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+              </div>
 
               <div  class="learning-space-drag-indicator">
                 <mat-icon class="drag-indicator"
@@ -46,7 +47,11 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-stroked-button class="learning-space-button-add" color="accent"
+      <button mat-raised-button routerLink="/courses">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Zurück
+      </button>
+      <button mat-raised-button class="learning-space-button-add" color="accent"
               [routerLink]="[ './new']">
         Neuen Lernraum hinzufügen
       </button>
