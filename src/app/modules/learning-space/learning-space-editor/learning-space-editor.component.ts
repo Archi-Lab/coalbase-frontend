@@ -3,13 +3,15 @@ import {Location} from '@angular/common';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {Course} from '../../../shared/models/course/course.model';
 import {CourseService} from '../../../core/services/course/course.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
+import {ResourceService} from "../../../core/services/resource/resource.service";
+import {WebLinkResource} from "../../../shared/models/resource/WebLinkResource";
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -26,6 +28,7 @@ export class LearningSpaceEditorComponent implements OnInit {
   learningOutcomeIsNew: boolean = false;
   learningSpaceForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
+    webLinks: new FormArray([])
   });
 
   constructor(
@@ -37,6 +40,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     private readonly learningSpaceService: LearningSpaceService,
     private readonly courseService: CourseService,
     private readonly learningOutcomeService: LearningOutcomeService,
+    private readonly resourceService: ResourceService,
     private readonly dialog: MatDialog) {
   }
 
@@ -55,7 +59,7 @@ export class LearningSpaceEditorComponent implements OnInit {
 
       if (learningSpaceIdentifier === 'new') {
         this.learningSpace = new LearningSpace('');
-        this.initializeForm(this.learningSpace);
+        this.initializeForm(this.learningSpace, []);
       } else if (learningSpaceIdentifier) {
         this.learningSpaceService.get(learningSpaceIdentifier).subscribe(learningSpace => {
           this.learningSpace = learningSpace;
@@ -65,24 +69,30 @@ export class LearningSpaceEditorComponent implements OnInit {
               this.learningSpace.getRelation(LearningSpace, 'requirement').subscribe(
                 (requirement: LearningSpace) => {
                   this.learningSpace.requirement = requirement;
-                  this.initializeForm(this.learningSpace);
+                  this.initializeForm(this.learningSpace, []);
                 },
-                (error) => this.initializeForm(this.learningSpace));
+                (error) => this.initializeForm(this.learningSpace, []));
             }, (error) => {
-              this.initializeForm(this.learningSpace)
+              this.initializeForm(this.learningSpace, [])
             });
         });
       }
     });
   }
 
-  private initializeForm(learningSpace: LearningSpace): void {
+  private initializeForm(learningSpace: LearningSpace, webResourceList: WebLinkResource[]): void {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined) {
       this.learningOutcomeIsNew = false;
     } else {
       this.learningOutcomeIsNew = true;
     }
+    if (webResourceList.length > 0) {
+      webResourceList.forEach(webLink => this.addWebLinkResource(webLink.webLink, webLink.description, webLink));
+    } else {
+      this.addWebLinkResource("", "");
+    }
+
   }
 
   private saveLearningSpaceFromForm() {
@@ -99,10 +109,39 @@ export class LearningSpaceEditorComponent implements OnInit {
       learningSpace.addRelation('learningOutcome', learningSpace.learningOutcome as LearningOutcome).subscribe();
   }
 
-
   private removeLearningSpaceInCourse(learningSpace: LearningSpace): void {
     const indexToRemove: number = this.course.learningSpaces.findIndex(learningSpaceSearch => learningSpaceSearch._links.self.href === learningSpace._links.self.href);
     this.course.learningSpaces = this.course.learningSpaces.slice(indexToRemove, 1);
+  }
+
+  private saveWebLinkResources(learningSpaceSelfReference: string) {
+    const webLinkResources: WebLinkResource[] = [];
+
+    this.webLinkFormArray.controls.forEach(webLinksForm => {
+
+      const webLinkObject = webLinksForm.get("object") as FormControl;
+      const webLink = webLinksForm.get("webLink") as FormControl;
+      const description = webLinksForm.get("description") as FormControl;
+
+      if (webLinkObject.value) {
+        const webLinkResource: WebLinkResource = webLinkObject.value;
+        webLinkResource.description = description.value;
+        webLinkResource.webLink = webLink.value;
+        webLinkResource.referenceId = learningSpaceSelfReference;
+        webLinkResources.push(webLinkResource);
+      } else {
+        webLinkResources.push(new WebLinkResource(learningSpaceSelfReference, webLink.value, description.value));
+      }
+    });
+
+    webLinkResources.forEach(webLinkResource => {
+      if (webLinkResource._links && webLinkResource._links.self) {
+        this.resourceService.update(webLinkResource).subscribe();
+      } else {
+        this.resourceService.create(webLinkResource).subscribe();
+      }
+    })
+
   }
 
   public saveAll(): void {
@@ -169,8 +208,25 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.location.back();
   }
 
+  public addWebLinkResource(webLink: string, description: string, webLinkResource?: WebLinkResource): void {
+    const formGroup: FormGroup = new FormGroup({
+      webLink: new FormControl(webLink, Validators.required),
+      description: new FormControl(description),
+      object: new FormControl(webLinkResource)
+    });
+    this.webLinkFormArray.push(formGroup);
+  }
+
+  public removeWebLinkResource(index: number): void {
+    this.webLinkFormArray.removeAt(index);
+  }
+
   public get titleForm(): FormControl {
     return this.learningSpaceForm.get('title') as FormControl;
+  }
+
+  public get webLinkFormArray(): FormArray {
+    return this.learningSpaceForm.get('webLinks') as FormArray;
   }
 
   private openDeleteDialog() {

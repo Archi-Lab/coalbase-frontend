@@ -13,7 +13,7 @@
 }
 
 .learning-space-editor-label {
-  margin: auto;
+  margin: 1.125em auto 0 auto;
   color: $th-koeln-violet;
 }
 
@@ -25,7 +25,7 @@
   margin-right: 8px;
 }
 
-.mat-form-field{
+.mat-form-field {
   margin-bottom: 10px;
 }
 
@@ -33,4 +33,31 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+.webLinkResource {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.webLinkResourceForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  button {
+    margin: auto;
+  }
+}
+
+.webLinkResourceFormControls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 85%;
+
+  .mat-form-field {
+    width: 100%;
+  }
 }
