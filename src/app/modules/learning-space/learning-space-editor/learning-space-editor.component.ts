@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -10,6 +10,7 @@ import {Course} from '../../../shared/models/course/course.model';
 import {CourseService} from '../../../core/services/course/course.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
+import {ExamFormEditorComponent} from "../exam-form-editor/exam-form-editor.component";
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -17,6 +18,9 @@ import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialo
   styleUrls: ['./learning-space-editor.component.scss']
 })
 export class LearningSpaceEditorComponent implements OnInit {
+
+  @ViewChild(ExamFormEditorComponent)
+  private examFormEditorComponent?: ExamFormEditorComponent;
 
   showLearningOutcomeEditor: boolean = false;
   showLearningSpaceEditor: boolean = true;
@@ -117,6 +121,9 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   private saveLearningSpace(): void {
     this.saveLearningSpaceFromForm();
+    if (this.examFormEditorComponent) {
+      this.learningSpace.examForm = this.examFormEditorComponent.saveExamFormFromForm();
+    }
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
       this.updateLearningSpace();
     } else {
