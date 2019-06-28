@@ -1,0 +1,26 @@
+.webLinkResource {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.webLinkResourceForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  button {
+    margin: auto;
+  }
+}
+
+.webLinkResourceFormControls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 85%;
+
+  .mat-form-field {
+    width: 100%;
+  }
+}

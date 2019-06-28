@@ -1,0 +1,19 @@
+@import '../../../../assets/scss/coalbase-colors';
+
+.exam-form-editor-container {
+  display: grid;
+}
+
+.exam-form-editor-label {
+  color: $th-koeln-violet;
+}
+
+.duration-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.unit-form-field {
+  margin-left: 30px;
+}
+

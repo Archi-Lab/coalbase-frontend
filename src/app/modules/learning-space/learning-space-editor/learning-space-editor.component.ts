@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {Course} from '../../../shared/models/course/course.model';
@@ -11,7 +11,7 @@ import {CourseService} from '../../../core/services/course/course.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
 import {ResourceService} from "../../../core/services/resource/resource.service";
-import {WebLinkResource} from "../../../shared/models/resource/WebLinkResource";
+import {WebLinkFormEditorComponent} from "../web-link-form-editor/webLink-form-editor.component";
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -23,12 +23,14 @@ export class LearningSpaceEditorComponent implements OnInit {
   showLearningOutcomeEditor: boolean = false;
   showLearningSpaceEditor: boolean = true;
 
+  learningSpaceSelfReference: string = "";
+  @ViewChild(WebLinkFormEditorComponent) webLinkFormEditor: WebLinkFormEditorComponent | undefined;
+
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
   learningOutcomeIsNew: boolean = false;
   learningSpaceForm: FormGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
-    webLinks: new FormArray([])
+    title: new FormControl('', Validators.required)
   });
 
   constructor(
@@ -59,40 +61,35 @@ export class LearningSpaceEditorComponent implements OnInit {
 
       if (learningSpaceIdentifier === 'new') {
         this.learningSpace = new LearningSpace('');
-        this.initializeForm(this.learningSpace, []);
+        this.initializeForm(this.learningSpace);
       } else if (learningSpaceIdentifier) {
         this.learningSpaceService.get(learningSpaceIdentifier).subscribe(learningSpace => {
           this.learningSpace = learningSpace;
+          this.learningSpaceSelfReference = learningSpace._links.self.href;
           this.learningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
             (learningOutcome: LearningOutcome) => {
               this.learningSpace.learningOutcome = learningOutcome;
               this.learningSpace.getRelation(LearningSpace, 'requirement').subscribe(
                 (requirement: LearningSpace) => {
                   this.learningSpace.requirement = requirement;
-                  this.initializeForm(this.learningSpace, []);
+                  this.initializeForm(this.learningSpace);
                 },
-                (error) => this.initializeForm(this.learningSpace, []));
+                (error) => this.initializeForm(this.learningSpace));
             }, (error) => {
-              this.initializeForm(this.learningSpace, [])
+              this.initializeForm(this.learningSpace);
             });
         });
       }
     });
   }
 
-  private initializeForm(learningSpace: LearningSpace, webResourceList: WebLinkResource[]): void {
+  private initializeForm(learningSpace: LearningSpace): void {
     this.titleForm.setValue(learningSpace.title);
     if (learningSpace.learningOutcome !== undefined && learningSpace.learningOutcome._links !== undefined) {
       this.learningOutcomeIsNew = false;
     } else {
       this.learningOutcomeIsNew = true;
     }
-    if (webResourceList.length > 0) {
-      webResourceList.forEach(webLink => this.addWebLinkResource(webLink.webLink, webLink.description, webLink));
-    } else {
-      this.addWebLinkResource("", "");
-    }
-
   }
 
   private saveLearningSpaceFromForm() {
@@ -115,33 +112,10 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   private saveWebLinkResources(learningSpaceSelfReference: string) {
-    const webLinkResources: WebLinkResource[] = [];
-
-    this.webLinkFormArray.controls.forEach(webLinksForm => {
-
-      const webLinkObject = webLinksForm.get("object") as FormControl;
-      const webLink = webLinksForm.get("webLink") as FormControl;
-      const description = webLinksForm.get("description") as FormControl;
-
-      if (webLinkObject.value) {
-        const webLinkResource: WebLinkResource = webLinkObject.value;
-        webLinkResource.description = description.value;
-        webLinkResource.webLink = webLink.value;
-        webLinkResource.referenceId = learningSpaceSelfReference;
-        webLinkResources.push(webLinkResource);
-      } else {
-        webLinkResources.push(new WebLinkResource(learningSpaceSelfReference, webLink.value, description.value));
-      }
-    });
-
-    webLinkResources.forEach(webLinkResource => {
-      if (webLinkResource._links && webLinkResource._links.self) {
-        this.resourceService.update(webLinkResource).subscribe();
-      } else {
-        this.resourceService.create(webLinkResource).subscribe();
-      }
-    })
-
+    this.learningSpaceSelfReference = learningSpaceSelfReference;
+    if (this.webLinkFormEditor) {
+      this.webLinkFormEditor.saveWebLinkResources();
+    }
   }
 
   public saveAll(): void {
@@ -167,6 +141,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.learningSpaceService.create(this.learningSpace).subscribe(
       learningSpace => {
         const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+        this.saveWebLinkResources(learningSpaceUpdated._links.self.href);
         this.addRelationsToLearningSpace(learningSpaceUpdated);
         this.addRelationToCourse(learningSpaceUpdated);
         this.router.navigate(['../'], {relativeTo: this.route});
@@ -178,6 +153,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.learningSpaceService.update(this.learningSpace).subscribe(
       learningSpace => {
         const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
+        this.saveWebLinkResources(learningSpaceUpdated._links.self.href);
         this.addRelationsToLearningSpace(learningSpaceUpdated);
         this.router.navigate(['../'], {relativeTo: this.route});
         this.snack.open("Lernraum bearbeitet", undefined, {duration: 2000});
@@ -208,25 +184,8 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.location.back();
   }
 
-  public addWebLinkResource(webLink: string, description: string, webLinkResource?: WebLinkResource): void {
-    const formGroup: FormGroup = new FormGroup({
-      webLink: new FormControl(webLink, Validators.required),
-      description: new FormControl(description),
-      object: new FormControl(webLinkResource)
-    });
-    this.webLinkFormArray.push(formGroup);
-  }
-
-  public removeWebLinkResource(index: number): void {
-    this.webLinkFormArray.removeAt(index);
-  }
-
   public get titleForm(): FormControl {
     return this.learningSpaceForm.get('title') as FormControl;
-  }
-
-  public get webLinkFormArray(): FormArray {
-    return this.learningSpaceForm.get('webLinks') as FormArray;
   }
 
   private openDeleteDialog() {

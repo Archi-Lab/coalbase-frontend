@@ -22,16 +22,24 @@
           <mat-card-content>
             <div class="learning-space-content-container">
               <div>
-                <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
-                <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+                <div>
+                  <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
+                  <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
+                                             [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+                </div>
+                <div>
+                  <h3 *ngIf="learningSpace.learningOutcome">Ressourcen des Lernraums:</h3>
+                  <app-web-link-view [reference]="learningSpace._links.self.href">
+                  </app-web-link-view>
+                </div>
               </div>
 
-              <div  class="learning-space-drag-indicator">
+              <div class="learning-space-drag-indicator">
                 <mat-icon class="drag-indicator"
                           [matTooltip]="'Sie können dieses Element per Drag&Drop neu anordnen.'"
                           [matTooltipShowDelay]="700"
                           [matTooltipHideDelay]="300"
-                          [matTooltipPosition]="'above'" >
+                          [matTooltipPosition]="'above'">
                   drag_indicator
                 </mat-icon>
               </div>

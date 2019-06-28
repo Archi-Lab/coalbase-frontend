@@ -9,6 +9,9 @@ import {LearningSpaceOverviewComponent} from './learning-space-overview/learning
 import {LearningSpaceDeleteDialogComponent} from './learning-space-delete-dialog/learning-space-delete-dialog.component';
 import {LearningOutcomeEditorComponent} from "./learning-outcome-editor/learning-outcome-editor.component";
 import {LearningOutcomeViewComponent} from "./learning-outcome-view/learning-outcome-view.component";
+import {ExamFormEditorComponent} from "./exam-form-editor/exam-form-editor.component";
+import {WebLinkFormEditorComponent} from "./web-link-form-editor/webLink-form-editor.component";
+import {WebLinkViewComponent} from "./web-link-view/web-link-view.component";
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import {LearningOutcomeViewComponent} from "./learning-outcome-view/learning-out
     LearningSpaceOverviewComponent,
     LearningSpaceDeleteDialogComponent,
     LearningOutcomeEditorComponent,
-    LearningOutcomeViewComponent
+    LearningOutcomeViewComponent,
+    ExamFormEditorComponent,
+    WebLinkFormEditorComponent,
+    WebLinkViewComponent,
   ],
   imports: [
     LearningSpaceRoutingModule,

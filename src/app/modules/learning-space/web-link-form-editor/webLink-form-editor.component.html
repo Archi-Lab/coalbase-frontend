@@ -1,0 +1,22 @@
+<div class="webLinkResource" [formGroup]="webLinkFormGroup">
+  <div class="webLinkResourceForm" formArrayName="webLinks"
+       *ngFor="let webLink of webLinks.controls; let webLinkFormIndex = index">
+    <div class="webLinkResourceFormControls">
+      <mat-form-field color="accent">
+          <textarea matInput placeholder="Weblink zu der Ressource"
+                    [formControl]="webLink.get('webLink')"></textarea>
+        <mat-error *ngIf="webLink.get('webLink').hasError('required')"></mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent">
+          <textarea matInput placeholder="Beschreibung der Ressource"
+                    [formControl]="webLink.get('description')"></textarea>
+      </mat-form-field>
+    </div>
+    <button mat-mini-fab color="primary" class="remove-button" (click)="removeWebLinkResource(webLinkFormIndex)">
+      <mat-icon aria-label="Button um einen Weblink zu löschen">delete</mat-icon>
+    </button>
+  </div>
+  <button mat-mini-fab (click)="addWebLinkResource('', '')">
+    <mat-icon aria-label="Button um einen Weblink hinzu zu fügen">add</mat-icon>
+  </button>
+</div>

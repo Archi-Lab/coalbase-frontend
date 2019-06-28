@@ -1,0 +1,48 @@
+<div class="exam-form-editor-container"
+     [formGroup]="examFormForm">
+
+  <mat-label class="exam-form-editor-label"><strong>Entwurf</strong></mat-label>
+  <mat-form-field color="accent">
+    <mat-select placeholder="Entwurf"
+                [formControl]="templateForm">
+      <mat-option *ngFor="let predefinedExamForm of predefinedExamForms"
+                  [value]="predefinedExamForm._links.self.href">
+        {{predefinedExamForm.type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-label class="exam-form-editor-label"><strong>Typ</strong></mat-label>
+  <mat-form-field color="accent">
+        <textarea matInput placeholder="Typ"
+                  [formControl]="typeForm"></textarea>
+  </mat-form-field>
+
+  <mat-label class="exam-form-editor-label"><strong>Beschreibung</strong></mat-label>
+  <mat-form-field color="accent">
+        <textarea matInput placeholder="Beschreibung"
+                  [formControl]="descriptionForm"></textarea>
+  </mat-form-field>
+
+  <mat-label class="exam-form-editor-label"><strong>Dauer</strong></mat-label>
+  <div class="duration-container">
+    <mat-form-field color="accent">
+        <input matInput placeholder="Min" type="number"
+                  [formControl]="durationMinValueForm">
+    </mat-form-field>
+
+    <p>
+      <strong>-</strong>
+    </p>
+
+    <mat-form-field color="accent">
+        <input matInput placeholder="Max" type="number"
+                  [formControl]="durationMaxValueForm">
+    </mat-form-field>
+
+    <mat-form-field class="unit-form-field" color="accent">
+        <input matInput placeholder="Einheit"
+                  [formControl]="durationUnitForm">
+    </mat-form-field>
+  </div>
+</div>

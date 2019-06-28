@@ -1,20 +1,22 @@
 import {Resource} from 'angular4-hal';
 import {LearningOutcome} from '../learning-outcome/learning-outcome.model';
+import {ExamForm} from "./exam-form.model";
 
 export class LearningSpace extends Resource {
 
-
   private _title: string;
+  private _examForm: ExamForm;
   private _requirement?: LearningSpace;
   private _learningOutcome?: LearningOutcome;
 
   constructor();
   constructor(title: string);
-  constructor(title: string, learningOutcome: LearningOutcome);
-  constructor(title: string, learningOutcome: LearningOutcome, requirement: LearningSpace);
-  constructor(title?: string, learningOutcome?: LearningOutcome, requirement?: LearningSpace) {
+  constructor(title: string, examForm: ExamForm, learningOutcome: LearningOutcome);
+  constructor(title: string, examForm: ExamForm, learningOutcome: LearningOutcome, requirement: LearningSpace);
+  constructor(title?: string, examForm?: ExamForm, learningOutcome?: LearningOutcome, requirement?: LearningSpace) {
     super();
     this._title = title || '';
+    this._examForm = examForm || new ExamForm();
     this._requirement = requirement || undefined;
     this._learningOutcome = learningOutcome || undefined;
 
@@ -42,6 +44,10 @@ export class LearningSpace extends Resource {
     this._title = value;
   }
 
+  set examForm(value: ExamForm) {
+    this._examForm = value;
+  }
+
   set requirement(value: LearningSpace | undefined) {
     this._requirement = value;
   }
@@ -52,6 +58,10 @@ export class LearningSpace extends Resource {
 
   get title(): string {
     return this._title;
+  }
+
+  get examForm(): ExamForm {
+    return this._examForm;
   }
 
   get requirement(): LearningSpace | undefined {
