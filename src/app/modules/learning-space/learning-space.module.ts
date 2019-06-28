@@ -10,6 +10,7 @@ import {LearningSpaceDeleteDialogComponent} from './learning-space-delete-dialog
 import {LearningOutcomeEditorComponent} from "./learning-outcome-editor/learning-outcome-editor.component";
 import {LearningOutcomeViewComponent} from "./learning-outcome-view/learning-outcome-view.component";
 import {ExamFormEditorComponent} from "./exam-form-editor/exam-form-editor.component";
+import {ExamFormViewComponent} from "./exam-form-view/exam-form-view.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ExamFormEditorComponent} from "./exam-form-editor/exam-form-editor.compo
     LearningSpaceDeleteDialogComponent,
     LearningOutcomeEditorComponent,
     LearningOutcomeViewComponent,
-    ExamFormEditorComponent
+    ExamFormEditorComponent,
+    ExamFormViewComponent
   ],
   imports: [
     LearningSpaceRoutingModule,

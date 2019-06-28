@@ -22,8 +22,15 @@
           <mat-card-content>
             <div class="learning-space-content-container">
               <div>
-                <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
-                <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+                <div>
+                  <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
+                  <app-learning-outcome-view *ngIf="learningSpace.learningOutcome" [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+                </div>
+
+                <div>
+                  <h3 *ngIf="learningSpace.examForm">Prüfungsform:</h3>
+                  <app-exam-form-view *ngIf="learningSpace.examForm" [examForm]="learningSpace.examForm"></app-exam-form-view>
+                </div>
               </div>
 
               <div  class="learning-space-drag-indicator">
