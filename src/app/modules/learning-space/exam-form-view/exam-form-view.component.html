@@ -1,0 +1,47 @@
+<div class="exam-form-content">
+  <div *ngIf="examForm">
+    <p *ngIf="examForm.type !== ''">
+      <strong>Typ:</strong>
+      {{examForm.type}}
+    </p>
+    <p *ngIf="examForm.type === ''">
+      <strong>Typ:</strong>
+      ?
+    </p>
+
+    <p *ngIf="examForm.description !== ''">
+      <strong>Beschreibung:</strong>
+      {{examForm.description}}
+    </p>
+    <p *ngIf="examForm.description === ''">
+      <strong>Beschreibung:</strong>
+      ?
+    </p>
+
+    <p *ngFor="let schedule of examForm.schedules; let first = first; let last = last">
+      <strong *ngIf="first">Zeitplan:</strong>
+      {{last ? schedule.value : schedule.value + ","}}
+    </p>
+    <p *ngIf="examForm.schedules.length === 0">
+      <strong>Zeitplan:</strong>
+      ?
+    </p>
+
+    <p *ngIf="examForm.duration.maxValue != 0">
+      <strong>Dauer:</strong>
+      {{examForm.duration.minValue + ' - ' + examForm.duration.maxValue + ' ' + examForm.duration.unit}}
+    </p>
+    <p *ngIf="examForm.duration.minValue != 0 && examForm.duration.maxValue == 0">
+      <strong>Dauer:</strong>
+      {{examForm.duration.minValue + ' ' + examForm.duration.unit}}
+    </p>
+    <p *ngIf="examForm.duration.minValue == 0 && examForm.duration.maxValue == 0 && examForm.duration.unit !== ''">
+      <strong>Dauer:</strong>
+      {{examForm.duration.unit}}
+    </p>
+    <p *ngIf="examForm.duration.minValue == 0 && examForm.duration.maxValue == 0 && examForm.duration.unit === ''">
+      <strong>Dauer:</strong>
+      ?
+    </p>
+  </div>
+</div>

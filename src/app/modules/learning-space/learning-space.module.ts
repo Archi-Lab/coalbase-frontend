@@ -10,6 +10,7 @@ import {LearningSpaceDeleteDialogComponent} from './learning-space-delete-dialog
 import {LearningOutcomeEditorComponent} from "./learning-outcome-editor/learning-outcome-editor.component";
 import {LearningOutcomeViewComponent} from "./learning-outcome-view/learning-outcome-view.component";
 import {ExamFormEditorComponent} from "./exam-form-editor/exam-form-editor.component";
+import {ExamFormViewComponent} from "./exam-form-view/exam-form-view.component";
 import {WebLinkFormEditorComponent} from "./web-link-form-editor/webLink-form-editor.component";
 import {WebLinkViewComponent} from "./web-link-view/web-link-view.component";
 
@@ -21,9 +22,10 @@ import {WebLinkViewComponent} from "./web-link-view/web-link-view.component";
     LearningSpaceDeleteDialogComponent,
     LearningOutcomeEditorComponent,
     LearningOutcomeViewComponent,
-    ExamFormEditorComponent,
     WebLinkFormEditorComponent,
     WebLinkViewComponent,
+    ExamFormEditorComponent,
+    ExamFormViewComponent,
   ],
   imports: [
     LearningSpaceRoutingModule,

@@ -6,7 +6,8 @@
     <mat-select placeholder="Entwurf"
                 [formControl]="templateForm">
       <mat-option *ngFor="let predefinedExamForm of predefinedExamForms"
-                  [value]="predefinedExamForm._links.self.href">
+                  [value]="predefinedExamForm._links.self.href"
+                  (click)="usePredefinedExamForm(predefinedExamForm._links.self.href)">
         {{predefinedExamForm.type}}
       </mat-option>
     </mat-select>
@@ -23,6 +24,26 @@
         <textarea matInput placeholder="Beschreibung"
                   [formControl]="descriptionForm"></textarea>
   </mat-form-field>
+
+  <mat-label class="exam-form-editor-label"><strong>Zeitpunkte</strong></mat-label>
+  <div class="form-array">
+    <div formArrayName="schedules" *ngFor="let schedule of schedulesFormArray.controls; let scheduleFormIndex = index">
+      <mat-form-field
+        color="accent"
+        class="form-control">
+          <textarea matInput placeholder="Zeitpunkt"
+                    [formControl]="schedule"></textarea>
+      </mat-form-field>
+
+      <button mat-mini-fab color="primary" class="remove-button" (click)="removeSchedule(scheduleFormIndex)">
+        <mat-icon aria-label="Button um einen Zeitpunkt zu löschen">delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-mini-fab class="add-button" (click)="addSchedule('')">
+      <mat-icon aria-label="Button um einen Zeitpunkt hinzu zu fügen">add</mat-icon>
+    </button>
+  </div>
 
   <mat-label class="exam-form-editor-label"><strong>Dauer</strong></mat-label>
   <div class="duration-container">

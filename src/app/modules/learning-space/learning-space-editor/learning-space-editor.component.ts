@@ -12,6 +12,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {LearningSpaceDeleteDialogComponent} from '../learning-space-delete-dialog/learning-space-delete-dialog.component';
 import {ResourceService} from "../../../core/services/resource/resource.service";
 import {WebLinkFormEditorComponent} from "../web-link-form-editor/webLink-form-editor.component";
+import {ExamFormEditorComponent} from "../exam-form-editor/exam-form-editor.component";
 
 @Component({
   selector: 'app-learning-space-editor',
@@ -20,11 +21,16 @@ import {WebLinkFormEditorComponent} from "../web-link-form-editor/webLink-form-e
 })
 export class LearningSpaceEditorComponent implements OnInit {
 
+  @ViewChild(ExamFormEditorComponent)
+  private examFormEditorComponent: ExamFormEditorComponent | undefined;
+  @ViewChild(WebLinkFormEditorComponent)
+  private webLinkFormEditor: WebLinkFormEditorComponent | undefined;
+
   showLearningOutcomeEditor: boolean = false;
   showLearningSpaceEditor: boolean = true;
 
   learningSpaceSelfReference: string = "";
-  @ViewChild(WebLinkFormEditorComponent) webLinkFormEditor: WebLinkFormEditorComponent | undefined;
+
 
   course: Course = new Course();
   learningSpace: LearningSpace = new LearningSpace();
@@ -130,6 +136,9 @@ export class LearningSpaceEditorComponent implements OnInit {
 
   private saveLearningSpace(): void {
     this.saveLearningSpaceFromForm();
+    if (this.examFormEditorComponent) {
+      this.learningSpace.examForm = this.examFormEditorComponent.saveExamFormFromForm();
+    }
     if (this.learningSpace._links != null && this.learningSpace._links.self != null) {
       this.updateLearningSpace();
     } else {
