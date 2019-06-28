@@ -71,7 +71,7 @@ export class LearningSpaceEditorComponent implements OnInit {
       } else if (learningSpaceIdentifier) {
         this.learningSpaceService.get(learningSpaceIdentifier).subscribe(learningSpace => {
           this.learningSpace = learningSpace;
-          this.learningSpaceSelfReference = learningSpace._links.self.href;
+          this.learningSpaceSelfReference = learningSpace.getIdFromUri();
           this.learningSpace.getRelation(LearningOutcome, 'learningOutcome').subscribe(
             (learningOutcome: LearningOutcome) => {
               this.learningSpace.learningOutcome = learningOutcome;
@@ -150,7 +150,7 @@ export class LearningSpaceEditorComponent implements OnInit {
     this.learningSpaceService.create(this.learningSpace).subscribe(
       learningSpace => {
         const learningSpaceUpdated: LearningSpace = learningSpace as LearningSpace;
-        this.saveWebLinkResources(learningSpaceUpdated._links.self.href);
+        this.saveWebLinkResources(learningSpaceUpdated.getIdFromUri());
         this.addRelationsToLearningSpace(learningSpaceUpdated);
         this.addRelationToCourse(learningSpaceUpdated);
         this.router.navigate(['../'], {relativeTo: this.route});

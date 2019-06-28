@@ -16,14 +16,9 @@ export class WebLinkViewComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    let options: any = {params: [{key: "referenceId", value: this.cutFirstUrlPart(this.reference)}]};
+    let options: any = {params: [{key: "referenceId", value: this.reference}]};
     this.resourceService.search("findByReferenceId", options).subscribe( (webLinks) => {
       this.webLinks = webLinks;
     });
-  }
-
-  private cutFirstUrlPart(reference: string): string {
-    const firstCut: string = reference.substring((reference.indexOf("//") + 2));
-    return firstCut.substring((firstCut.indexOf("/") + 1));
   }
 }

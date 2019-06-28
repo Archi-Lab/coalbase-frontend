@@ -34,7 +34,7 @@
                 </div>
                 <div>
                   <h3 *ngIf="learningSpace.learningOutcome">Ressourcen des Lernraums:</h3>
-                  <app-web-link-view [reference]="learningSpace._links.self.href">
+                  <app-web-link-view [reference]="learningSpace.getIdFromUri()">
                   </app-web-link-view>
                 </div>
               </div>

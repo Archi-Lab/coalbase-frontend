@@ -10,8 +10,7 @@ import {ResourceService} from "../../../core/services/resource/resource.service"
 })
 export class WebLinkFormEditorComponent implements OnChanges {
 
-  @Input() webLinkReference: string = "";
-  reference: string = "";
+  @Input() reference: string = "";
   webLinkFormGroup: FormGroup = new FormGroup({
     webLinks: new FormArray([])
   });
@@ -21,8 +20,7 @@ export class WebLinkFormEditorComponent implements OnChanges {
   }
 
   ngOnChanges(changes: { [property: string]: SimpleChange }): void {
-    if (changes.webLinkReference && changes.webLinkReference.currentValue) {
-      this.reference = this.cutFirstUrlPart(this.webLinkReference);
+    if (changes.reference && changes.reference.currentValue) {
       if (this.reference) {
         let options: any = {params: [{key: "referenceId", value: this.reference}]};
         this.resourceService.search("findByReferenceId", options).subscribe(webLinks => {
@@ -91,10 +89,4 @@ export class WebLinkFormEditorComponent implements OnChanges {
   public get webLinks(): FormArray {
     return this.webLinkFormGroup.get("webLinks") as FormArray;
   }
-
-  private cutFirstUrlPart(reference: string): string {
-    const firstCut: string = reference.substring((reference.indexOf("//") + 2));
-    return firstCut.substring((firstCut.indexOf("/") + 1));
-  }
-
 }
