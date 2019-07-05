@@ -98,6 +98,9 @@ export class LearningSpaceEditorComponent implements OnInit {
         result = await this.learningSpaceService.create(this.learningSpace).toPromise() as LearningSpace;
       }
       if (result) {
+
+        this.course.updateRelation("learningSpaces", result);
+        this.course.learningSpaces.push(result);
         await this.saveLearningOutcome();
 
         if (this.webLinkFormEditor) {
