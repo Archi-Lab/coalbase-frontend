@@ -12,8 +12,8 @@
       <mat-label class="learning-space-editor-label"><strong>Lernraum Titel</strong></mat-label>
       <mat-form-field color="accent">
         <textarea matInput placeholder="Titel für den Lernraum eingeben"
-                  [formControl]="titleForm"></textarea>
-        <mat-error *ngIf="titleForm.hasError('required')">
+                  [formControl]="learningSpaceTitle"></textarea>
+        <mat-error *ngIf="learningSpaceTitle.hasError('required')">
           Titel <strong>fehlt</strong>!
         </mat-error>
       </mat-form-field>
@@ -26,29 +26,29 @@
 
         <div class="learning-outcome-edit-buttons">
           <button mat-mini-fab color="accent" (click)="openLearningOutcomeEditor()">
-            <mat-icon *ngIf="learningSpace.learningOutcome === undefined"
+            <mat-icon *ngIf="!learningSpace.learningOutcome"
                       aria-label="Button um ein LearningOutcome hinzuzufügen">add
             </mat-icon>
-            <mat-icon *ngIf="learningSpace.learningOutcome !== undefined"
+            <mat-icon *ngIf="learningSpace.learningOutcome"
                       aria-label="Button um ein LearningOutcome zu editieren">edit
             </mat-icon>
           </button>
 
-          <button *ngIf="this.learningSpace.learningOutcome !== undefined" mat-mini-fab color="primary"
+          <button *ngIf="learningSpace.learningOutcome" mat-mini-fab color="primary"
                   (click)="deleteLearningOutcome()">
             <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
           </button>
         </div>
       </div>
       <mat-label class="learning-space-editor-label"><strong>Prüfungsform</strong></mat-label>
-      <app-exam-form-editor class="exam-form-editor-container" [examForm]="this.learningSpace.examForm"></app-exam-form-editor>
+      <app-exam-form-editor class="exam-form-editor-container" [examForm]="learningSpace.examForm"></app-exam-form-editor>
       <mat-label class="learning-space-editor-label"><strong>Web-Links</strong></mat-label>
-      <app-learning-space-webLink-editor [reference]="learningSpaceSelfReference"></app-learning-space-webLink-editor>
+      <app-learning-space-webLink-editor [reference]="learningSpace.getIdFromUri()"></app-learning-space-webLink-editor>
     </div>
 
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button (click)="backToPreviousPage()">
+    <button mat-raised-button (click)="location.back()">
       <mat-icon>arrow_back_ios</mat-icon>
       Abbrechen
     </button>
@@ -56,8 +56,8 @@
       <mat-icon>close</mat-icon>
       Löschen
     </button>
-    <button mat-raised-button color="accent" (click)="saveAll()"
-            [disabled]="titleForm.hasError('required')">
+    <button mat-raised-button color="accent" (click)="saveLearningSpace()"
+            [disabled]="learningSpaceTitle.hasError('required')">
       <mat-icon>check</mat-icon>
       Speichern
     </button>

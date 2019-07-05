@@ -10,7 +10,7 @@ import {ResourceService} from "../../../core/services/resource/resource.service"
 })
 export class WebLinkFormEditorComponent implements OnChanges {
 
-  @Input() reference: string = "";
+  @Input() reference: string | undefined;
   webLinkFormGroup: FormGroup = new FormGroup({
     webLinks: new FormArray([])
   });
@@ -20,18 +20,7 @@ export class WebLinkFormEditorComponent implements OnChanges {
   }
 
   ngOnChanges(changes: { [property: string]: SimpleChange }): void {
-    if (changes.reference && changes.reference.currentValue) {
-      if (this.reference) {
-        let options: any = {params: [{key: "referenceId", value: this.reference}]};
-        this.resourceService.search("findByReferenceId", options).subscribe(webLinks => {
-          webLinks.forEach(webLink => {
-            this.addWebLinkResource(webLink.webLink, webLink.description, webLink);
-          });
-        });
-      } else {
-        this.addWebLinkResource("", "");
-      }
-    }
+    this.initializeForm(changes.reference);
   }
 
   public addWebLinkResource(webLink: string, description: string, webLinkResource?: WebLinkResource): void {
@@ -53,10 +42,11 @@ export class WebLinkFormEditorComponent implements OnChanges {
     this.webLinks.removeAt(index);
   }
 
-  public saveWebLinkResources() {
+  public saveWebLinkResources(resourceReference: string) {
+    console.log("SAVE RESOURCES TO 1: ", resourceReference);
     const webLinkResources: WebLinkResource[] = [];
 
-    if (this.reference) {
+    if (resourceReference) {
       this.webLinks.controls.forEach(webLinksForm => {
           const webLinkObject = webLinksForm.get("object") as FormControl;
           const webLink = webLinksForm.get("webLink") as FormControl;
@@ -66,10 +56,10 @@ export class WebLinkFormEditorComponent implements OnChanges {
             const webLinkResource: WebLinkResource = webLinkObject.value;
             webLinkResource.description = description.value;
             webLinkResource.webLink = webLink.value;
-            webLinkResource.referenceId = this.reference;
+            webLinkResource.referenceId = resourceReference;
             webLinkResources.push(webLinkResource);
           } else {
-            webLinkResources.push(new WebLinkResource(this.reference, webLink.value, description.value));
+            webLinkResources.push(new WebLinkResource(resourceReference, webLink.value, description.value));
           }
         }
       );
@@ -81,12 +71,27 @@ export class WebLinkFormEditorComponent implements OnChanges {
           this.resourceService.create(webLinkResource).subscribe();
         }
       })
-    } else {
-      throw new Error("No reference is set for these webLinks");
     }
   }
 
   public get webLinks(): FormArray {
     return this.webLinkFormGroup.get("webLinks") as FormArray;
+  }
+
+  private initializeForm(referenceChange: SimpleChange) {
+    if (referenceChange && this.reference) {
+      let options: any = {params: [{key: "referenceId", value: this.reference}]};
+      this.resourceService.search("findByReferenceId", options).subscribe(webLinks => {
+        if (webLinks && webLinks.length > 0) {
+          webLinks.forEach(webLink => {
+            this.addWebLinkResource(webLink.webLink, webLink.description, webLink);
+          });
+        }else {
+          this.addWebLinkResource("", "");
+        }
+      });
+    } else {
+      this.addWebLinkResource("", "");
+    }
   }
 }
