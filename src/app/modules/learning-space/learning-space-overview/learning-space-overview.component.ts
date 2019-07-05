@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LearningSpace} from '../../../shared/models/learning-space/learning-space.model';
 import {LearningSpaceService} from '../../../core/services/learning-space/learning-space.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,11 +6,7 @@ import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CourseService} from "../../../core/services/course/course.service";
 import {Course} from "../../../shared/models/course/course.model";
-import {Requirement} from "../../../shared/models/learning-outcome/requirement.model";
-import {Ability} from "../../../shared/models/learning-outcome/ability.model";
-import {Purpose} from "../../../shared/models/learning-outcome/purpose.model";
-import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
-import {Competence} from "../../../shared/models/learning-outcome/competence.model";
+import {ExamForm} from "../../../shared/models/learning-space/exam-form.model";
 
 @Component({
   selector: 'app-learning-space-overview',
@@ -101,6 +97,10 @@ export class LearningSpaceOverviewComponent implements OnInit {
     if (this.sortedLearningSpaces.length > (event.previousIndex + 1)) {
       this.updateRelationForLearningSpace((event.previousIndex + 1));
     }
+  }
+
+  public isExamFormEmpty(examForm: ExamForm) : boolean {
+    return examForm.type === '' && examForm.description === '' && examForm.scope.minValue === 0 && examForm.scope.maxValue === 0 && examForm.scope.unit === '' && examForm.schedules.length === 0;
   }
 
   private updateRelationForLearningSpace(indexToUpdate: number): void {

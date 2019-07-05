@@ -28,8 +28,8 @@
                                              [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
                 </div>
                 <div>
-                  <h3 *ngIf="learningSpace.examForm">Prüfungsform:</h3>
-                  <app-exam-form-view *ngIf="learningSpace.examForm"
+                  <h3 *ngIf="!isExamFormEmpty(learningSpace.examForm)">Prüfungsform:</h3>
+                  <app-exam-form-view *ngIf="!isExamFormEmpty(learningSpace.examForm)"
                                       [examForm]="learningSpace.examForm"></app-exam-form-view>
                 </div>
                 <div>
