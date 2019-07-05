@@ -99,7 +99,7 @@ export class LearningSpaceEditorComponent implements OnInit {
       }
       if (result) {
 
-        this.course.updateRelation("learningSpaces", result);
+        this.course.updateRelation("learningSpaces", result).subscribe();
         this.course.learningSpaces.push(result);
         await this.saveLearningOutcome();
 
