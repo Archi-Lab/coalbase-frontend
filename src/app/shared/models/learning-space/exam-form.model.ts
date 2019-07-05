@@ -1,9 +1,9 @@
 import {Schedule} from "../predefined-exam-form/schedule.model";
-import {Duration} from "../predefined-exam-form/duration.model";
+import {Scope} from "../predefined-exam-form/scope.model";
 
 export class ExamForm {
   type: string = '';
   description: string = '';
   schedules: Schedule[] = [];
-  duration: Duration = new Duration();
+  scope: Scope = new Scope();
 }

@@ -20,7 +20,7 @@ export class ExamFormEditorComponent implements OnInit, OnChanges {
     type: new FormControl(''),
     description: new FormControl(''),
     schedules: this.fb.array([]),
-    duration : new FormGroup({
+    scope : new FormGroup({
       minValue: new FormControl(''),
       maxValue: new FormControl(''),
       unit: new FormControl('')
@@ -70,7 +70,7 @@ export class ExamFormEditorComponent implements OnInit, OnChanges {
     examForm.type = predefinedExamForm.type;
     examForm.description = predefinedExamForm.description;
     examForm.schedules = predefinedExamForm.schedules;
-    examForm.duration = predefinedExamForm.duration;
+    examForm.scope = predefinedExamForm.scope;
 
     return examForm;
   }
@@ -88,10 +88,10 @@ export class ExamFormEditorComponent implements OnInit, OnChanges {
       this.addSchedule('');
     }
 
-    // Duration
-    this.durationMinValueForm.setValue(examForm.duration.minValue);
-    this.durationMaxValueForm.setValue(examForm.duration.maxValue);
-    this.durationUnitForm.setValue(examForm.duration.unit);
+    // Scope
+    this.scopeMinValueForm.setValue(examForm.scope.minValue);
+    this.scopeMaxValueForm.setValue(examForm.scope.maxValue);
+    this.scopeUnitForm.setValue(examForm.scope.unit);
   }
 
   public saveExamFormFromForm() : ExamForm {
@@ -110,10 +110,10 @@ export class ExamFormEditorComponent implements OnInit, OnChanges {
       }
     }
 
-    // Duration
-    examForm.duration.minValue = this.durationMinValueForm.value;
-    examForm.duration.maxValue = this.durationMaxValueForm.value;
-    examForm.duration.unit = this.durationUnitForm.value;
+    // Scope
+    examForm.scope.minValue = this.scopeMinValueForm.value;
+    examForm.scope.maxValue = this.scopeMaxValueForm.value;
+    examForm.scope.unit = this.scopeUnitForm.value;
 
     return examForm;
   }
@@ -130,20 +130,20 @@ export class ExamFormEditorComponent implements OnInit, OnChanges {
     return this.examFormForm.get('description') as FormControl;
   }
 
-  public get durationForm(): FormGroup {
-    return this.examFormForm.get('duration') as FormGroup;
+  public get scopeForm(): FormGroup {
+    return this.examFormForm.get('scope') as FormGroup;
   }
 
-  public get durationMinValueForm(): FormControl {
-    return this.durationForm.get('minValue') as FormControl;
+  public get scopeMinValueForm(): FormControl {
+    return this.scopeForm.get('minValue') as FormControl;
   }
 
-  public get durationMaxValueForm(): FormControl {
-    return this.durationForm.get('maxValue') as FormControl;
+  public get scopeMaxValueForm(): FormControl {
+    return this.scopeForm.get('maxValue') as FormControl;
   }
 
-  public get durationUnitForm(): FormControl {
-    return this.durationForm.get('unit') as FormControl;
+  public get scopeUnitForm(): FormControl {
+    return this.scopeForm.get('unit') as FormControl;
   }
 
   // Schedules Forms

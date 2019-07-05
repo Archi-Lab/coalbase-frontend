@@ -1,4 +1,4 @@
-export class Duration {
+export class Scope {
   minValue: number;
   maxValue: number;
   unit: string;

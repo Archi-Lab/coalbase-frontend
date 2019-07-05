@@ -103,6 +103,10 @@ export class LearningSpaceOverviewComponent implements OnInit {
     }
   }
 
+  public isExamFormEmpty(examForm: ExamForm) : boolean {
+    return examForm.type === '' && examForm.description === '' && examForm.scope.minValue === 0 && examForm.scope.maxValue === 0 && examForm.scope.unit === '' && examForm.schedules.length === 0;
+  }
+
   private updateRelationForLearningSpace(indexToUpdate: number): void {
     if (indexToUpdate === 0) {
       if (this.sortedLearningSpaces[indexToUpdate].requirement) {

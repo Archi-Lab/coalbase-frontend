@@ -27,20 +27,20 @@
       ?
     </p>
 
-    <p *ngIf="examForm.duration.maxValue != 0">
-      <strong>Dauer:</strong>
-      {{examForm.duration.minValue + ' - ' + examForm.duration.maxValue + ' ' + examForm.duration.unit}}
+    <p *ngIf="examForm.scope.maxValue != 0">
+      <strong>Umfang:</strong>
+      {{examForm.scope.minValue + ' - ' + examForm.scope.maxValue + ' ' + examForm.scope.unit}}
     </p>
-    <p *ngIf="examForm.duration.minValue != 0 && examForm.duration.maxValue == 0">
-      <strong>Dauer:</strong>
-      {{examForm.duration.minValue + ' ' + examForm.duration.unit}}
+    <p *ngIf="examForm.scope.minValue != 0 && examForm.scope.maxValue == 0">
+      <strong>Umfang:</strong>
+      {{examForm.scope.minValue + ' ' + examForm.scope.unit}}
     </p>
-    <p *ngIf="examForm.duration.minValue == 0 && examForm.duration.maxValue == 0 && examForm.duration.unit !== ''">
-      <strong>Dauer:</strong>
-      {{examForm.duration.unit}}
+    <p *ngIf="examForm.scope.minValue == 0 && examForm.scope.maxValue == 0 && examForm.scope.unit !== ''">
+      <strong>Umfang:</strong>
+      {{examForm.scope.unit}}
     </p>
-    <p *ngIf="examForm.duration.minValue == 0 && examForm.duration.maxValue == 0 && examForm.duration.unit === ''">
-      <strong>Dauer:</strong>
+    <p *ngIf="examForm.scope.minValue == 0 && examForm.scope.maxValue == 0 && examForm.scope.unit === ''">
+      <strong>Umfang:</strong>
       ?
     </p>
   </div>
