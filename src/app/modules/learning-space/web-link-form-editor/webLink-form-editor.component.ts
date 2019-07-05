@@ -43,23 +43,25 @@ export class WebLinkFormEditorComponent implements OnChanges {
   }
 
   public saveWebLinkResources(resourceReference: string) {
-    console.log("SAVE RESOURCES TO 1: ", resourceReference);
     const webLinkResources: WebLinkResource[] = [];
 
     if (resourceReference) {
       this.webLinks.controls.forEach(webLinksForm => {
+
+
           const webLinkObject = webLinksForm.get("object") as FormControl;
           const webLink = webLinksForm.get("webLink") as FormControl;
           const description = webLinksForm.get("description") as FormControl;
-
-          if (webLinkObject.value) {
-            const webLinkResource: WebLinkResource = webLinkObject.value;
-            webLinkResource.description = description.value;
-            webLinkResource.webLink = webLink.value;
-            webLinkResource.referenceId = resourceReference;
-            webLinkResources.push(webLinkResource);
-          } else {
-            webLinkResources.push(new WebLinkResource(resourceReference, webLink.value, description.value));
+          if (!this.isWebLinkEmpty(webLink.value, description.value)) {
+            if (webLinkObject.value) {
+              const webLinkResource: WebLinkResource = webLinkObject.value;
+              webLinkResource.description = description.value;
+              webLinkResource.webLink = webLink.value;
+              webLinkResource.referenceId = resourceReference;
+              webLinkResources.push(webLinkResource);
+            } else {
+              webLinkResources.push(new WebLinkResource(resourceReference, webLink.value, description.value));
+            }
           }
         }
       );
@@ -78,6 +80,10 @@ export class WebLinkFormEditorComponent implements OnChanges {
     return this.webLinkFormGroup.get("webLinks") as FormArray;
   }
 
+  private isWebLinkEmpty(webLink: string, description: string): boolean {
+    return webLink === "" && description === "";
+  }
+
   private initializeForm(referenceChange: SimpleChange) {
     if (referenceChange && this.reference) {
       let options: any = {params: [{key: "referenceId", value: this.reference}]};
@@ -86,12 +92,10 @@ export class WebLinkFormEditorComponent implements OnChanges {
           webLinks.forEach(webLink => {
             this.addWebLinkResource(webLink.webLink, webLink.description, webLink);
           });
-        }else {
+        } else if (this.webLinks.controls.length === 0) {
           this.addWebLinkResource("", "");
         }
       });
-    } else {
-      this.addWebLinkResource("", "");
     }
   }
 }

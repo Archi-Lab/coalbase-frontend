@@ -137,15 +137,16 @@ export class LearningSpaceEditorComponent implements OnInit {
   /* edit methods for a learning outcome*/
   public async saveLearningOutcome(): Promise<void> {
     if (this.learningSpace) {
-      if (this.learningSpace.learningOutcome
-        && this.learningSpace.learningOutcome._links
-        && this.learningSpace.learningOutcome._links.self) {
-        this.learningSpace.learningOutcome = await
-          this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
-      } else {
-        this.learningSpace.learningOutcome = await
-          this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
-        await this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome as LearningOutcome).toPromise();
+      if (this.learningSpace.learningOutcome) {
+        if (this.learningSpace.learningOutcome._links
+          && this.learningSpace.learningOutcome._links.self) {
+          this.learningSpace.learningOutcome = await
+            this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+        } else {
+          this.learningSpace.learningOutcome = await
+            this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+          await this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome as LearningOutcome).toPromise();
+        }
       }
     }
   }
