@@ -118,10 +118,10 @@ export class LearningSpaceEditorComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(shouldDelete => {
         if (shouldDelete) {
-          this.learningSpaceService.delete(this.learningSpace as LearningSpace).subscribe(
+          this.learningSpaceService.delete(this.learningSpace).subscribe(
             () => {
               this.snack.open("Lernraum gelöscht", undefined, {duration: 2000});
-              this.deleteLearningSpaceFromCourse(this.learningSpace as LearningSpace);
+              this.deleteLearningSpaceFromCourse(this.learningSpace);
               this.router.navigate(['../'], {relativeTo: this.route});
             },
             () => this.snack.open("Lernraum konnte nicht gelöscht werden. Besteht eventuell noch eine Abhängigkeit auf diesen Lernraum?", undefined, {duration: 2000})
