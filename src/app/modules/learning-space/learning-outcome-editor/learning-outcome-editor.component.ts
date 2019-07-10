@@ -22,7 +22,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     role: new FormControl(''),
     competence: new FormGroup({
       action: new FormControl(''),
-      taxonomyLevel: new FormControl('')
+      taxonomyLevel: new FormControl(undefined)
     }),
     requirements: this.fb.array([]),
     abilities: this.fb.array([]),
@@ -40,7 +40,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     if (this.learningOutcomeReference === undefined) {
       this.learningOutcome = new LearningOutcome(
         {value: ''},
-        {action: '', taxonomyLevel: ''},
+        {action: '', taxonomyLevel: undefined},
         [],
         [],
         []
@@ -65,7 +65,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     if (this.learningOutcome.requirements != null && this.learningOutcome.requirements.length > 0) {
       this.learningOutcome.requirements.forEach(requirement => this.addRequirement(requirement.value, requirement.taxonomyLevel));
     } else {
-      this.addRequirement('', TAXONOMY_LEVELS[0].name);
+      this.addRequirement('', undefined);
     }
 
     // Abilities
@@ -73,7 +73,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     if (this.learningOutcome.abilities != null && this.learningOutcome.abilities.length > 0) {
       this.learningOutcome.abilities.forEach(ability => this.addAbility(ability.value, ability.taxonomyLevel));
     } else {
-      this.addAbility('', TAXONOMY_LEVELS[0].name);
+      this.addAbility('', undefined);
     }
 
     // Purposes
@@ -147,7 +147,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     return this.learningOutcomeFormGroup.get('requirements') as FormArray;
   }
 
-  public addRequirement(requirement: string, taxonomyLevel: string): void {
+  public addRequirement(requirement: string, taxonomyLevel: string | undefined): void {
     this.requirementsFormArray.push(new FormGroup({
       requirement: new FormControl(requirement),
       taxonomyLevel: new FormControl(taxonomyLevel)
@@ -167,7 +167,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     return this.learningOutcomeFormGroup.get('abilities') as FormArray;
   }
 
-  public addAbility(ability: string, taxonomyLevel: string): void {
+  public addAbility(ability: string, taxonomyLevel: string | undefined): void {
     this.abilitiesFormArray.push(new FormGroup({
       ability: new FormControl(ability),
       taxonomyLevel: new FormControl(taxonomyLevel)

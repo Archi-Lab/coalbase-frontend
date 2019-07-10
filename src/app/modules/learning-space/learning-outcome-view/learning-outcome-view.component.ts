@@ -33,8 +33,12 @@ export class LearningOutcomeViewComponent implements OnInit {
     return this.buildStringWithTaxonomy(ability.value, ability.taxonomyLevel);
   }
 
-  private buildStringWithTaxonomy(value: string, taxonomyID: string): string {
-    return value + ' (' + this.getTaxonomyLevelByID(taxonomyID) + ')';
+  private buildStringWithTaxonomy(value: string, taxonomyID?: string): string {
+    if (taxonomyID) {
+      return value + ' (' + this.getTaxonomyLevelByID(taxonomyID) + ')';
+    } else {
+      return value + ' (?)';
+    }
   }
 
   private getTaxonomyLevelByID(taxonomyID: string): number {
