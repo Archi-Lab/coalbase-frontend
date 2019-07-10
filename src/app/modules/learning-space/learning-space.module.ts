@@ -13,6 +13,7 @@ import {ExamFormEditorComponent} from "./exam-form-editor/exam-form-editor.compo
 import {ExamFormViewComponent} from "./exam-form-view/exam-form-view.component";
 import {WebLinkFormEditorComponent} from "./web-link-form-editor/webLink-form-editor.component";
 import {WebLinkViewComponent} from "./web-link-view/web-link-view.component";
+import {CommentEditorComponent} from "./comment-editor/comment-editor.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {WebLinkViewComponent} from "./web-link-view/web-link-view.component";
     WebLinkViewComponent,
     ExamFormEditorComponent,
     ExamFormViewComponent,
+    CommentEditorComponent
   ],
   imports: [
     LearningSpaceRoutingModule,

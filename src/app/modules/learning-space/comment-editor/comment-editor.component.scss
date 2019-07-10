@@ -1,0 +1,19 @@
+.comment-content {
+  width: fit-content;
+  height: 100%;
+}
+
+.form-array {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+}
+
+.form-control {
+  width: 60%;
+  margin-right: 5%;
+}
+
+.form-wrapper {
+  margin-left: 2%;
+}
