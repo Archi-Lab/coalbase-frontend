@@ -147,10 +147,10 @@ export class LearningOutcomeEditorComponent implements OnChanges {
 
     if (this.learningOutcome._links && this.learningOutcome._links.self) {
       this.learningOutcome = await
-        this.learningOutcomeService.update(this.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+        this.learningOutcomeService.update(this.learningOutcome).toPromise() as LearningOutcome;
     } else {
       this.learningOutcome = await
-        this.learningOutcomeService.create(this.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+        this.learningOutcomeService.create(this.learningOutcome).toPromise() as LearningOutcome;
     }
 
     let learningOutcomeReference = this.learningOutcome.getIdFromUri();

@@ -148,7 +148,7 @@ export class LearningSpaceEditorComponent implements OnInit {
         await this.learningSpace.deleteRelation("learningOutcome", learningOutcome).toPromise();
       }
 
-      await this.learningOutcomeService.delete(this.learningSpace.learningOutcome);
+      await this.learningOutcomeService.delete(this.learningSpace.learningOutcome).toPromise();
 
       this.learningSpace.learningOutcome = undefined;
       this.learningOutcomeIsNew = true;
