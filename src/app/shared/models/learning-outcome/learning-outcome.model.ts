@@ -22,9 +22,13 @@ export class LearningOutcome extends Resource {
     this._links = links;
   }
 
-  public getIdFromUri(): string {
-    const selfUri: string = this._links.self.href;
-    return selfUri.substring(selfUri.lastIndexOf('/') + 1, selfUri.length).trim();
+  public getIdFromUri(): string | undefined {
+    if (this._links && this._links.self) {
+      const selfUri: string = this._links.self.href;
+      return selfUri.substring(selfUri.lastIndexOf('/') + 1, selfUri.length).trim();
+    } else {
+      return undefined;
+    }
   }
 
   public isEmpty(): boolean {

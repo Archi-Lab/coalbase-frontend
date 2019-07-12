@@ -35,7 +35,7 @@
           </button>
 
           <button *ngIf="learningSpace.learningOutcome" mat-mini-fab color="primary"
-                  (click)="deleteLearningOutcome()">
+                  (click)="deleteRelationLearningOutcome().then()">
             <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
           </button>
         </div>
@@ -48,7 +48,7 @@
 
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button (click)="location.back()">
+    <button mat-raised-button (click)="abort()">
       <mat-icon>arrow_back_ios</mat-icon>
       Abbrechen
     </button>

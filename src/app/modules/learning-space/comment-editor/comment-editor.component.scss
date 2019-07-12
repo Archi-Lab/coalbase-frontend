@@ -1,19 +1,26 @@
-.comment-content {
-  width: fit-content;
-  height: 100%;
-}
-
-.form-array {
+.comment-resource {
   display: flex;
   flex-direction: column;
-  justify-items: flex-start;
+  justify-content: center;
 }
 
-.form-control {
-  width: 60%;
-  margin-right: 5%;
+.comment-resource-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  button {
+    margin: auto;
+  }
 }
 
-.form-wrapper {
-  margin-left: 2%;
+.comment-resource-form-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 85%;
+
+  .mat-form-field {
+    width: 100%;
+  }
 }

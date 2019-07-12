@@ -101,7 +101,7 @@ export class LearningSpaceEditorComponent implements OnInit {
 
         this.course.updateRelation("learningSpaces", result).subscribe();
         this.course.learningSpaces.push(result);
-        await this.saveLearningOutcome();
+        await this.addRelationLearningOutcome();
 
         if (this.webLinkFormEditor) {
           this.webLinkFormEditor.saveWebLinkResources(result.getIdFromUri());
@@ -135,29 +135,20 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   /* edit methods for a learning outcome*/
-  public async saveLearningOutcome(): Promise<void> {
-    if (this.learningSpace) {
-      if (this.learningSpace.learningOutcome) {
-        if (this.learningSpace.learningOutcome._links
-          && this.learningSpace.learningOutcome._links.self) {
-          this.learningSpace.learningOutcome = await
-            this.learningOutcomeService.update(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
-        } else {
-          this.learningSpace.learningOutcome = await
-            this.learningOutcomeService.create(this.learningSpace.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
-          await this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome as LearningOutcome).toPromise();
-        }
-      }
+  public async addRelationLearningOutcome(): Promise<void> {
+    if (this.learningSpace && this.learningSpace.learningOutcome && this.learningSpace.learningOutcome._links && this.learningSpace.learningOutcome._links.self) {
+      await this.learningSpace.addRelation('learningOutcome', this.learningSpace.learningOutcome as LearningOutcome).toPromise();
     }
   }
 
-  public deleteLearningOutcome(): void {
-    if (this.learningSpace) {
-      if (this.learningSpace._links !== undefined
-        && this.learningSpace._links.learningOutcome !== undefined) {
+  public async deleteRelationLearningOutcome(): Promise<void> {
+    if (this.learningSpace && this.learningSpace.learningOutcome) {
+      if (this.learningSpace._links !== undefined && this.learningSpace._links.learningOutcome !== undefined) {
         const learningOutcome = this.learningSpace.learningOutcome as LearningOutcome;
-        this.learningSpace.deleteRelation("learningOutcome", learningOutcome).subscribe();
+        await this.learningSpace.deleteRelation("learningOutcome", learningOutcome).toPromise();
       }
+
+      await this.learningOutcomeService.delete(this.learningSpace.learningOutcome);
 
       this.learningSpace.learningOutcome = undefined;
       this.learningOutcomeIsNew = true;
@@ -202,6 +193,13 @@ export class LearningSpaceEditorComponent implements OnInit {
       } else {
         this.setLearningSpaceByUuid(learningSpaceUuid);
       }
+    }
+  }
+
+  public abort(): void {
+    this.location.back();
+    if (this.learningSpace._links === undefined) {
+      this.deleteRelationLearningOutcome().then();
     }
   }
 

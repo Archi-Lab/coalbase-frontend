@@ -1,5 +1,18 @@
-<div class="comment-content">
-  <div class="form-array form-wrapper">
-
+<div class="comment-resource" [formGroup]="commentsFormGroup">
+  <div class="comment-resource-form" formArrayName="comments"
+       *ngFor="let comment of comments.controls; let commentFormIndex = index">
+    <div class="web-link-resource-form-controls">
+      <mat-form-field color="accent">
+          <textarea matInput placeholder="Kommentar"
+                    [formControl]="comment.get('content')"></textarea>
+        <mat-error *ngIf="comment.get('content').hasError('required')"></mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-mini-fab color="primary" class="remove-button" (click)="removeComment(commentFormIndex)">
+      <mat-icon aria-label="Button um einen Kommentar zu löschen">delete</mat-icon>
+    </button>
   </div>
+  <button mat-mini-fab (click)="addComment('')">
+    <mat-icon aria-label="Button um einen Kommentar hinzu zu fügen">add</mat-icon>
+  </button>
 </div>

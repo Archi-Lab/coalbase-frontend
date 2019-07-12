@@ -2,12 +2,13 @@ import {Resource} from 'angular4-hal';
 
 export class Comment extends Resource {
 
-  private _attachedEntityId : string;
+  private _attachedEntityId: string;
   private _attributeName: string;
   private _content: string;
 
 
   constructor();
+  constructor(attachedEntityId: string, attributeName: string, content: string);
   constructor(attachedEntityId?: string, attributeName?: string, content?: string) {
     super();
     this._attachedEntityId = attachedEntityId || '';

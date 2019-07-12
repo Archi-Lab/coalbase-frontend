@@ -1,10 +1,20 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LearningOutcomeService} from '../../../core/services/learning-outcome/learning-outcome.service';
 import {LearningOutcome} from '../../../shared/models/learning-outcome/learning-outcome.model';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MatSnackBar} from "@angular/material";
 import {TAXONOMY_LEVELS} from "../../../shared/models/taxonomy/taxonomy.const";
+import {CommentEditorComponent} from "../comment-editor/comment-editor.component";
 
 @Component({
   selector: 'app-learning-outcome-editor',
@@ -29,6 +39,8 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     purposes: this.fb.array([]),
   });
 
+  @ViewChildren(CommentEditorComponent) commentEditorComponents: QueryList<CommentEditorComponent> | undefined;
+
   constructor(private readonly router: Router,
               private readonly route: ActivatedRoute,
               private readonly snack: MatSnackBar,
@@ -46,7 +58,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
         []
       );
     } else {
-        this.learningOutcome = this.learningOutcomeReference;
+      this.learningOutcome = this.learningOutcomeReference;
     }
 
     this.initializeForm();
@@ -85,7 +97,15 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     }
   }
 
-  public saveLearningOutcome(): void {
+  private async saveComments(learningOutcomeReference: string): Promise<void> {
+    if (this.commentEditorComponents) {
+      for (let commentComponent of this.commentEditorComponents.toArray()) {
+        await commentComponent.saveComments(learningOutcomeReference);
+      }
+    }
+  }
+
+  public async saveLearningOutcome(): Promise<void> {
     // Role
     this.learningOutcome.role.value = this.roleFormControl.value;
 
@@ -123,6 +143,19 @@ export class LearningOutcomeEditorComponent implements OnChanges {
           value: purposeForm.controls.purpose.value
         });
       }
+    }
+
+    if (this.learningOutcome._links && this.learningOutcome._links.self) {
+      this.learningOutcome = await
+        this.learningOutcomeService.update(this.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+    } else {
+      this.learningOutcome = await
+        this.learningOutcomeService.create(this.learningOutcome as LearningOutcome).toPromise() as LearningOutcome;
+    }
+
+    let learningOutcomeReference = this.learningOutcome.getIdFromUri();
+    if (learningOutcomeReference) {
+      await this.saveComments(learningOutcomeReference);
     }
 
     this.closeLearningOutcomeEditor(this.learningOutcome);

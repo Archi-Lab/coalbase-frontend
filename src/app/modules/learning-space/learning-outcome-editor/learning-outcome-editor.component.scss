@@ -1,5 +1,14 @@
 @import '../../../../assets/scss/coalbase-colors';
 
+.attribute-region {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.comment-region {
+  width: 20%;
+}
+
 .learning-outcome-editor {
   margin: 0 auto;
   width: 68.5%;
@@ -31,6 +40,7 @@
 
 .form-wrapper {
   margin-left: 2%;
+  width: 78%;
 }
 
 .form-group-taxonomy {

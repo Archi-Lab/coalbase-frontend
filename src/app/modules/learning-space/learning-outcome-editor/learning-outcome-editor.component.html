@@ -4,11 +4,14 @@
                     class="learning-outcome-editor-content">
 
     <mat-label class="learning-outcome-editor-label"><strong>Als</strong></mat-label>
-    <div class="form-wrapper">
-      <mat-form-field class="form-control" color="accent">
+    <div class="attribute-region">
+      <div class="form-wrapper">
+        <mat-form-field class="form-control" color="accent">
         <textarea matInput placeholder="Rolle"
                   [formControl]="roleFormControl"></textarea>
-      </mat-form-field>
+        </mat-form-field>
+      </div>
+      <app-comment-editor class="comment-region" [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'role'"></app-comment-editor>
     </div>
 
     <mat-label class="learning-outcome-editor-label"><strong>kann ich</strong></mat-label>
