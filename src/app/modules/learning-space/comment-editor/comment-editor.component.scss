@@ -1,10 +1,10 @@
-.comment-resource {
+.comment-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.comment-resource-form {
+.comment-form-array {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -14,13 +14,11 @@
   }
 }
 
-.comment-resource-form-controls {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 85%;
+.comment-form-control {
+  width: auto;
+}
 
-  .mat-form-field {
-    width: 100%;
-  }
+.comment-expansion-panel {
+  background: #ffffff00;
+  height: 100%;
 }

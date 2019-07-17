@@ -82,11 +82,7 @@ export class CommentEditorComponent implements OnInit {
   }
 
   private initializeForm() {
-    console.log(this.attachedEntityId);
-    console.log(this.attributeName);
-    console.log("1");
     if (this.attachedEntityId && this.attributeName) {
-      console.log("2");
       this.commentService.findByAttachedEntityIdAndAttributeName(this.attachedEntityId, this.attributeName).subscribe(comments => {
         if (comments && comments.length > 0) {
           comments.forEach(comment => {

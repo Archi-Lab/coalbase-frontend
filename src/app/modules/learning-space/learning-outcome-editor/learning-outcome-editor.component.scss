@@ -1,13 +1,5 @@
 @import '../../../../assets/scss/coalbase-colors';
 
-.attribute-region {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.comment-region {
-  width: 20%;
-}
 
 .learning-outcome-editor {
   margin: 0 auto;
@@ -19,8 +11,9 @@
 
 .learning-outcome-editor-content {
   display: grid;
-  grid-template-columns: 10% auto;
-  grid-row-gap: 10px;
+  grid-template-columns: 10% auto 300px;
+  grid-row-gap: 2%;
+  grid-column-gap: 2%;
 }
 
 .learning-outcome-editor-label {
@@ -36,11 +29,6 @@
 .form-control {
   width: 60%;
   margin-right: 5%;
-}
-
-.form-wrapper {
-  margin-left: 2%;
-  width: 78%;
 }
 
 .form-group-taxonomy {

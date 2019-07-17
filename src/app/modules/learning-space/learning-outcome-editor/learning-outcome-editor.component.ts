@@ -36,7 +36,7 @@ export class LearningOutcomeEditorComponent implements OnChanges {
     }),
     requirements: this.fb.array([]),
     abilities: this.fb.array([]),
-    purposes: this.fb.array([]),
+    purposes: this.fb.array([])
   });
 
   @ViewChildren(CommentEditorComponent) commentEditorComponents: QueryList<CommentEditorComponent> | undefined;

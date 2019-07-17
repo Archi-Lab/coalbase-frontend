@@ -4,22 +4,19 @@
                     class="learning-outcome-editor-content">
 
     <mat-label class="learning-outcome-editor-label"><strong>Als</strong></mat-label>
-    <div class="attribute-region">
-      <div class="form-wrapper">
-        <mat-form-field class="form-control" color="accent">
-        <textarea matInput placeholder="Rolle"
-                  [formControl]="roleFormControl"></textarea>
-        </mat-form-field>
-      </div>
-      <app-comment-editor class="comment-region" [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'role'"></app-comment-editor>
+    <div>
+      <mat-form-field class="form-control" color="accent">
+      <textarea matInput placeholder="Rolle"
+                [formControl]="roleFormControl"></textarea>
+      </mat-form-field>
     </div>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'role'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>kann ich</strong></mat-label>
-    <div [formGroup]="competenceFormGroup"
-         class="form-wrapper">
+    <div [formGroup]="competenceFormGroup">
       <mat-form-field class="form-control" color="accent">
-        <textarea matInput placeholder="Kompetenz"
-                  [formControl]="competenceFormGroup.controls.action"></textarea>
+      <textarea matInput placeholder="Kompetenz"
+                [formControl]="competenceFormGroup.controls.action"></textarea>
       </mat-form-field>
 
       <mat-form-field class="form-group-taxonomy" color="accent">
@@ -32,9 +29,10 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'competence'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>vorausgesetzt, ich kann</strong></mat-label>
-    <div class="form-array form-wrapper">
+    <div class="form-array">
       <div formArrayName="requirements"
            *ngFor="let requirement of requirementsFormArray.controls; let requirementFormIndex = index">
         <mat-form-field
@@ -62,9 +60,10 @@
         <mat-icon aria-label="Button um ein Fähigkeit hinzu zu fügen">add</mat-icon>
       </button>
     </div>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'requirements'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>indem ich</strong></mat-label>
-    <div class="form-array form-wrapper">
+    <div class="form-array">
       <div formArrayName="abilities" *ngFor="let ability of abilitiesFormArray.controls; let abilityFormIndex = index">
         <mat-form-field
           color="accent"
@@ -91,9 +90,11 @@
         <mat-icon aria-label="Button um ein Fähigkeit hinzu zu fügen">add</mat-icon>
       </button>
     </div>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'abilities'"></app-comment-editor>
+
 
     <mat-label class="learning-outcome-editor-label"><strong>sodass ich</strong></mat-label>
-    <div class="form-array form-wrapper">
+    <div class="form-array">
       <div formArrayName="purposes" *ngFor="let purpose of purposesFormArray.controls; let purposeFormIndex = index">
         <mat-form-field
           color="accent"
@@ -111,6 +112,7 @@
         <mat-icon aria-label="Button um einen Zweck hinzu zu fügen">add</mat-icon>
       </button>
     </div>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'purposes'"></app-comment-editor>
 
     <div class="learning-outcome-editor-button-group">
       <button mat-raised-button (click)="closeLearningOutcomeEditor(undefined)">
