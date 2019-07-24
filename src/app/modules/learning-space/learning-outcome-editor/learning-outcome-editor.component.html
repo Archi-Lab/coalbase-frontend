@@ -10,7 +10,7 @@
                 [formControl]="roleFormControl"></textarea>
       </mat-form-field>
     </div>
-    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'role'"></app-comment-editor>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'role'" [componentName]="'Rolle'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>kann ich</strong></mat-label>
     <div [formGroup]="competenceFormGroup">
@@ -29,7 +29,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'competence'"></app-comment-editor>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'competence'" [componentName]="'Kompetenz'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>vorausgesetzt, ich kann</strong></mat-label>
     <div class="form-array">
@@ -38,7 +38,7 @@
         <mat-form-field
           color="accent"
           class="form-control">
-          <textarea matInput placeholder="Fähigkeit"
+          <textarea matInput placeholder="Voraussetzung"
                     [formControl]="requirement.get('requirement')"></textarea>
         </mat-form-field>
 
@@ -52,15 +52,15 @@
           </mat-select>
         </mat-form-field>
         <button mat-mini-fab color="primary" class="remove-button" (click)="removeRequirement(requirementFormIndex)">
-          <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
+          <mat-icon aria-label="Button um eine Voraussetzung zu löschen">delete</mat-icon>
         </button>
       </div>
 
       <button mat-mini-fab (click)="addRequirement('', undefined)">
-        <mat-icon aria-label="Button um ein Fähigkeit hinzu zu fügen">add</mat-icon>
+        <mat-icon aria-label="Button um eine Voraussetzung hinzu zu fügen">add</mat-icon>
       </button>
     </div>
-    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'requirements'"></app-comment-editor>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'requirements'" [componentName]="'Voraussetzungen'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>indem ich</strong></mat-label>
     <div class="form-array">
@@ -90,7 +90,7 @@
         <mat-icon aria-label="Button um ein Fähigkeit hinzu zu fügen">add</mat-icon>
       </button>
     </div>
-    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'abilities'"></app-comment-editor>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'abilities'" [componentName]="'Fähigkeiten'"></app-comment-editor>
 
 
     <mat-label class="learning-outcome-editor-label"><strong>sodass ich</strong></mat-label>
@@ -112,7 +112,7 @@
         <mat-icon aria-label="Button um einen Zweck hinzu zu fügen">add</mat-icon>
       </button>
     </div>
-    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'purposes'"></app-comment-editor>
+    <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'purposes'" [componentName]="'Zwecke'"></app-comment-editor>
 
     <div class="learning-outcome-editor-button-group">
       <button mat-raised-button (click)="closeLearningOutcomeEditor(undefined)">

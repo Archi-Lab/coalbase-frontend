@@ -12,6 +12,7 @@ export class CommentEditorComponent implements OnInit {
 
   @Input() attachedEntityId: string | undefined;
   @Input() attributeName: string | undefined;
+  @Input() componentName: string | undefined;
   commentsFormGroup: FormGroup = new FormGroup({
     comments: new FormArray([])
   });
@@ -42,7 +43,7 @@ export class CommentEditorComponent implements OnInit {
     this.comments.removeAt(index);
   }
 
-  public async saveComments(attachedEntityId: string) : Promise<void> { // TODO maybe use only input variable "attachedEntityId". Problem: Does not update on LO save
+  public async saveComments(attachedEntityId: string) : Promise<void> {
     this.attachedEntityId = attachedEntityId;
     const comments: Comment[] = [];
 

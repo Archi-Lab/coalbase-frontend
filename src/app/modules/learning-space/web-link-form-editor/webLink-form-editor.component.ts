@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChange} from "@angular/core";
+import {Component, Input, OnChanges, SimpleChange} from "@angular/core";
 import {WebLinkResource} from "../../../shared/models/resource/WebLinkResource";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ResourceService} from "../../../core/services/resource/resource.service";
@@ -47,8 +47,6 @@ export class WebLinkFormEditorComponent implements OnChanges {
 
     if (resourceReference) {
       this.webLinks.controls.forEach(webLinksForm => {
-
-
           const webLinkObject = webLinksForm.get("object") as FormControl;
           const webLink = webLinksForm.get("webLink") as FormControl;
           const description = webLinksForm.get("description") as FormControl;
