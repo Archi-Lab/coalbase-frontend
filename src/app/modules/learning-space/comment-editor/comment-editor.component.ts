@@ -17,6 +17,8 @@ export class CommentEditorComponent implements OnInit {
     comments: new FormArray([])
   });
 
+  editMode: boolean = false;
+
 
   constructor(private readonly commentService: CommentService) {
   }
@@ -36,9 +38,9 @@ export class CommentEditorComponent implements OnInit {
   public removeComment(index: number): void {
 
     const formGroup = this.comments.controls[index] as FormGroup;
-    const webLink = formGroup.get("object") as FormControl;
-    if (webLink && webLink.value) {
-      this.commentService.delete(webLink.value).subscribe();
+    const comment = formGroup.get("object") as FormControl;
+    if (comment && comment.value) {
+      this.commentService.delete(comment.value).subscribe();
     }
     this.comments.removeAt(index);
   }
@@ -47,20 +49,20 @@ export class CommentEditorComponent implements OnInit {
     this.attachedEntityId = attachedEntityId;
     const comments: Comment[] = [];
 
+    this.clearEmptyComments();
+
     this.comments.controls.forEach(commentsForm => {
       const comment = commentsForm.get("content") as FormControl;
       const commentObject = commentsForm.get("object") as FormControl;
-      if (!this.isCommentEmpty(comment.value)) {
-        if (this.attachedEntityId && this.attributeName) {
-          if (commentObject.value) {
-            const commentResource: Comment = commentObject.value;
-            commentResource.content = comment.value;
-            commentResource.attachedEntityId = this.attachedEntityId;
-            commentResource.attributeName = this.attributeName;
-            comments.push(commentResource);
-          } else {
-            comments.push(new Comment(this.attachedEntityId, this.attributeName, comment.value));
-          }
+      if (this.attachedEntityId && this.attributeName) {
+        if (commentObject.value) {
+          const commentResource: Comment = commentObject.value;
+          commentResource.content = comment.value;
+          commentResource.attachedEntityId = this.attachedEntityId;
+          commentResource.attributeName = this.attributeName;
+          comments.push(commentResource);
+        } else {
+          comments.push(new Comment(this.attachedEntityId, this.attributeName, comment.value));
         }
       }
     });
@@ -70,6 +72,27 @@ export class CommentEditorComponent implements OnInit {
         await this.commentService.update(commentResource).toPromise();
       } else {
         await this.commentService.create(commentResource).toPromise();
+      }
+    }
+  }
+
+  public clearEmptyComments() {
+    for (let i = this.comments.controls.length-1; i >= 0; i--) {
+      const comment = this.comments.controls[i].get("content") as FormControl;
+      if (this.isCommentEmpty(comment.value)) {
+        this.removeComment(i);
+      }
+    }
+  }
+
+  public switchEditMode() {
+    if (this.editMode) {
+      this.editMode = false;
+      this.clearEmptyComments();
+    } else {
+      this.editMode = true;
+      if (this.comments.controls.length == 0) {
+        this.addComment("");
       }
     }
   }
@@ -89,8 +112,6 @@ export class CommentEditorComponent implements OnInit {
           comments.forEach(comment => {
             this.addComment(comment.content, comment);
           });
-        } else if (this.comments.controls.length === 0) {
-          this.addComment("");
         }
       });
     }

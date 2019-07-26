@@ -1,3 +1,9 @@
+.space-around-div {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
 .comment-form {
   display: flex;
   flex-direction: column;
@@ -10,12 +16,14 @@
   justify-content: space-around;
 
   button {
-    margin: auto;
+    margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 }
 
 .comment-form-control {
-  width: auto;
+  width: 100%;
 }
 
 .comment-expansion-panel {
