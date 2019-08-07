@@ -81,14 +81,17 @@ export class LearningSpaceEditorComponent implements OnInit {
     }
   }
 
+  private retrieveExamForm() {
+    if (this.learningSpace && this.examFormEditorComponent) {
+      this.learningSpace.examForm = this.examFormEditorComponent.saveExamFormFromForm();
+    }
+  }
+
   /* edit methods for a learning space*/
   private async saveLearningSpace(): Promise<void> {
     if (this.learningSpace) {
       this.learningSpace.title = this.learningSpaceTitle.value;
-
-      if (this.examFormEditorComponent) {
-        this.learningSpace.examForm = this.examFormEditorComponent.saveExamFormFromForm();
-      }
+      this.retrieveExamForm();
 
       let result: LearningSpace;
       if (this.learningSpace._links
@@ -98,7 +101,6 @@ export class LearningSpaceEditorComponent implements OnInit {
         result = await this.learningSpaceService.create(this.learningSpace).toPromise() as LearningSpace;
       }
       if (result) {
-
         this.course.updateRelation("learningSpaces", result).subscribe();
         this.course.learningSpaces.push(result);
         await this.addRelationLearningOutcome();
@@ -162,6 +164,8 @@ export class LearningSpaceEditorComponent implements OnInit {
   }
 
   public openLearningOutcomeEditor(): void {
+    this.retrieveExamForm();
+
     this.showLearningOutcomeEditor = true;
     this.showLearningSpaceEditor = false;
   }
