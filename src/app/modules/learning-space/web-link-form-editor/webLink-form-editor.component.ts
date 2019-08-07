@@ -42,7 +42,7 @@ export class WebLinkFormEditorComponent implements OnChanges {
     this.webLinks.removeAt(index);
   }
 
-  public saveWebLinkResources(resourceReference: string) {
+  public async saveWebLinkResources(resourceReference: string): Promise<void> {
     const webLinkResources: WebLinkResource[] = [];
 
     if (resourceReference) {
@@ -64,13 +64,16 @@ export class WebLinkFormEditorComponent implements OnChanges {
         }
       );
 
+      let promises : Promise<any>[] = [];
       webLinkResources.forEach(webLinkResource => {
         if (webLinkResource._links && webLinkResource._links.self) {
-          this.resourceService.update(webLinkResource).subscribe();
+          promises.push(this.resourceService.update(webLinkResource).toPromise());
         } else {
-          this.resourceService.create(webLinkResource).subscribe();
+          promises.push(this.resourceService.create(webLinkResource).toPromise());
         }
-      })
+      });
+
+      await Promise.all(promises);
     }
   }
 

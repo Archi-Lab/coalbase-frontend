@@ -106,7 +106,7 @@ export class LearningSpaceEditorComponent implements OnInit {
         await this.addRelationLearningOutcome();
 
         if (this.webLinkFormEditor) {
-          this.webLinkFormEditor.saveWebLinkResources(result.getIdFromUri());
+          await this.webLinkFormEditor.saveWebLinkResources(result.getIdFromUri());
         }
 
         this.navigateBackToOverview();
