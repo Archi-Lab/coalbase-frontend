@@ -32,8 +32,8 @@
     <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'competence'" [componentName]="'Kompetenz'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>vorausgesetzt, ich kann</strong></mat-label>
-    <div class="form-array">
-      <div formArrayName="requirements"
+    <div>
+      <div class="form-array" formArrayName="requirements"
            *ngFor="let requirement of requirementsFormArray.controls; let requirementFormIndex = index">
         <mat-form-field
           color="accent"
@@ -63,8 +63,8 @@
     <app-comment-editor [attachedEntityId]="learningOutcome.getIdFromUri()" [attributeName]="'requirements'" [componentName]="'Voraussetzungen'"></app-comment-editor>
 
     <mat-label class="learning-outcome-editor-label"><strong>indem ich</strong></mat-label>
-    <div class="form-array">
-      <div formArrayName="abilities" *ngFor="let ability of abilitiesFormArray.controls; let abilityFormIndex = index">
+    <div>
+      <div class="form-array" formArrayName="abilities" *ngFor="let ability of abilitiesFormArray.controls; let abilityFormIndex = index">
         <mat-form-field
           color="accent"
           class="form-control">
@@ -94,8 +94,8 @@
 
 
     <mat-label class="learning-outcome-editor-label"><strong>sodass ich</strong></mat-label>
-    <div class="form-array">
-      <div formArrayName="purposes" *ngFor="let purpose of purposesFormArray.controls; let purposeFormIndex = index">
+    <div>
+      <div class="form-array" formArrayName="purposes" *ngFor="let purpose of purposesFormArray.controls; let purposeFormIndex = index">
         <mat-form-field
           color="accent"
           class="form-control">

@@ -11,9 +11,9 @@
 
 .learning-outcome-editor-content {
   display: grid;
-  grid-template-columns: 10% auto 300px;
-  grid-row-gap: 2%;
-  grid-column-gap: 2%;
+  grid-template-columns: min-content minmax(max-content, auto) minmax(min-content, 25%);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
 }
 
 .learning-outcome-editor-label {
@@ -22,8 +22,9 @@
 
 .form-array {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-items: flex-start;
+  align-items: baseline;
 }
 
 .form-control {
