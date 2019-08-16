@@ -11,7 +11,7 @@
 
 .learning-outcome-editor-content {
   display: grid;
-  grid-template-columns: min-content minmax(max-content, auto) minmax(min-content, 25%);
+  grid-template-columns: min-content minmax(max-content, auto) 300px;
   grid-row-gap: 10px;
   grid-column-gap: 10px;
 }

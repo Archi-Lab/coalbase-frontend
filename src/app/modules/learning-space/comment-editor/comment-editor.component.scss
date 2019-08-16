@@ -1,3 +1,5 @@
+@import '~src/assets/scss/coalbase-colors';
+
 .space-around-div {
   display: flex;
   justify-content: space-around;
@@ -20,6 +22,32 @@
     margin-top: auto;
     margin-bottom: auto;
   }
+}
+
+.comment-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $th-koeln-violet;
+  background-size: cover;
+  background-position: center;
+
+  div {
+    font-size: 1.3em;
+    text-align: center;
+    color: white;
+  }
+}
+
+.right-align-div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comment-card {
+  display: block;
+  margin-bottom: 10px;
 }
 
 .comment-form-control {

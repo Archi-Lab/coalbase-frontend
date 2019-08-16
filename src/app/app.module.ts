@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CacheInterceptor} from "./core/interceptors/cache/cache.interceptor";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {KeyCloakUser} from "./security/KeycloakUser";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
       provide: HTTP_INTERCEPTORS,
       useClass: CacheInterceptor,
       multi: true
-    }
+    },
+    KeyCloakUser
   ],
   bootstrap: [AppComponent]
 })
