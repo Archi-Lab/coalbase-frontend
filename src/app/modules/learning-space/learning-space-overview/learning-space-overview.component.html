@@ -23,7 +23,7 @@
             <div class="learning-space-content-container">
               <div>
                 <div>
-                  <h3 *ngIf="learningSpace.learningOutcome">Ziel des Lernraums:</h3>
+                  <h3 *ngIf="learningSpace.learningOutcome">Learningoutcome:</h3>
                   <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
                                              [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
                 </div>
@@ -33,7 +33,7 @@
                                       [examForm]="learningSpace.examForm"></app-exam-form-view>
                 </div>
                 <div>
-                  <h3 *ngIf="learningSpace.learningOutcome">Ressourcen des Lernraums:</h3>
+                  <h3 *ngIf="learningSpace.learningOutcome">Ressourcen:</h3>
                   <app-web-link-view [reference]="learningSpace.getIdFromUri()">
                   </app-web-link-view>
                 </div>
