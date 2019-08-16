@@ -1,24 +1,10 @@
 @import '../../../../assets/scss/coalbase-colors';
 
 .learning-space-editor-card {
-  margin: 1.5em auto 0 auto;
+  margin: 1.5em auto 1.5em auto;
   max-width: 800px;
   min-width: 800px;
   box-sizing: border-box;
-}
-
-.learning-space-editor-container {
-  display: grid;
-  grid-template-columns: auto auto;
-}
-
-.learning-space-editor-label {
-  margin: 1.125em auto 0 auto;
-  color: $th-koeln-violet;
-}
-
-.learning-space-editor-course-label {
-  padding: 1em 0;
 }
 
 .mat-card-actions .mat-raised-button:first-child {
@@ -31,11 +17,40 @@
 
 .learning-outcome-edit-buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
+  margin: 0 3em 0 3em;
 }
 
 .exam-form-editor-container {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.form-field-full-width {
+  width: 100%;
+}
+
+.learning-space-editor-vertical-stepper {
+  background: transparent;
+}
+
+.learning-space-editor-step-container {
+  margin: 5px 0 5px 0;
+}
+
+.learning-space-editor-vertical-learning-outcome{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.learning-space-editor-step-button-group {
+  margin: 10px 0 10px 0;
+  button {
+    margin: 0 2.5px 0 2.5px;
+  }
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: $th-koeln-violet;
 }

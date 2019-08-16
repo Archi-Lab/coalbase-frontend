@@ -1,52 +1,78 @@
 <mat-card class="learning-space-editor-card" *ngIf="showLearningSpaceEditor">
   <mat-card-header>
-    <mat-card-title>{{learningSpace.title}}</mat-card-title>
-    <mat-card-subtitle>Lernraum</mat-card-subtitle>
+    <mat-card-title>Lernraum: {{learningSpace.title}}</mat-card-title>
+    <mat-card-subtitle>Lehrveranstaltung: {{course.title}}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <div class="learning-space-editor-container"
-         [formGroup]="learningSpaceForm">
-      <mat-label class="learning-space-editor-label"><strong>Lehrveranstaltung</strong></mat-label>
-      <mat-label class="learning-space-editor-course-label">{{course.title}}</mat-label>
-      <mat-label class="learning-space-editor-label"><strong>Lernraum Titel</strong></mat-label>
-      <mat-form-field color="accent">
-        <textarea matInput placeholder="Titel für den Lernraum eingeben"
-                  [formControl]="learningSpaceTitle"></textarea>
-        <mat-error *ngIf="learningSpaceTitle.hasError('required')">
-          Titel <strong>fehlt</strong>!
-        </mat-error>
-      </mat-form-field>
+    <div [formGroup]="learningSpaceForm">
+      <mat-vertical-stepper class="learning-space-editor-vertical-stepper">
+        <mat-step label="Lernraum Titel">
+          <div class="learning-space-editor-step-container">
+            <mat-form-field class="form-field-full-width" color="accent">
+              <textarea matInput placeholder="Titel für den Lernraum eingeben"
+                        [formControl]="learningSpaceTitle"></textarea>
+              <mat-error *ngIf="learningSpaceTitle.hasError('required')">
+                Titel <strong>fehlt</strong>!
+              </mat-error>
+            </mat-form-field>
+            <div class="learning-space-editor-step-button-group">
+              <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step label="Learningoutcome">
+          <div class="learning-space-editor-step-container">
+            <div class="learning-space-editor-vertical-learning-outcome">
+              <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
+                                         [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
 
-      <mat-label class="learning-space-editor-label"><strong>Learning Outcome</strong></mat-label>
+              <div class="learning-outcome-edit-buttons">
+                <button mat-mini-fab color="accent" (click)="openLearningOutcomeEditor()">
+                  <mat-icon *ngIf="!learningSpace.learningOutcome"
+                            aria-label="Button um ein LearningOutcome hinzuzufügen">add
+                  </mat-icon>
+                  <mat-icon *ngIf="learningSpace.learningOutcome"
+                            aria-label="Button um ein LearningOutcome zu editieren">edit
+                  </mat-icon>
+                </button>
 
-      <div>
-        <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
-                                   [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
-
-        <div class="learning-outcome-edit-buttons">
-          <button mat-mini-fab color="accent" (click)="openLearningOutcomeEditor()">
-            <mat-icon *ngIf="!learningSpace.learningOutcome"
-                      aria-label="Button um ein LearningOutcome hinzuzufügen">add
-            </mat-icon>
-            <mat-icon *ngIf="learningSpace.learningOutcome"
-                      aria-label="Button um ein LearningOutcome zu editieren">edit
-            </mat-icon>
-          </button>
-
-          <button *ngIf="learningSpace.learningOutcome" mat-mini-fab color="primary"
-                  (click)="deleteRelationLearningOutcome().then()">
-            <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <mat-label class="learning-space-editor-label"><strong>Prüfungsform</strong></mat-label>
-      <app-exam-form-editor class="exam-form-editor-container" [examForm]="learningSpace.examForm"></app-exam-form-editor>
-      <mat-label class="learning-space-editor-label"><strong>Web-Links</strong></mat-label>
-      <app-learning-space-webLink-editor [reference]="learningSpace.getIdFromUri()"></app-learning-space-webLink-editor>
+                <button mat-mini-fab color="primary"
+                        (click)="deleteRelationLearningOutcome().then()">
+                  <mat-icon aria-label="Button um eine Fähigkeit zu löschen">delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="learning-space-editor-step-button-group">
+              <button mat-button matStepperPrevious mat-stroked-button color="accent">Zurück</button>
+              <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step label="Prüfungsform">
+          <div class="learning-space-editor-step-container">
+            <app-exam-form-editor class="exam-form-editor-container"
+                                  [examForm]="learningSpace.examForm"></app-exam-form-editor>
+            <div class="learning-space-editor-step-button-group">
+              <button mat-button matStepperPrevious mat-stroked-button color="accent">Zurück</button>
+              <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step label="Resourcen">
+          <div class="learning-space-editor-step-container">
+            <app-learning-space-webLink-editor
+              [reference]="learningSpace.getIdFromUri()"></app-learning-space-webLink-editor>
+            <div class="learning-space-editor-step-button-group">
+            <button mat-button matStepperPrevious mat-stroked-button color="accent">Zurück</button>
+            <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
     </div>
-
   </mat-card-content>
+
   <mat-card-actions>
     <button mat-raised-button (click)="abort()">
       <mat-icon>arrow_back_ios</mat-icon>
