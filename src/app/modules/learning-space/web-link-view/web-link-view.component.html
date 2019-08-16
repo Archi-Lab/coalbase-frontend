@@ -1,7 +1,10 @@
 <div>
-  <div *ngFor="let webLink of webLinks" class="web-link-view">
-    <span><strong>Link:</strong>&nbsp;{{webLink.webLink}}</span>
+  <p *ngIf="webLinks.length == 0">Keine Ressourcen vorhanden.</p>
+  <div *ngFor="let webLink of webLinks; let last = last" class="web-link-view">
+    <span><strong>Link:</strong>&nbsp;
+      <a href={{webLink.webLink}}>{{webLink.webLink}}</a>
+    </span>
     <span><strong>Beschreibung:</strong>&nbsp;{{webLink.description}}</span>
+    <br *ngIf="!last">
   </div>
-
 </div>
