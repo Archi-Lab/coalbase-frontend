@@ -21,9 +21,9 @@ export class KeyCloakUser {
     this._isLoggedIn = await this.keycloakAngular.isLoggedIn();
 
     if (this._isLoggedIn) {
-      this._roles = await this.keycloakAngular.getUserRoles(true);
+      this._roles = this.keycloakAngular.getUserRoles(true);
 
-      const keycloak = await this.keycloakAngular.getKeycloakInstance();
+      const keycloak = this.keycloakAngular.getKeycloakInstance();
 
       keycloak
       .loadUserInfo()
