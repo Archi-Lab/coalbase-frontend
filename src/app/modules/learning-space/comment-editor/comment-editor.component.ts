@@ -128,7 +128,7 @@ export class CommentEditorComponent implements OnInit {
 
   private buildCommentAuthorShortName(comment: Comment): string {
     if (comment === null) {
-      return '?';
+      return '?.?.';
     }
 
     let returnValue = '';
@@ -143,5 +143,13 @@ export class CommentEditorComponent implements OnInit {
       returnValue += "?."
     }
     return returnValue;
+  }
+
+  private buildDate(comment: Comment) : string {
+    if (comment === null || comment.modified === null) {
+      return '?';
+    }
+
+    return new Date(comment.modified.toString()).toLocaleString();
   }
 }

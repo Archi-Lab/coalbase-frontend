@@ -10,7 +10,7 @@
           <div>{{buildCommentAuthorShortName(comment.get('object').value)}}</div>
         </div>
         <mat-card-title>{{buildCommentAuthorFullName(comment.get('object').value)}}</mat-card-title>
-        <mat-card-subtitle>Geändert: 17.10.95 12:00</mat-card-subtitle>
+        <mat-card-subtitle>Geändert am: {{buildDate(comment.get('object').value)}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div>
