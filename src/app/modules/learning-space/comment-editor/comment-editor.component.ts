@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommentService} from "../../../core/services/comment/comment.service";
 import {Comment} from "../../../shared/models/comment/comment.model";
+import {KeyCloakUser} from "../../../security/KeycloakUser";
 
 @Component({
   selector: 'app-comment-editor',
@@ -20,7 +21,8 @@ export class CommentEditorComponent implements OnInit {
   editMode: boolean = false;
 
 
-  constructor(private readonly commentService: CommentService) {
+  constructor(private readonly commentService: CommentService,
+              private user: KeyCloakUser) {
   }
 
   ngOnInit(): void {
@@ -62,7 +64,7 @@ export class CommentEditorComponent implements OnInit {
           commentResource.attributeName = this.attributeName;
           comments.push(commentResource);
         } else {
-          comments.push(new Comment(this.attachedEntityId, this.attributeName, comment.value));
+          comments.push(new Comment(this.attachedEntityId, this.attributeName, {userName: '', firstName: this.user.getFirstName(), lastName: this.user.getLastName()}, comment.value));
         }
       }
     });
@@ -115,5 +117,31 @@ export class CommentEditorComponent implements OnInit {
         }
       });
     }
+  }
+
+  private buildCommentAuthorFullName(comment: Comment): string {
+    if (comment === null) {
+      return '?';
+    }
+    return comment.author.firstName + ' ' + comment.author.lastName;
+  }
+
+  private buildCommentAuthorShortName(comment: Comment): string {
+    if (comment === null) {
+      return '?';
+    }
+
+    let returnValue = '';
+    if (comment.author.firstName.length > 0) {
+      returnValue += comment.author.firstName.charAt(0) + '.';
+    } else {
+      returnValue += "?."
+    }
+    if (comment.author.lastName.length > 0) {
+      returnValue += comment.author.lastName.charAt(0) + '.';
+    } else {
+      returnValue += "?."
+    }
+    return returnValue;
   }
 }
