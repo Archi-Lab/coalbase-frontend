@@ -71,11 +71,7 @@ export class LearningSpaceListOverviewComponent implements OnInit {
         this.sortedLearningSpaces.sort((a, b) => LearningSpaceListOverviewComponent.sortLearningSpaces(a, b));
       },
       (error) => {
-        if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
           this.unsortedLearningSpaces.push(aLearningSpace);
-        } else {
-          this.unsortedLearningSpaces.push(aLearningSpace);
-        }
       }
     );
   }
