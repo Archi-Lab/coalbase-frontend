@@ -1,73 +1,46 @@
-<div class="learning-space-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-icon mat-card-avatar color="accent">
-        meeting_room
-      </mat-icon>
-      <mat-card-title>
-        {{course.title}}
-      </mat-card-title>
-      <mat-card-subtitle>Lernräume</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div cdkDropList (cdkDropListDropped)="drop($event)">
-        <mat-card class="learning-space-card" cdkDrag
-                  *ngFor="let learningSpace of sortedLearningSpaces;">
-          <mat-card-header>
-            <mat-card-title>{{learningSpace.title}}</mat-card-title>
-            <mat-card-subtitle *ngIf="!learningSpace.isFirst()">
-              Vorbedingung:&nbsp;{{learningSpace.requirement.title}}</mat-card-subtitle>
-          </mat-card-header>
-          <div class="learning-space-card-placeholder" *cdkDragPlaceholder></div>
-          <mat-card-content>
-            <div class="learning-space-content-container">
-              <div>
-                <div>
-                  <h3 *ngIf="learningSpace.learningOutcome">Learningoutcome:</h3>
-                  <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
-                                             [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
-                </div>
-                <div>
-                  <h3 *ngIf="!isExamFormEmpty(learningSpace.examForm)">Prüfungsform:</h3>
-                  <app-exam-form-view *ngIf="!isExamFormEmpty(learningSpace.examForm)"
-                                      [examForm]="learningSpace.examForm"></app-exam-form-view>
-                </div>
-                <div>
-                  <h3 *ngIf="learningSpace.learningOutcome">Ressourcen:</h3>
-                  <app-web-link-view [reference]="learningSpace.getIdFromUri()">
-                  </app-web-link-view>
-                </div>
-              </div>
+<mat-card class="learning-space-card" >
+  <mat-card-header>
+    <mat-card-title>{{learningSpace.title}}</mat-card-title>
+    <mat-card-subtitle *ngIf="!learningSpace.isFirst()">
+      Vorbedingung:&nbsp;{{learningSpace.requirement.title}}</mat-card-subtitle>
+  </mat-card-header>
 
-              <div class="learning-space-drag-indicator">
-                <mat-icon class="drag-indicator"
-                          [matTooltip]="'Sie können dieses Element per Drag&Drop neu anordnen.'"
-                          [matTooltipShowDelay]="700"
-                          [matTooltipHideDelay]="300"
-                          [matTooltipPosition]="'above'">
-                  drag_indicator
-                </mat-icon>
-              </div>
-            </div>
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button mat-raised-button color="accent" [routerLink]="['./', learningSpace.getIdFromUri()]">
-              Bearbeiten
-            </button>
-          </mat-card-actions>
-        </mat-card>
+  <mat-card-content>
+    <div class="learning-space-content-container">
+      <div>
+        <div>
+          <h3>Learningoutcome:</h3>
+          <app-learning-outcome-view *ngIf="learningSpace.learningOutcome"
+                                     [learningOutcome]="learningSpace.learningOutcome"></app-learning-outcome-view>
+          <span *ngIf="!learningSpace.learningOutcome">Kein Learningoutcome vorhanden.</span>
+        </div>
+        <div>
+          <h3>Prüfungsform:</h3>
+          <app-exam-form-view *ngIf="!isExamFormEmpty(learningSpace.examForm)"
+                              [examForm]="learningSpace.examForm"></app-exam-form-view>
+          <span *ngIf="isExamFormEmpty(learningSpace.examForm)">Keine Prüfungsform vorhanden.</span>
+        </div>
+        <div>
+          <h3>Ressourcen:</h3>
+          <app-web-link-view [reference]="learningSpace.getIdFromUri()">
+          </app-web-link-view>
+        </div>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button routerLink="/courses">
-        <mat-icon>arrow_back_ios</mat-icon>
-        Zurück
-      </button>
-      <button mat-raised-button class="learning-space-button-add" color="accent"
-              [routerLink]="[ './new']">
-        Neuen Lernraum hinzufügen
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+
+      <div class="learning-space-drag-indicator">
+        <mat-icon class="drag-indicator"
+                  [matTooltip]="'Sie können dieses Element per Drag&Drop neu anordnen.'"
+                  [matTooltipShowDelay]="700"
+                  [matTooltipHideDelay]="300"
+                  [matTooltipPosition]="'above'">
+          drag_indicator
+        </mat-icon>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="accent" [routerLink]="['./', learningSpace.getIdFromUri()]">
+      Bearbeiten
+    </button>
+  </mat-card-actions>
+</mat-card>

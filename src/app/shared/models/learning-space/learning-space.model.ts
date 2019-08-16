@@ -27,7 +27,10 @@ export class LearningSpace extends Resource {
   }
 
   public isRequirement(requirement: LearningSpace) {
-    return this._requirement === requirement;
+    if (this._requirement) {
+      return this._requirement.getIdFromUri() === requirement.getIdFromUri();
+    }
+    return false;
   }
 
 

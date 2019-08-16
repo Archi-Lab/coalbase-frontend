@@ -1,0 +1,37 @@
+<mat-card class="learning-space-order-card">
+  <mat-card-header>
+    <mat-card-title>Lernraum Reihenfolge:</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-label *ngIf="sortedLearningSpaces && sortedLearningSpaces.length > 0">Sortiere Lernräume</mat-label>
+    <div class="learning-space-order-content" *ngIf="sortedLearningSpaces && sortedLearningSpaces.length > 0">
+      <div *ngFor="let learningSpace of sortedLearningSpaces; let index=index"
+           class="learning-space-order-lsp-container">
+        <span *ngIf="index === 0" class="learning-space-order-icon"></span>
+        <mat-icon *ngIf="learningSpace.requirement" class="learning-space-order-icon">arrow_forward</mat-icon>
+        <mat-card class="learning-space-order-lsp-card">
+          <mat-card-header>
+            <mat-card-title class="wrap-title">{{learningSpace.title}}</mat-card-title>
+            <mat-card-subtitle class="wrap-title" *ngIf="learningSpace.requirement">Folgt
+              auf: {{learningSpace.requirement.title}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+    <mat-label *ngIf="unsortedLearningSpaces && unsortedLearningSpaces.length > 0">Unsortierte Lernräume</mat-label>
+    <div class="learning-space-order-content" *ngIf="unsortedLearningSpaces && unsortedLearningSpaces.length > 0">
+      <div *ngFor="let learningSpace of unsortedLearningSpaces; let index=index"
+           class="learning-space-order-lsp-container">
+        <mat-icon *ngIf="index > 0 && !learningSpace.requirement" class="learning-space-order-icon">remove</mat-icon>
+        <mat-card class="learning-space-order-lsp-card">
+          <mat-card-header>
+            <mat-card-title class="wrap-title">{{learningSpace.title}}</mat-card-title>
+            <mat-card-subtitle class="wrap-title" *ngIf="learningSpace.requirement">Folgt
+              auf: {{learningSpace.requirement.title}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,47 @@
+<div class="learning-space-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">
+        meeting_room
+      </mat-icon>
+      <mat-card-title>
+        {{course.title}}
+      </mat-card-title>
+      <mat-card-subtitle>Lernräume</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-learning-space-order [sortedLearningSpaces]="sortedLearningSpaces"
+                                [unsortedLearningSpaces]="unsortedLearningSpaces"></app-learning-space-order>
+
+      <h2 *ngIf="sortedLearningSpaces && sortedLearningSpaces.length > 0">Sortierte Lernräume</h2>
+      <div cdkDropList #listOne="cdkDropList" (cdkDropListDropped)="drop($event)">
+        <div class="learning-space-drag-drop-element" cdkDrag *ngFor="let learningSpace of sortedLearningSpaces;">
+          <div class="learning-space-card-placeholder" *cdkDragPlaceholder></div>
+          <app-learning-space-overview [learningSpace]="learningSpace">
+          </app-learning-space-overview>
+        </div>
+      </div>
+
+      <h2 *ngIf="unsortedLearningSpaces && unsortedLearningSpaces.length > 0">Unsortierte Lernräume</h2>
+      <div cdkDropList #listTwo="cdkDropList" [cdkDropListConnectedTo]="[listOne]"
+           (cdkDropListDropped)="transfer($event)">
+        <div class="learning-space-drag-drop-element" cdkDrag *ngFor="let learningSpace of unsortedLearningSpaces;">
+          <div class="learning-space-card-placeholder" *cdkDragPlaceholder></div>
+          <app-learning-space-overview [learningSpace]="learningSpace">
+          </app-learning-space-overview>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button routerLink="/courses">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Zurück
+      </button>
+      <button mat-raised-button class="learning-space-button-add" color="accent"
+              [routerLink]="[ './new']">
+        Neuen Lernraum hinzufügen
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
