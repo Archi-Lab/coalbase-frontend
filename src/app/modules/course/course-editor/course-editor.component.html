@@ -5,33 +5,46 @@
   </mat-card-header>
   <mat-card-content>
     <div class="course-editor-container" [formGroup]="courseForm">
-      <mat-label class="course-editor-label"><strong>Kürzel</strong></mat-label>
-      <mat-form-field color="accent">
-        <textarea matInput
-                  cdkTextareaAutosize
-                  maxlength="3"
-                  placeholder="Kürzel der Veranstaltung"
-                  [formControl]="shortTitleForm"></textarea>
-      </mat-form-field>
-
-      <mat-label class="course-editor-label"><strong>Titel</strong></mat-label>
-      <mat-form-field color="accent">
-        <textarea matInput
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="3"
-                  placeholder="Titel der Veranstaltung"
-                  [formControl]="titleForm"></textarea>
-      </mat-form-field>
-
-      <mat-label class="course-editor-label"><strong>Beschreibung</strong></mat-label>
-      <mat-form-field color="accent">
+      <mat-vertical-stepper class="course-editor-vertical-stepper">
+        <mat-step label="Kürzel">
+          <mat-form-field color="accent" class="form-field-full-width">
+            <textarea matInput
+                      cdkTextareaAutosize
+                      maxlength="3"
+                      placeholder="Kürzel der Veranstaltung"
+                      [formControl]="shortTitleForm"></textarea>
+          </mat-form-field>
+          <div class="course-editor-step-button-group">
+            <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+          </div>
+        </mat-step>
+        <mat-step label="Titel">
+          <mat-form-field color="accent" class="form-field-full-width">
+          <textarea matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="3"
+                    placeholder="Titel der Veranstaltung"
+                    [formControl]="titleForm"></textarea>
+          </mat-form-field>
+          <div class="course-editor-step-button-group">
+            <button mat-button matStepperPrevious mat-stroked-button color="accent">Zurück</button>
+            <button mat-button matStepperNext mat-stroked-button color="accent">Weiter</button>
+          </div>
+        </mat-step>
+        <mat-step label="Beschreibung">
+          <mat-form-field color="accent" class="form-field-full-width">
         <textarea matInput
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="1"
                   cdkAutosizeMaxRows="10"
                   placeholder="Kurzbeschreibung der Veranstaltung" [formControl]="descriptionForm"></textarea>
-      </mat-form-field>
+          </mat-form-field>
+          <div class="course-editor-step-button-group">
+            <button mat-button matStepperPrevious mat-stroked-button color="accent">Zurück</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
     </div>
   </mat-card-content>
   <mat-card-actions>

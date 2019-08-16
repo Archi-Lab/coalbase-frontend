@@ -9,7 +9,7 @@ import {ExamForm} from "../../../shared/models/learning-space/exam-form.model";
 })
 export class LearningSpaceOverviewComponent implements OnInit {
 
-  @Input() learningSpace: LearningSpace | undefined;
+  @Input() learningSpace: LearningSpace = new LearningSpace();
 
   constructor() { }
 

@@ -8,11 +8,28 @@
 }
 
 .course-editor-container {
-  display: grid;
-  grid-template-columns: auto auto;
 }
 
 .course-editor-label {
   margin: auto;
   color: $th-koeln-violet;
+}
+
+.course-editor-vertical-stepper {
+  background: transparent;
+}
+
+.course-editor-step-button-group {
+  margin: 10px 0 10px 0;
+  button {
+    margin: 0 2.5px 0 2.5px;
+  }
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: $th-koeln-violet;
+}
+
+.form-field-full-width {
+  width: 100%;
 }
