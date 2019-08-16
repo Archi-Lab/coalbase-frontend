@@ -66,20 +66,13 @@ export class LearningSpaceListOverviewComponent implements OnInit {
     aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
       (requirement: LearningSpace) => {
         aLearningSpace.requirement = requirement;
-        if(!this.sortedLearningSpaces.find(learningSpace => learningSpace.getIdFromUri() === requirement.getIdFromUri())){
-          const requirementIndex = this.unsortedLearningSpaces.findIndex(learningSpace => learningSpace.getIdFromUri() === requirement.getIdFromUri());
-          if (requirementIndex >= 0){
-            this.sortedLearningSpaces.unshift(this.unsortedLearningSpaces[requirementIndex]);
-            this.unsortedLearningSpaces.splice(requirementIndex, 1);
-          }
-        }
+        this.checkUnusedLearningSpaces();
         this.sortedLearningSpaces.push(aLearningSpace);
         this.sortedLearningSpaces.sort((a, b) => LearningSpaceListOverviewComponent.sortLearningSpaces(a, b));
       },
       (error) => {
         if (this.sortedLearningSpaces.length > 0 && this.sortedLearningSpaces[0].isFirst()) {
           this.unsortedLearningSpaces.push(aLearningSpace);
-          console.log("Pushed a unordered lsp")
         } else {
           this.unsortedLearningSpaces.push(aLearningSpace);
         }
@@ -87,16 +80,28 @@ export class LearningSpaceListOverviewComponent implements OnInit {
     );
   }
 
+  private checkUnusedLearningSpaces(): void {
+    this.sortedLearningSpaces.forEach((learningSpaceToCheck) => {
+      if (learningSpaceToCheck.requirement !== undefined) {
+        const requirementToCheck : LearningSpace = learningSpaceToCheck.requirement;
+        if (!this.sortedLearningSpaces.find(learningSpace => learningSpace.getIdFromUri() === requirementToCheck.getIdFromUri())) {
+          const requirementIndex = this.unsortedLearningSpaces.findIndex(learningSpace => learningSpace.getIdFromUri() === requirementToCheck.getIdFromUri());
+          if (requirementIndex >= 0) {
+            this.sortedLearningSpaces.unshift(this.unsortedLearningSpaces[requirementIndex]);
+            this.unsortedLearningSpaces.splice(requirementIndex, 1);
+          }
+        }
+      }
+    });
+  }
+
   private static sortLearningSpaces(lowerElement: LearningSpace, higherElement: LearningSpace): number {
     if (!lowerElement.isFirst() && lowerElement.isRequirement(higherElement)) {
-      console.log(`${lowerElement.title}  is requirement of ${higherElement.title}`);
       return 1;
     }
     if (!higherElement.isFirst() && higherElement.isRequirement(lowerElement)) {
-      console.log(`${higherElement.title}  is requirement of ${lowerElement.title}`);
       return -1;
     }
-    console.log(`${higherElement.title} ===  ${lowerElement.title}`);
     return 0;
   }
 
@@ -114,7 +119,7 @@ export class LearningSpaceListOverviewComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       this.updateRelationForLearningSpace(event.currentIndex);
-      this.updateRelationForLearningSpace(event.currentIndex+1);
+      this.updateRelationForLearningSpace(event.currentIndex + 1);
     }
 
   }
