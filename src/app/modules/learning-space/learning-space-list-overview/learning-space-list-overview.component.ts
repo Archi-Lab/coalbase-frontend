@@ -48,9 +48,15 @@ export class LearningSpaceListOverviewComponent implements OnInit {
   private resolveLearningSpaces(courseIdentifier: string): void {
     this.courseService.get(courseIdentifier).subscribe(course => {
       course.getRelationArray(LearningSpace, "learningSpaces").subscribe(learningSpaces => {
+        let requirementPromises : Promise<void>[] = [];
+
         learningSpaces.forEach(learningSpace => {
           this.resolveLearningOutcomeOf(learningSpace);
-          this.resolveRequirementOf(learningSpace);
+          requirementPromises.push(this.resolveRequirementOf(learningSpace));
+        });
+
+        Promise.all(requirementPromises).then(() => {
+          this.checkUnusedLearningSpaces();
         });
       });
     });
@@ -62,18 +68,21 @@ export class LearningSpaceListOverviewComponent implements OnInit {
     );
   }
 
-  private resolveRequirementOf(aLearningSpace: LearningSpace): void {
-    aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
-      (requirement: LearningSpace) => {
-        aLearningSpace.requirement = requirement;
-        this.checkUnusedLearningSpaces();
-        this.sortedLearningSpaces.push(aLearningSpace);
-        this.sortedLearningSpaces.sort((a, b) => LearningSpaceListOverviewComponent.sortLearningSpaces(a, b));
-      },
-      (error) => {
+  private resolveRequirementOf(aLearningSpace: LearningSpace): Promise<void> {
+    return new Promise<void>((resolve) => {
+      aLearningSpace.getRelation(LearningSpace, 'requirement').subscribe(
+        (requirement: LearningSpace) => {
+          aLearningSpace.requirement = requirement;
+          this.sortedLearningSpaces.push(aLearningSpace);
+          this.sortedLearningSpaces.sort((a, b) => LearningSpaceListOverviewComponent.sortLearningSpaces(a, b));
+          resolve();
+        },
+        (error) => {
           this.unsortedLearningSpaces.push(aLearningSpace);
-      }
-    );
+          resolve();
+        }
+      );
+    });
   }
 
   private checkUnusedLearningSpaces(): void {
@@ -117,12 +126,13 @@ export class LearningSpaceListOverviewComponent implements OnInit {
       this.updateRelationForLearningSpace(event.currentIndex);
       this.updateRelationForLearningSpace(event.currentIndex + 1);
     }
-
   }
 
   transfer(event: CdkDragDrop<LearningSpace[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container && this.sortedLearningSpaces.length === 0 && this.unsortedLearningSpaces.length > 1 && event.currentIndex > 0) {
+      transferArrayItem(this.unsortedLearningSpaces, this.sortedLearningSpaces, event.currentIndex, 0);
+      transferArrayItem(this.unsortedLearningSpaces, this.sortedLearningSpaces, event.currentIndex-1, 0);
+      this.updateRelationForLearningSpace(1);
     }
   }
 
