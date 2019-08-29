@@ -3,22 +3,23 @@ node {
     checkout scm
   }
 
-  stage('Test') {
-    echo "Should test the project here!"
-  }
-
-  try {
-    stage("Quality Check") {
-      def scannerHome = tool 'SonarQube Scanner';
-      withSonarQubeEnv('SonarQube-Server') {
-        sh "${scannerHome}/bin/sonar-scanner"
-      }
+  docker.image('node:12.9.1-alpine').inside {
+    stage('Test') {
+      echo "Should test the project here!"
     }
-  } finally {
-    recordIssues enabledForFailure: true, aggregatingResults: true,
-      tool: checkStyle(pattern: 'checkstyle-result.xml')
-  }
 
+    try {
+      stage("Quality Check") {
+        def scannerHome = tool 'SonarQube Scanner';
+        withSonarQubeEnv('SonarQube-Server') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+      }
+    } finally {
+      recordIssues enabledForFailure: true, aggregatingResults: true,
+        tool: checkStyle(pattern: 'checkstyle-result.xml')
+    }
+  }
   stage("Quality Gate") {
     timeout(time: 10, unit: "MINUTES") {
       def qg = waitForQualityGate()
