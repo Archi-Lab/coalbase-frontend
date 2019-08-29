@@ -19,7 +19,7 @@ node {
       }
     } finally {
       recordIssues enabledForFailure: true, aggregatingResults: true,
-        tool: checkStyle(pattern: 'checkstyle-result.xml')
+        tool: checkStyle(pattern: '**/target/checkstyle-result.xml')
     }
   }
   stage("Quality Gate") {
