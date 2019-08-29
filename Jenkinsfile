@@ -3,7 +3,7 @@ node {
     checkout scm
   }
 
-  docker.image('node:12.9.1-alpine').inside {
+  docker.image('node:12.9-alpine').inside {
     stage('Test') {
       echo "Should test the project here!"
     }
