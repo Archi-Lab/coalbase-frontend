@@ -4,6 +4,8 @@ node {
   }
 
   docker.image('node:12.9-alpine').inside {
+    sh 'apk -U add openjdk8-jre'
+
     stage('Test') {
       echo "Should test the project here!"
     }
