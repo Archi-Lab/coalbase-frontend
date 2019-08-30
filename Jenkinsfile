@@ -41,7 +41,7 @@ node {
   stage('Deploy') {
     docker.withServer('tcp://10.10.10.51:2376', 'coalbase-prod-certs') {
       docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins') {
-        sh 'docker stack deploy --with-registry-auth -c ./docker-compose.yml frontend'
+        sh 'docker stack deploy --with-registry-auth -c ./docker-compose.yml coalbase-frontend'
       }
     }
   }
