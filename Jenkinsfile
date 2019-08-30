@@ -11,7 +11,6 @@ node {
     }
 
     stage("Quality Check") {
-//      sh 'npm install typescript'
       def scannerHome = tool 'SonarQube Scanner';
       withSonarQubeEnv('SonarQube-Server') {
         sh "${scannerHome}/bin/sonar-scanner"
