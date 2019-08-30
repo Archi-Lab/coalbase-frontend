@@ -130,6 +130,7 @@ export class LearningSpaceListOverviewComponent implements OnInit {
 
   transfer(event: CdkDragDrop<LearningSpace[]>): void {
     if (event.previousContainer === event.container && this.sortedLearningSpaces.length === 0 && this.unsortedLearningSpaces.length > 1 && event.currentIndex > 0) {
+      moveItemInArray(this.unsortedLearningSpaces, event.previousIndex, event.currentIndex);
       transferArrayItem(this.unsortedLearningSpaces, this.sortedLearningSpaces, event.currentIndex, 0);
       transferArrayItem(this.unsortedLearningSpaces, this.sortedLearningSpaces, event.currentIndex-1, 0);
       this.updateRelationForLearningSpace(1);
