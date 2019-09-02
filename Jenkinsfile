@@ -33,7 +33,6 @@ node {
       docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
 
     docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins') {
-      sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend"
       sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
     }
   }
