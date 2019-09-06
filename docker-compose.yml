@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   angular-server:
-    image: ${repository}/${image}:${tag}
+    image: ${REPOSITORY}/${IMAGE}:${TAG}
     ports:
       - 4201:80
     #    logging:
