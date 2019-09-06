@@ -1,5 +1,5 @@
 node {
-  def repository = "nexus.docker.archi-lab.io/archilab"
+  def repository = "docker.nexus.archi-lab.io/archilab"
   def image
   def tag = "${env.BUILD_NUMBER}"
 
