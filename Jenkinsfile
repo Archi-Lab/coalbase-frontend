@@ -1,4 +1,8 @@
 node {
+  def repository = "nexus.docker.archi-lab.io/archilab"
+  def image
+  def tag = "${env.BUILD_NUMBER}"
+
   stage('Checkout') {
     checkout scm
   }
@@ -18,6 +22,7 @@ node {
       }
     }
   }
+
   stage("Quality Gate") {
     timeout(time: 10, unit: "MINUTES") {
       def qg = waitForQualityGate()
@@ -29,19 +34,21 @@ node {
   }
 
   stage('Build') {
-    sh "docker build -t docker.nexus.archi-lab.io/archilab/coalbase-frontend ."
-    sh "docker tag docker.nexus.archi-lab.io/archilab/coalbase-frontend \
-      docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
+    def packageJSON = readJSON file: 'package.json'
+    image = packageJSON.name
+
+    sh "docker build -t ${repository}/${image}:${tag} ."
 
     docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins') {
-      sh "docker push docker.nexus.archi-lab.io/archilab/coalbase-frontend:${env.BUILD_ID}"
+      sh "docker push ${repository}/${image}:${tag}"
     }
   }
 
   stage('Deploy') {
     docker.withServer('tcp://10.10.10.51:2376', 'coalbase-prod-certs') {
       docker.withRegistry('https://docker.nexus.archi-lab.io//', 'archilab-nexus-jenkins') {
-        sh 'docker stack deploy --with-registry-auth -c ./docker-compose.yml coalbase-frontend'
+        sh "env REPOSITORY=${repository} IMAGE=${image} TAG=${tag} docker stack deploy \
+          --with-registry-auth -c ./docker-compose.yml ${image}"
       }
     }
   }
