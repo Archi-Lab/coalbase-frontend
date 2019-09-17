@@ -1,18 +1,18 @@
 version: '3.5'
 
 services:
+
   angular-server:
     image: ${REPOSITORY}/${IMAGE}:${TAG}
     ports:
       - 4201:80
-    #    logging:
-    #      driver: gelf
-    #      options:
-    #        gelf-address: "udp://127.0.0.1:12201"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://archilab-infra:12201"
     deploy:
       restart_policy:
         condition: any
         delay: 5s
         max_attempts: 3
         window: 120s
-
