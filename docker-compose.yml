@@ -6,10 +6,6 @@ services:
     image: ${REPOSITORY}/${IMAGE}:${TAG}
     ports:
       - 4201:80
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://archilab-infra:12201"
     deploy:
       restart_policy:
         condition: any
